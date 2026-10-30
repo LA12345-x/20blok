@@ -123,7 +123,13 @@ function figure(x){
     if (ig || tw){
       const thumb = el("a",{class:"frame",href:x.href,target:"_blank",rel:"noopener"}, el("img",{src:IMG[x.src],alt:x.alt||x.cap||"",loading:"lazy"}),
         x.nobadge?null:el("span",{class:"badge"}, icon("M7 5l12 7-12 7z",true), x.badge||"WATCH"));
-      const bq = ig ? el("blockquote",{class:"instagram-media","data-instgrm-permalink":x.href.split("?")[0].replace("/reels/","/reel/"),"data-instgrm-version":"14"}, thumb)
+      if (ig){
+        const m = x.href.match(/instagram\\.com\\/(p|reels?|tv)\\/([A-Za-z0-9_-]+)/);
+        const kind = m[1].startsWith("reel") ? "reel" : m[1];
+        const f = el("iframe",{src:"https://www.instagram.com/"+kind+"/"+m[2]+"/embed/", title:x.cap||x.alt||"Instagram post", loading:"lazy", scrolling:"no", allowtransparency:"true", allow:"encrypted-media; picture-in-picture"});
+        return el("figure",{class:"fig embed social ig"}, el("div",{class:"ig-frame"}, f), x.cap?el("figcaption",{text:x.cap}):null);
+      }
+      const bq = ig ? null
                     : el("blockquote",{class:"twitter-tweet","data-theme":"dark","data-dnt":"true"}, el("a",{href:x.href.replace("x.com","twitter.com"),text:" "}), thumb);
       return el("figure",{class:"fig embed social"+(x.narrow?" narrow":"")}, bq, x.cap?el("figcaption",{text:x.cap}):null);
     }
@@ -136,6 +142,8 @@ R('.pair{display:flex;', '''.fig.embed .embed-frame{position:relative;width:100%
 .fig.embed.social .twitter-tweet{max-width:550px!important}
 .fig.embed.social blockquote.instagram-media,.fig.embed.social iframe.instagram-media{max-width:400px!important;width:100%!important;min-width:0!important;margin:0 auto!important}
 .fig.embed.social iframe{position:static}
+.fig.embed.ig .ig-frame{width:100%;max-width:400px;margin:0 auto;aspect-ratio:400/880;border-radius:12px;overflow:hidden;background:#fff}
+.fig.embed.ig .ig-frame iframe{position:static;display:block;width:100%;height:100%;border:0}
 .pair{display:flex;''')
 R('window.addEventListener("hashchange", ()=>render(false));', 'window.addEventListener("hashchange", ()=>{ render(false); setTimeout(hydrateEmbeds,0); });')
 R('render(false);\nconnect();', 'render(false);\nsetTimeout(hydrateEmbeds,0);\nconnect();')
