@@ -27,7 +27,7 @@ for k, uri in IM.items():
     ext = {"image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "image/gif": "gif", "video/mp4": "mp4"}.get(mime, "bin")
     fn = f"media/{k}.{ext}"
     open(os.path.join(out, fn), "wb").write(base64.b64decode(b64))
-    paths[k] = fn
+    paths[k] = "/" + fn
 
 # ---------- page head: real document ----------
 R('<meta name="claude:viewport-fit-sides" content="cover">\n', '')
@@ -145,12 +145,34 @@ R('.pair{display:flex;', '''.fig.embed .embed-frame{position:relative;width:100%
 .fig.embed.ig .ig-frame{width:100%;max-width:400px;margin:0 auto;height:calc(min(100vw - 32px, 400px) * 1.25 + 168px);border-radius:12px;overflow:hidden;background:#fff}
 .fig.embed.ig .ig-frame iframe{position:static;display:block;width:100%;height:100%;border:0}
 .pair{display:flex;''')
-R('window.addEventListener("hashchange", ()=>render(false));', 'window.addEventListener("hashchange", ()=>{ render(false); setTimeout(hydrateEmbeds,0); });')
-R('render(false);\nconnect();', 'render(false);\nsetTimeout(hydrateEmbeds,0);\nconnect();')
+# ---------- real addresses (20blok.com/based) instead of #based ----------
+for a_, b_ in [('href="#this-week"','href="/"'),('href="#all-time"','href="/all-time"'),('href="#past-issues"','href="/past-issues"'),('href="#issue-notes"','href="/issue-notes"'),
+               ('href:"#this-week"','href:"/"'),('href:"#issue-notes"','href:"/issue-notes"'),('href:"#must-see"','href:"/must-see"'),('href:"#straight-up"','href:"/straight-up"'),
+               ('href:"#"+','href:"/"+'),('location.hash = b.id','go(b.id)'),('x.href.startsWith("#")','x.href.startsWith("/")')]:
+    assert a_ in t, a_; t = t.replace(a_, b_)
+R('function curRoute(){ return (location.hash||"").replace(/^#/,"") || "this-week"; }', '''function curRoute(){
+  const p = location.pathname.replace(/^\\/+|\\/+$/g,"");
+  if (!p){ const h=(location.hash||"").replace(/^#/,""); if (h) return h; }
+  return p || "this-week";
+}
+const TITLES = {"all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
+function go(id){ const path = (!id || id==="this-week") ? "/" : "/"+id; if (location.pathname!==path || location.hash) history.pushState({}, "", path); render(false); }
+document.addEventListener("click", e=>{
+  if (e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+  const a = e.target.closest("a[href^='/']"); if (!a || a.target) return;
+  const href = a.getAttribute("href"); if (href.startsWith("/media/") || href.startsWith("/api/")) return;
+  e.preventDefault(); go(href.replace(/^\/+|\/+$/g,"") || "this-week");
+});
+window.addEventListener("popstate", ()=>render(false));
+(function(){ const h=(location.hash||"").replace(/^#/,""); if (h && (location.pathname==="/"||location.pathname==="")) history.replaceState({}, "", "/"+(h==="this-week"?"":h)); })();''')
+R('  const h = (location.hash||"").replace(/^#/,"") || "this-week";', '  const h = curRoute();')
+R('  else if (commentsUnsub){', '  document.title = blok ? blok.title+" — 20 Blok" : (TITLES[h] ? TITLES[h]+" — 20 Blok" : "20 Blok — Culture, creativity, and the internet.");\n  setTimeout(hydrateEmbeds,0);\n  if (false){}\n  else if (commentsUnsub){')
+R('window.addEventListener("hashchange", ()=>render(false));', 'window.addEventListener("hashchange", ()=>{ const h=(location.hash||"").replace(/^#/,""); if (h) history.replaceState({}, "", "/"+(h==="this-week"?"":h)); render(false); });')
+R('  window.addEventListener("hashchange",()=>{ if(root&&!root.hidden) hide(); });', '  window.addEventListener("popstate",()=>{ if(root&&!root.hidden) hide(); });')
 
 # ---------- Beehiiv subscribe box ----------
 R(' Or leave a comment on any blok.', '')
-R('    el("a",{class:"notes-link",href:"#issue-notes"}', '    subscribeBox(),\n    el("a",{class:"notes-link",href:"#issue-notes"}')
+R('    el("a",{class:"notes-link",href:"/issue-notes"}', '    subscribeBox(),\n    el("a",{class:"notes-link",href:"/issue-notes"}')
 SUB_JS = '''function subscribeBox(){
   const input = el("input",{type:"email",name:"email",required:"required",autocomplete:"email",inputmode:"email",placeholder:"you@email.com","aria-label":"Your email"});
   const btn = el("button",{type:"submit",class:"sb-btn"},"Subscribe");
@@ -195,8 +217,46 @@ SUB_CSS = '''.subscribe-band{display:grid;gap:14px;margin-top:24px;padding:24px;
 R('.fig.embed .embed-frame{', SUB_CSS + '.fig.embed .embed-frame{')
 
 # ---------- write ----------
+for b in data:
+    for x in b["body"]:
+        if x.get("t")=="link" and x.get("href","").startswith("#"): x["href"] = "/" + x["href"][1:]
 dd = json.dumps(data, ensure_ascii=False).replace('</', '<\\/')
 t = t.replace('__DATA__', dd).replace('__IMAGES__', json.dumps(paths))
-open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(t)
+import html as H
+SITE = "https://20blok.com"
+def page(route, title, desc, img, body_html):
+    p = t
+    p = p.replace("<title>20 Blok — Culture, creativity, and the internet.</title>", "<title>"+H.escape(title)+"</title>", 1)
+    p = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="'+H.escape(desc)+'">', p, 1)
+    p = re.sub(r'<meta property="og:title" content="[^"]*">', '<meta property="og:title" content="'+H.escape(title)+'">', p, 1)
+    p = re.sub(r'<meta property="og:description" content="[^"]*">', '<meta property="og:description" content="'+H.escape(desc)+'">', p, 1)
+    p = re.sub(r'<meta property="og:image" content="[^"]*">', '<meta property="og:image" content="'+SITE+img+'">', p, 1)
+    url = SITE + ("/" if route=="" else "/"+route)
+    p = re.sub(r'<meta property="og:url" content="[^"]*">', '<meta property="og:url" content="'+url+'">\n<link rel="canonical" href="'+url+'">', p, 1)
+    p = p.replace('<main class="wrap" id="view" aria-live="polite"></main>', '<main class="wrap" id="view" aria-live="polite">'+body_html+'</main>', 1)
+    d = os.path.join(out, route) if route else out
+    os.makedirs(d, exist_ok=True)
+    open(os.path.join(d, "index.html"), "w", encoding="utf-8").write(p)
+    return url
+def txt(x): return H.escape(x.get("text",""))
+def first_para(b):
+    for x in b["body"]:
+        if x.get("t")=="p" and x.get("text"): return x["text"]
+    return ""
+def short(s, n=155):
+    s = re.sub(r"\s+"," ",s).strip(); return s if len(s)<=n else s[:n-1].rsplit(" ",1)[0]+"…"
+urls = []
+grid = "".join('<li><a href="/'+b["id"]+'">'+H.escape(b["name"])+': '+H.escape(b["title"])+'</a></li>' for b in data)
+home_desc = "20 Blok by Lenny Lesser: twenty stories every issue on culture, creativity and the internet. You pick the winners."
+urls.append(page("", "20 Blok — Culture, creativity, and the internet.", home_desc, "/media/cover.jpg", '<h1>20 Blok, Issue 7: Retail Mindset</h1><ul>'+grid+'</ul>'))
+for b in data:
+    body = "".join("<p>"+txt(x)+"</p>" if x.get("t") in ("p","q","pull") else ("<h2>"+txt(x)+"</h2>" if x.get("t")=="h" else "") for x in b["body"])
+    img = paths.get(b.get("img") or "cover", "/media/cover.jpg")
+    urls.append(page(b["id"], b["title"]+" — 20 Blok", short(first_para(b)) or home_desc, img, '<article><p>'+H.escape(b["name"])+'</p><h1>'+H.escape(b["title"])+'</h1>'+body+'</article>'))
+for r_, ti in [("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue Notes"),("bonus","Issue Notes")]:
+    u = page(r_, ti+" — 20 Blok", home_desc, "/media/cover.jpg", "<h1>"+ti+"</h1>")
+    if r_ != "bonus": urls.append(u)
+open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join("  <url><loc>"+u+"</loc></url>\n" for u in urls) + "</urlset>\n")
+open(os.path.join(out, "robots.txt"), "w").write("User-agent: *\nAllow: /\nSitemap: https://20blok.com/sitemap.xml\n")
 open(os.path.join(out, "vercel.json"), "w").write(json.dumps({"cleanUrls": True, "headers": [{"source": "/media/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]}]}, indent=2))
 print("built", out, "media files:", len(paths))
