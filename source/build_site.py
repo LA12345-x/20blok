@@ -6,8 +6,8 @@ import base64, json, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 out = sys.argv[1]
-sb_url = sys.argv[2] if len(sys.argv) > 3 else "__SB_URL__"
-sb_key = sys.argv[3] if len(sys.argv) > 3 else "__SB_KEY__"
+sb_url = sys.argv[2] if len(sys.argv) > 3 else "https://kuyhymlhaifxccovamdt.supabase.co"
+sb_key = sys.argv[3] if len(sys.argv) > 3 else "sb_publishable_hK_MKPDnsGxDUTu2zRWYgg_d4WSwjIS"
 
 t = open(os.path.join(HERE, "template.html"), encoding="utf-8").read()
 data = json.load(open(os.path.join(HERE, "data.json"), encoding="utf-8"))
@@ -45,7 +45,7 @@ reset = '<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:1
 t = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
      '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
      + reset + head +
-     '\n<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>\n'
+     '\n<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>\n'
      '</head>\n<body>\n' + body + '\n</body>\n</html>\n')
 
 # ---------- votes through Supabase (one per browser via anonymous sign-in) ----------
