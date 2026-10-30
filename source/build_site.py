@@ -142,7 +142,7 @@ R('.pair{display:flex;', '''.fig.embed .embed-frame{position:relative;width:100%
 .fig.embed.social .twitter-tweet{max-width:550px!important}
 .fig.embed.social blockquote.instagram-media,.fig.embed.social iframe.instagram-media{max-width:400px!important;width:100%!important;min-width:0!important;margin:0 auto!important}
 .fig.embed.social iframe{position:static}
-.fig.embed.ig .ig-frame{width:100%;max-width:400px;margin:0 auto;aspect-ratio:400/880;border-radius:12px;overflow:hidden;background:#fff}
+.fig.embed.ig .ig-frame{width:100%;max-width:400px;margin:0 auto;height:calc(min(100vw - 32px, 400px) * 1.25 + 168px);border-radius:12px;overflow:hidden;background:#fff}
 .fig.embed.ig .ig-frame iframe{position:static;display:block;width:100%;height:100%;border:0}
 .pair{display:flex;''')
 R('window.addEventListener("hashchange", ()=>render(false));', 'window.addEventListener("hashchange", ()=>{ render(false); setTimeout(hydrateEmbeds,0); });')
