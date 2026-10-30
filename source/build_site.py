@@ -183,7 +183,7 @@ SUB_JS = '''function subscribeBox(){
     try{
       const r = await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});
       const j = await r.json().catch(()=>({}));
-      if (r.ok && j.ok){ markSubscribed(); form.replaceChildren(el("p",{class:"sb-done",text:"You’re in. Check your inbox for a welcome email."})); return; }
+      if (r.ok && j.ok){ rememberPage(); markSubscribed(); form.replaceChildren(el("p",{class:"sb-done",text:"You’re in. Check your inbox for a welcome email."})); return; }
       msg.replaceChildren(document.createTextNode(j.error==="email" ? "That email doesn’t look right. Try again." : "That didn’t go through"+(j.error?" ("+j.error+(j.status?" "+j.status:"")+")":"")+". "), j.error==="email" ? "" : el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"}));
     }catch(err){ msg.replaceChildren("That didn’t go through. ", el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"})); }
     btn.disabled=false; }}, input, btn);
@@ -251,9 +251,14 @@ NUDGE_JS = '''function welcomeView(){
       el("p",{}, "Bookmark ", el("b",{text:"20blok.com"}), ". That\\u2019s where every issue goes up first."),
       el("h3",{text:"How it works"}),
       el("ul",{}, el("li",{text:"Every issue has 20 bloks: stories on culture, creativity and the internet."}), el("li",{text:"Tap the arrow on any blok to uprate it. No sign-in needed."}), el("li",{text:"The most uprated bloks rise to the top-left of the grid."}))),
-    el("p",{style:"margin-top:28px"}, el("a",{class:"sub",href:"/",text:"START READING \\u2192"})))];
+    (()=>{ const last = lsOK("blok20-last"); const lb = last && BLOKS.find(b=>b.id===last);
+      return el("div",{class:"wl-actions"},
+        lb ? el("a",{class:"sub",href:"/"+lb.id}, "CONTINUE READING \\u2192") : el("a",{class:"sub",href:"/",text:"START READING \\u2192"}),
+        lb ? el("p",{class:"wl-last",text:"Pick up where you left off: "+lb.title}) : null,
+        el("a",{class:"wl-home",href:"/",text:lb ? "Or go to the home page" : "See this issue\\u2019s 20 bloks"})); })())];
 }
 function lsOK(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }catch(e){ return null; } }
+function rememberPage(){ const h=curRoute(); if (BLOKS.find(b=>b.id===h)) lsOK("blok20-last", h); }
 function markSubscribed(){ lsOK("blok20-subscribed","1"); const n=document.getElementById("sb-nudge"); if(n) n.remove(); }
 let nudgeShown = false, bloksSeen = 0;
 function maybeNudge(){
@@ -267,7 +272,7 @@ function maybeNudge(){
   const close = el("button",{type:"button",class:"nd-x","aria-label":"Close",text:"\\u00d7",onclick:()=>{ lsOK("blok20-nudge-hide", String(Date.now()+7*864e5)); bar.remove(); }});
   const form = el("form",{class:"nd-form",onsubmit:async e=>{ e.preventDefault(); const email=input.value.trim(); if(!email) return; msg.textContent="Signing you up\\u2026";
       try{ const r=await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})}); const j=await r.json().catch(()=>({}));
-        if(r.ok&&j.ok){ lsOK("blok20-subscribed","1"); bar.replaceChildren(el("p",{class:"nd-done",text:"You\\u2019re in. Check your inbox to confirm."})); setTimeout(()=>bar.remove(),5000); return; }
+        if(r.ok&&j.ok){ rememberPage(); lsOK("blok20-subscribed","1"); bar.replaceChildren(el("p",{class:"nd-done",text:"You\\u2019re in. Check your inbox to confirm."})); setTimeout(()=>bar.remove(),5000); return; }
         msg.textContent = j.error==="email" ? "Check that email." : "Didn\\u2019t go through. Try the form at the bottom."; }catch(err){ msg.textContent="Didn\\u2019t go through."; } }},
     input, el("button",{type:"submit",class:"sb-btn"},"Subscribe"));
   bar = el("aside",{id:"sb-nudge",class:"nudge","aria-label":"Subscribe"},
@@ -299,6 +304,9 @@ SUB_CSS = '''.nudge{position:fixed;left:50%;transform:translateX(-50%);bottom:ca
 .nd-msg{flex-basis:100%;font-size:13px;color:var(--muted)}.nd-msg:empty{display:none}
 .nd-x{position:absolute;top:6px;right:8px;width:32px;height:32px;border:0;background:none;color:var(--muted);font-size:22px;cursor:pointer}
 .nd-done{margin:0;font-weight:700}
+.wl-actions{display:grid;gap:12px;justify-items:start;margin-top:28px}
+.wl-last{margin:0;font-size:14px;color:var(--muted)}
+.wl-home{font-size:14px;color:var(--fg-soft)}
 body:has(#sb-nudge) .float-vote{bottom:calc(env(safe-area-inset-bottom,0px) + 150px)}
 .subscribe-band{display:grid;gap:14px;margin-top:24px;padding:24px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
 .subscribe-band h2{margin:0 0 4px;font-family:var(--display);font-weight:900;font-size:clamp(24px,3vw,32px)}
