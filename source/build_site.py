@@ -184,7 +184,7 @@ SUB_JS = '''function subscribeBox(){
       const r = await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});
       const j = await r.json().catch(()=>({}));
       if (r.ok && j.ok){ form.replaceChildren(el("p",{class:"sb-done",text:"You’re in. Check your inbox for a welcome email."})); return; }
-      msg.replaceChildren(document.createTextNode(j.error==="email" ? "That email doesn’t look right. Try again." : "That didn’t go through. "), j.error==="email" ? "" : el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"}));
+      msg.replaceChildren(document.createTextNode(j.error==="email" ? "That email doesn’t look right. Try again." : "That didn’t go through"+(j.error?" ("+j.error+(j.status?" "+j.status:"")+")":"")+". "), j.error==="email" ? "" : el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"}));
     }catch(err){ msg.replaceChildren("That didn’t go through. ", el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"})); }
     btn.disabled=false; }}, input, btn);
   return el("section",{class:"subscribe-band",id:"subscribe-band","aria-labelledby":"sb-head"},
