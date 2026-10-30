@@ -94,7 +94,7 @@ t = t[:s] + '''function commentsSection(b){
   return el("section",{class:"comments","aria-labelledby":"c-head"},
     el("h2",{id:"c-head"},"Comments"),
     el("p",{class:"c-empty",text:"Comments open soon. Want in early? Subscribe and you'll be first to know."}),
-    el("p",{}, el("a",{class:"sub",href:NEWSLETTER,target:"_blank",rel:"noopener",text:"SUBSCRIBE"})));
+    subscribeBox());
 }
 ''' + t[e:]
 t = t.replace('if (blok){ drawComments(); renderComments(); }', '')
@@ -147,6 +147,28 @@ R('.pair{display:flex;', '''.fig.embed .embed-frame{position:relative;width:100%
 .pair{display:flex;''')
 R('window.addEventListener("hashchange", ()=>render(false));', 'window.addEventListener("hashchange", ()=>{ render(false); setTimeout(hydrateEmbeds,0); });')
 R('render(false);\nconnect();', 'render(false);\nsetTimeout(hydrateEmbeds,0);\nconnect();')
+
+# ---------- Beehiiv subscribe box ----------
+R(' Or leave a comment on any blok.', '')
+R('    el("a",{class:"notes-link",href:"#issue-notes"}', '    subscribeBox(),\n    el("a",{class:"notes-link",href:"#issue-notes"}')
+SUB_JS = '''const BEEHIIV_FORM = "27d9925d-dcbf-4b22-8916-fa424d78f244";
+function subscribeBox(){
+  const slot = el("div",{class:"bh-slot"});
+  setTimeout(()=>{ const s=document.createElement("script"); s.async=true; s.src="https://subscribe-forms.beehiiv.com/v3/loader.js"; s.setAttribute("data-beehiiv-form",BEEHIIV_FORM); slot.append(s); },0);
+  return el("section",{class:"subscribe-band","aria-labelledby":"sb-head"},
+    el("div",{}, el("h2",{id:"sb-head",text:"Get the next issue"}), el("p",{text:"New stories every issue, straight to your inbox. Free."})),
+    slot,
+    el("p",{class:"bh-fallback"}, el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Or subscribe on the newsletter page →"})));
+}
+'''
+R('function ytId(u){', SUB_JS + 'function ytId(u){')
+SUB_CSS = '''.subscribe-band{display:grid;gap:14px;margin-top:24px;padding:24px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
+.subscribe-band h2{margin:0 0 4px;font-family:var(--display);font-weight:900;font-size:clamp(24px,3vw,32px)}
+.subscribe-band p{margin:0;color:var(--fg-soft)}
+.subscribe-band .bh-slot{min-height:60px;max-width:560px}
+.subscribe-band .bh-fallback a{font-size:14px;color:var(--muted)}
+'''
+R('.fig.embed .embed-frame{', SUB_CSS + '.fig.embed .embed-frame{')
 
 # ---------- write ----------
 dd = json.dumps(data, ensure_ascii=False).replace('</', '<\\/')

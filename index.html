@@ -193,6 +193,11 @@ main{padding-block:20px 64px}
 .lbx-nav.p{left:10px}.lbx-nav.n{right:10px}
 .lbx-hint{padding:10px 16px 16px;text-align:center;font-family:var(--sans);font-size:13px;color:#aaa}
 @media (max-width:640px){.lbx-stage{padding:0}.lbx-nav{display:none}}
+.subscribe-band{display:grid;gap:14px;margin-top:24px;padding:24px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
+.subscribe-band h2{margin:0 0 4px;font-family:var(--display);font-weight:900;font-size:clamp(24px,3vw,32px)}
+.subscribe-band p{margin:0;color:var(--fg-soft)}
+.subscribe-band .bh-slot{min-height:60px;max-width:560px}
+.subscribe-band .bh-fallback a{font-size:14px;color:var(--muted)}
 .fig.embed .embed-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000}
 .fig.embed.tall .embed-frame{aspect-ratio:9/16;max-width:360px;margin:0 auto}
 .fig.embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
@@ -436,7 +441,7 @@ function commentsSection(b){
   return el("section",{class:"comments","aria-labelledby":"c-head"},
     el("h2",{id:"c-head"},"Comments"),
     el("p",{class:"c-empty",text:"Comments open soon. Want in early? Subscribe and you'll be first to know."}),
-    el("p",{}, el("a",{class:"sub",href:NEWSLETTER,target:"_blank",rel:"noopener",text:"SUBSCRIBE"})));
+    subscribeBox());
 }
 function linkify(text){
   return text.split(/(https?:\/\/\S+)/g).map(p => /^https?:\/\//.test(p) ? el("a",{href:p,target:"_blank",rel:"noopener",text:p}) : document.createTextNode(p));
@@ -483,9 +488,19 @@ function gridView(all){
       el("p",{text: (shared ? "Ranked live by readers. " : "Ranked by readers. ") + "Uprate what you want more of. The most uprated blok sits top-left; ties keep the table of contents order."})),
     grid,
     el("section",{class:"feedback","aria-labelledby":"fb-head"},
-      el("div",{}, el("h2",{id:"fb-head",text:"Got a minute?"}), el("p",{text:"Tell me which bloks actually resonate and what you want more of next issue. Or leave a comment on any blok."})),
+      el("div",{}, el("h2",{id:"fb-head",text:"Got a minute?"}), el("p",{text:"Tell me which bloks actually resonate and what you want more of next issue."})),
       el("a",{class:"fb-btn",href:SURVEY,target:"_blank",rel:"noopener"},"Take the quick survey →")),
+    subscribeBox(),
     el("a",{class:"notes-link",href:"#issue-notes"}, el("span",{text:"THE BACK PAGE"}), el("b",{text:"Issue notes: what changed, the bonus pick and the sign-off →"}))];
+}
+const BEEHIIV_FORM = "27d9925d-dcbf-4b22-8916-fa424d78f244";
+function subscribeBox(){
+  const slot = el("div",{class:"bh-slot"});
+  setTimeout(()=>{ const s=document.createElement("script"); s.async=true; s.src="https://subscribe-forms.beehiiv.com/v3/loader.js"; s.setAttribute("data-beehiiv-form",BEEHIIV_FORM); slot.append(s); },0);
+  return el("section",{class:"subscribe-band","aria-labelledby":"sb-head"},
+    el("div",{}, el("h2",{id:"sb-head",text:"Get the next issue"}), el("p",{text:"New stories every issue, straight to your inbox. Free."})),
+    slot,
+    el("p",{class:"bh-fallback"}, el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Or subscribe on the newsletter page →"})));
 }
 function ytId(u){ const m = u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : null; }
 let embedScripts = {};
