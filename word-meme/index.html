@@ -317,7 +317,7 @@ footer .inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px
 <main class="wrap" id="view" aria-live="polite"><article><p>WORD MEME</p><h1>I Turned It Down ↔ I Turnt It Down</h1><p>Big Boogie is an American rapper. He has more than a million followers on Instagram and is well established in his own right.</p><p>He also happens to be responsible for one of the most recognizable word meme moments in pop culture: “I turned it down” or, exactly as it came out, “I turnt it down.”</p><p>In what first looked like an unabashed troll job on The Bootleg Kev Podcast, Big Boogie was asked whether he went to college. He said he didn’t, because he had “turned it down” to “grind from the rap.”</p><p>When the interviewer asked what, exactly, he had turned down, Big Boogie said he&#x27;d received a band scholarship to a college in Jacksonville, with an offer somewhere between $5 million and $15 million.</p><p>“I ain’t go to college, but, umm, I turned it down. Yeah, I turned it down, just to do this, just to grind from the rap. Yeah, scholarship and everything. Umm, I think it was, like, in Jacksonville. Yeah, a big band in Jacksonville. It was a big college, though, and they offered me, like, 15—some shit like 10 million or something like that, five million, something like that—on scholarship. Yeah, like, what the fuck, y’all, if you know what I’m saying. But I was just so younger, like, I didn’t know what it was. Tsssss. I turned it down. It was a scholarship, like, I had to go to school for this decade. Yeah, it was somewhat like—it was in the millions, though.”</p><p>The genius of the moment is the confidence behind the assertion: he turned down the opportunity, not the other way around. Then there&#x27;s the fact that he can&#x27;t remember whether he was offered $5 million, $10 million or $15 million; the condition that he&#x27;d have to attend school &quot;for this decade&quot;; and, of course, the facial expressions and head turns.</p><p>It truly is a moment of internet gold.</p><p>“I turnt it down.”</p><p>The more I watch this clip—and the minutes before and after it—the more I find myself doing a little self-persuasion: maybe he really did get some kind of offer, or at least something was in motion. Big Boogie is likable, and there&#x27;s something honest and charismatic about him that makes you want to believe him.</p><p>Born John Lotts, Big Boogie is a bona fide success story. He lost his father while he was still in the 10th grade and later lost his brother Brandon, yet kept moving forward and built a successful music career, eventually signing with Yo Gotti&#x27;s CMG.</p><p>&quot;I turnt it down&quot; works because it captures who he is in real time: gracious, entertaining, creative, adaptable and unbothered by what people might think.</p><p>The meme is another trophy in his cabinet—culturally relevant, biographically interesting and a new piece of language for the rest of us to use, carrying the spirit of his hustle with it.</p><p>So next time you miss the event, skip the meeting or don’t get the date, and someone asks about it, just say, “I turnt it down,” and leave it at that.</p><p>Original Bootleg Kev interview with Big Boogie (long form):</p></article></main>
 
 <footer class="foot"><div class="wrap"><div class="inner">
-  <span>20 Blok · Culture, creativity, and the internet. · <a href="/issue-notes">Issue notes</a> · <a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a></span>
+  <span>20 Blok · Culture, creativity, and the internet. · <a href="/issue-notes">Issue notes</a> · <a href="/privacy">Privacy</a> · <a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a></span>
   <span>© 2026 Lenny Lesser</span>
 </div></div></footer>
 
@@ -361,7 +361,7 @@ async function connect(){
   try{
     sb = window.supabase.createClient(SB_URL, SB_KEY);
     let { data:{ session } } = await sb.auth.getSession();
-    if (!session){ const r = await sb.auth.signInAnonymously(); session = r.data && r.data.session; }
+    if (!session){ const captchaToken = await getTurnstileToken(); const r = await sb.auth.signInAnonymously(captchaToken ? {options:{captchaToken}} : undefined); session = r.data && r.data.session; }
     if (!session) return;
     uid = session.user.id;
     await loadVotes();
@@ -404,7 +404,7 @@ function curRoute(){
   if (!p){ const h=(location.hash||"").replace(/^#/,""); if (h) return h; }
   return p || "this-week";
 }
-const TITLES = {"all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
+const TITLES = {"privacy":"Privacy","all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
 function go(id){ const path = (!id || id==="this-week") ? "/" : "/"+id; if (location.pathname!==path || location.hash) history.pushState({}, "", path); render(false); }
 document.addEventListener("click", e=>{
   if (e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -538,6 +538,39 @@ function goSubscribe(e){
   e.preventDefault();
   band.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"center"});
   const i = band.querySelector("input"); if (i) setTimeout(()=>i.focus({preventScroll:true}), 500);
+}
+function privacyView(){
+  const P = t => el("p",{text:t});
+  return [el("article",{class:"article"},
+    el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"}),
+    el("header",{class:"art-head"}, el("p",{class:"eyebrow",text:"20 Blok"}), el("h1",{class:"art-title",text:"Privacy"})),
+    el("div",{class:"prose"},
+      P("20 Blok is a free magazine by Lenny Lesser. This page explains what the site collects and why. Last updated October 30, 2026."),
+      el("h3",{text:"Email"}),
+      P("If you subscribe, your email address goes to Beehiiv, the service that sends the newsletter. It's used only to send you new issues and newsletter updates. You can unsubscribe from any email."),
+      el("h3",{text:"Votes"}),
+      P("Uprating a blok doesn't ask for your name or email. Your browser gets an anonymous ID so each person counts once. Votes are stored with Supabase, which hosts the site's database."),
+      el("h3",{text:"Bot protection"}),
+      el("p",{}, "This site uses Cloudflare Turnstile to keep bots from faking votes. Turnstile checks your browser quietly in the background. Its handling of data is described in the ",
+        el("a",{href:"https://www.cloudflare.com/turnstile-privacy-policy/",target:"_blank",rel:"noopener",text:"Cloudflare Turnstile Privacy Addendum"}), "."),
+      el("h3",{text:"Embedded videos"}),
+      P("Articles include videos and posts from YouTube, Instagram and X. When they load, those services may collect data under their own privacy policies. YouTube videos use YouTube's privacy-enhanced mode."),
+      el("h3",{text:"Hosting"}),
+      P("The site is hosted by Vercel, which keeps standard server logs. 20 Blok doesn't sell your data or run advertising trackers."),
+      el("h3",{text:"Questions"}),
+      el("p",{}, "Email lennybusinessnow@gmail.com.")))];
+}
+function getTurnstileToken(){
+  return new Promise((resolve) => {
+    let done = false; const finish = v => { if (!done){ done = true; resolve(v); } };
+    setTimeout(() => finish(null), 15000);
+    const run = () => { try{
+      const box = el("div",{style:"position:fixed;left:-9999px;bottom:0;width:1px;height:1px;overflow:hidden","aria-hidden":"true"}); document.body.append(box);
+      window.turnstile.render(box, {sitekey: "0x4AAAAAAFs0zYHiwJb4Wxa7", callback: tok => finish(tok), "error-callback": () => finish(null), "expired-callback": () => finish(null)});
+    }catch(e){ finish(null); } };
+    if (window.turnstile) { run(); return; }
+    const s = document.createElement("script"); s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"; s.async = true; s.onload = run; s.onerror = () => finish(null); document.head.append(s);
+  });
 }
 function ytId(u){ const m = u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : null; }
 let embedScripts = {};
@@ -707,7 +740,7 @@ function render(keepFocus){
   const focused = keepFocus && document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.vote : null;
   const h = curRoute();
   const blok = BLOKS.find(b=>b.id===h);
-  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : gridView(false);
+  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : h==="privacy" ? privacyView() : gridView(false);
   const active = blok ? null : (["all-time","past-issues"].includes(h) ? h : "this-week");
   document.querySelectorAll("[data-route]").forEach(a=> a.dataset.route===active ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
   const extra = (h==="past-issues"||h==="issue-notes"||h==="bonus") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];

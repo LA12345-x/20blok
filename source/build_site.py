@@ -203,6 +203,49 @@ R('function ytId(u){', SUB_JS + 'function ytId(u){')
 R('  document.getElementById("view").replaceChildren(...kids);', '  const extra = (h==="past-issues"||h==="issue-notes"||h==="bonus") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];\n  document.getElementById("view").replaceChildren(...kids, ...extra);')
 R('<a class="sub" href="https://lennylesser.beehiiv.com" target="_blank" rel="noopener">SUBSCRIBE</a>',
   '<a class="sub" href="https://lennylesser.beehiiv.com" target="_blank" rel="noopener" onclick="goSubscribe(event)">SUBSCRIBE</a>')
+# ---------- privacy page + Turnstile (invisible bot check before anonymous voting) ----------
+TURNSTILE_SITE_KEY = "0x4AAAAAAFs0zYHiwJb4Wxa7"
+R('<a href="/issue-notes">Issue notes</a> · ', '<a href="/issue-notes">Issue notes</a> · <a href="/privacy">Privacy</a> · ')
+R('(h==="issue-notes"||h==="bonus") ? notesView() : gridView(false);', '(h==="issue-notes"||h==="bonus") ? notesView() : h==="privacy" ? privacyView() : gridView(false);')
+PRIV_JS = '''function privacyView(){
+  const P = t => el("p",{text:t});
+  return [el("article",{class:"article"},
+    el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"}),
+    el("header",{class:"art-head"}, el("p",{class:"eyebrow",text:"20 Blok"}), el("h1",{class:"art-title",text:"Privacy"})),
+    el("div",{class:"prose"},
+      P("20 Blok is a free magazine by Lenny Lesser. This page explains what the site collects and why. Last updated October 30, 2026."),
+      el("h3",{text:"Email"}),
+      P("If you subscribe, your email address goes to Beehiiv, the service that sends the newsletter. It's used only to send you new issues and newsletter updates. You can unsubscribe from any email."),
+      el("h3",{text:"Votes"}),
+      P("Uprating a blok doesn't ask for your name or email. Your browser gets an anonymous ID so each person counts once. Votes are stored with Supabase, which hosts the site's database."),
+      el("h3",{text:"Bot protection"}),
+      el("p",{}, "This site uses Cloudflare Turnstile to keep bots from faking votes. Turnstile checks your browser quietly in the background. Its handling of data is described in the ",
+        el("a",{href:"https://www.cloudflare.com/turnstile-privacy-policy/",target:"_blank",rel:"noopener",text:"Cloudflare Turnstile Privacy Addendum"}), "."),
+      el("h3",{text:"Embedded videos"}),
+      P("Articles include videos and posts from YouTube, Instagram and X. When they load, those services may collect data under their own privacy policies. YouTube videos use YouTube's privacy-enhanced mode."),
+      el("h3",{text:"Hosting"}),
+      P("The site is hosted by Vercel, which keeps standard server logs. 20 Blok doesn't sell your data or run advertising trackers."),
+      el("h3",{text:"Questions"}),
+      el("p",{}, "Email lennybusinessnow@gmail.com.")))];
+}
+function getTurnstileToken(){
+  return new Promise((resolve) => {
+    let done = false; const finish = v => { if (!done){ done = true; resolve(v); } };
+    setTimeout(() => finish(null), 15000);
+    const run = () => { try{
+      const box = el("div",{style:"position:fixed;left:-9999px;bottom:0;width:1px;height:1px;overflow:hidden","aria-hidden":"true"}); document.body.append(box);
+      window.turnstile.render(box, {sitekey: "%s", callback: tok => finish(tok), "error-callback": () => finish(null), "expired-callback": () => finish(null)});
+    }catch(e){ finish(null); } };
+    if (window.turnstile) { run(); return; }
+    const s = document.createElement("script"); s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"; s.async = true; s.onload = run; s.onerror = () => finish(null); document.head.append(s);
+  });
+}
+''' % TURNSTILE_SITE_KEY
+R('function ytId(u){', PRIV_JS + 'function ytId(u){')
+R('if (!session){ const r = await sb.auth.signInAnonymously(); session = r.data && r.data.session; }',
+  'if (!session){ const captchaToken = await getTurnstileToken(); const r = await sb.auth.signInAnonymously(captchaToken ? {options:{captchaToken}} : undefined); session = r.data && r.data.session; }')
+R('const TITLES = {"all-time":"All-Time"', 'const TITLES = {"privacy":"Privacy","all-time":"All-Time"')
+
 SUB_CSS = '''.subscribe-band{display:grid;gap:14px;margin-top:24px;padding:24px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
 .subscribe-band h2{margin:0 0 4px;font-family:var(--display);font-weight:900;font-size:clamp(24px,3vw,32px)}
 .subscribe-band p{margin:0;color:var(--fg-soft)}
@@ -254,7 +297,7 @@ for b in data:
     body = "".join("<p>"+txt(x)+"</p>" if x.get("t") in ("p","q","pull") else ("<h2>"+txt(x)+"</h2>" if x.get("t")=="h" else "") for x in b["body"])
     img = paths.get(b.get("img") or "cover", "/media/cover.jpg")
     urls.append(page(b["id"], b["title"]+" — 20 Blok", short(first_para(b)) or home_desc, img, '<article><p>'+H.escape(b["name"])+'</p><h1>'+H.escape(b["title"])+'</h1>'+body+'</article>'))
-for r_, ti in [("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue Notes"),("bonus","Issue Notes")]:
+for r_, ti in [("privacy","Privacy"),("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue Notes"),("bonus","Issue Notes")]:
     u = page(r_, ti+" — 20 Blok", home_desc, "/media/cover.jpg", "<h1>"+ti+"</h1>")
     if r_ != "bonus": urls.append(u)
 open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join("  <url><loc>"+u+"</loc></url>\n" for u in urls) + "</urlset>\n")

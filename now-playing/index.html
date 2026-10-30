@@ -317,7 +317,7 @@ footer .inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px
 <main class="wrap" id="view" aria-live="polite"><article><p>NOW PLAYING</p><h1>The Devil Wears Prada 2</h1><p>Prada 2 hit all the right notes: top-tier performances, a storyline about working in the fashion and beauty industries, well written, great locations—all-around very well done. Lady Gaga is even in it. It’s the perfect mix of quality and entertainment. If you let go and have fun with it, it is truly a blast.</p><p>But one thing stood out to me. It was subtle, and once it popped up on screen, I couldn’t stop thinking about it.</p><h2>At What Cost?</h2><p>Toward the end, Miranda Priestly (Meryl Streep) tells Andy (Anne Hathaway) that if she writes a book, it should include how much of her children’s lives she’s missed. “People should know,” she says. “They should know there’s a cost.”</p><p>And then, in the same breath: “I love working.”</p><p>First, credit where it’s due. This is a movie about an industry: fashion, media, work, career. It didn’t have to touch family at all. Somebody in that writers’ room knew it would be a miss to leave it out, and they put it in anyway.</p><p>The Catholic Weekly put it well: the film “perhaps inadvertently” shows the consequences of choosing career over family. Miranda has twin daughters she hasn’t been there for. Andy, twenty years after the first movie, regrets never marrying and having a family of her own.</p><p>Two women, both at the top, and both paid for it.</p><p>Two women, both at the top, and both paid for it.</p><h2>The Other Cost</h2><p>Here’s the part nobody says out loud. The cost isn’t only the family. It’s who you become.</p><p>Miranda is great at her job. She’s also famously cold, cutting, and hard on everyone around her. That’s the whole shtick of the character, and the movies glamorize it.</p><p>So is that what we’ve decided? Being great at your job is the whole point, even if it turns you into someone people don’t like? Money, status and competition can do that to anyone, men or women. On screen it’s glossy and entertaining. In real life it’s a lot less glamorous.</p><h2>Maybe the Real Message</h2><p>Watching it again in my head, maybe there’s something subtler in that moment. Miranda, at a career high, telling the one person she respects: keep working with me, yes,,,but don’t end up like me. Think about the family.</p><p>If that’s what they meant, it’s one of the most honest parts in the movie.</p><h2>Further Reading</h2><p>The Catholic Weekly: Glamour, ambition and a lesson from The Devil Wears Prada 2 → https://catholicweekly.com.au/glamour-ambition-and-a-lesson-from-devil-wears-prada-2/</p><p>HerMoney: The Devil Wears Prada 2 agrees with Emma Grede: there is a cost to success → https://hermoney.com/earn/work-life-balance/the-devil-wears-prada-2-agrees-with-emma-grede-there-is-a-cost-to-success/</p><p>Plugged In: The Devil Wears Prada 2 review → https://www.pluggedin.com/movie-reviews/devil-wears-prada-2-2026/</p></article></main>
 
 <footer class="foot"><div class="wrap"><div class="inner">
-  <span>20 Blok · Culture, creativity, and the internet. · <a href="/issue-notes">Issue notes</a> · <a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a></span>
+  <span>20 Blok · Culture, creativity, and the internet. · <a href="/issue-notes">Issue notes</a> · <a href="/privacy">Privacy</a> · <a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a></span>
   <span>© 2026 Lenny Lesser</span>
 </div></div></footer>
 
@@ -361,7 +361,7 @@ async function connect(){
   try{
     sb = window.supabase.createClient(SB_URL, SB_KEY);
     let { data:{ session } } = await sb.auth.getSession();
-    if (!session){ const r = await sb.auth.signInAnonymously(); session = r.data && r.data.session; }
+    if (!session){ const captchaToken = await getTurnstileToken(); const r = await sb.auth.signInAnonymously(captchaToken ? {options:{captchaToken}} : undefined); session = r.data && r.data.session; }
     if (!session) return;
     uid = session.user.id;
     await loadVotes();
@@ -404,7 +404,7 @@ function curRoute(){
   if (!p){ const h=(location.hash||"").replace(/^#/,""); if (h) return h; }
   return p || "this-week";
 }
-const TITLES = {"all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
+const TITLES = {"privacy":"Privacy","all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
 function go(id){ const path = (!id || id==="this-week") ? "/" : "/"+id; if (location.pathname!==path || location.hash) history.pushState({}, "", path); render(false); }
 document.addEventListener("click", e=>{
   if (e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -538,6 +538,39 @@ function goSubscribe(e){
   e.preventDefault();
   band.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"center"});
   const i = band.querySelector("input"); if (i) setTimeout(()=>i.focus({preventScroll:true}), 500);
+}
+function privacyView(){
+  const P = t => el("p",{text:t});
+  return [el("article",{class:"article"},
+    el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"}),
+    el("header",{class:"art-head"}, el("p",{class:"eyebrow",text:"20 Blok"}), el("h1",{class:"art-title",text:"Privacy"})),
+    el("div",{class:"prose"},
+      P("20 Blok is a free magazine by Lenny Lesser. This page explains what the site collects and why. Last updated October 30, 2026."),
+      el("h3",{text:"Email"}),
+      P("If you subscribe, your email address goes to Beehiiv, the service that sends the newsletter. It's used only to send you new issues and newsletter updates. You can unsubscribe from any email."),
+      el("h3",{text:"Votes"}),
+      P("Uprating a blok doesn't ask for your name or email. Your browser gets an anonymous ID so each person counts once. Votes are stored with Supabase, which hosts the site's database."),
+      el("h3",{text:"Bot protection"}),
+      el("p",{}, "This site uses Cloudflare Turnstile to keep bots from faking votes. Turnstile checks your browser quietly in the background. Its handling of data is described in the ",
+        el("a",{href:"https://www.cloudflare.com/turnstile-privacy-policy/",target:"_blank",rel:"noopener",text:"Cloudflare Turnstile Privacy Addendum"}), "."),
+      el("h3",{text:"Embedded videos"}),
+      P("Articles include videos and posts from YouTube, Instagram and X. When they load, those services may collect data under their own privacy policies. YouTube videos use YouTube's privacy-enhanced mode."),
+      el("h3",{text:"Hosting"}),
+      P("The site is hosted by Vercel, which keeps standard server logs. 20 Blok doesn't sell your data or run advertising trackers."),
+      el("h3",{text:"Questions"}),
+      el("p",{}, "Email lennybusinessnow@gmail.com.")))];
+}
+function getTurnstileToken(){
+  return new Promise((resolve) => {
+    let done = false; const finish = v => { if (!done){ done = true; resolve(v); } };
+    setTimeout(() => finish(null), 15000);
+    const run = () => { try{
+      const box = el("div",{style:"position:fixed;left:-9999px;bottom:0;width:1px;height:1px;overflow:hidden","aria-hidden":"true"}); document.body.append(box);
+      window.turnstile.render(box, {sitekey: "0x4AAAAAAFs0zYHiwJb4Wxa7", callback: tok => finish(tok), "error-callback": () => finish(null), "expired-callback": () => finish(null)});
+    }catch(e){ finish(null); } };
+    if (window.turnstile) { run(); return; }
+    const s = document.createElement("script"); s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"; s.async = true; s.onload = run; s.onerror = () => finish(null); document.head.append(s);
+  });
 }
 function ytId(u){ const m = u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : null; }
 let embedScripts = {};
@@ -707,7 +740,7 @@ function render(keepFocus){
   const focused = keepFocus && document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.vote : null;
   const h = curRoute();
   const blok = BLOKS.find(b=>b.id===h);
-  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : gridView(false);
+  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : h==="privacy" ? privacyView() : gridView(false);
   const active = blok ? null : (["all-time","past-issues"].includes(h) ? h : "this-week");
   document.querySelectorAll("[data-route]").forEach(a=> a.dataset.route===active ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
   const extra = (h==="past-issues"||h==="issue-notes"||h==="bonus") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];

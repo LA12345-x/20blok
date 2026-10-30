@@ -317,7 +317,7 @@ footer .inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px
 <main class="wrap" id="view" aria-live="polite"><article><p>WALL OF SOMMI</p><h1>The Chart Nobody is Talking About</h1><p>Sommi contends the Bitcoin dominance chart is flashing overbought, and that everybody’s already in. Why is no one talking about it?</p></article></main>
 
 <footer class="foot"><div class="wrap"><div class="inner">
-  <span>20 Blok · Culture, creativity, and the internet. · <a href="/issue-notes">Issue notes</a> · <a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a></span>
+  <span>20 Blok · Culture, creativity, and the internet. · <a href="/issue-notes">Issue notes</a> · <a href="/privacy">Privacy</a> · <a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a></span>
   <span>© 2026 Lenny Lesser</span>
 </div></div></footer>
 
@@ -361,7 +361,7 @@ async function connect(){
   try{
     sb = window.supabase.createClient(SB_URL, SB_KEY);
     let { data:{ session } } = await sb.auth.getSession();
-    if (!session){ const r = await sb.auth.signInAnonymously(); session = r.data && r.data.session; }
+    if (!session){ const captchaToken = await getTurnstileToken(); const r = await sb.auth.signInAnonymously(captchaToken ? {options:{captchaToken}} : undefined); session = r.data && r.data.session; }
     if (!session) return;
     uid = session.user.id;
     await loadVotes();
@@ -404,7 +404,7 @@ function curRoute(){
   if (!p){ const h=(location.hash||"").replace(/^#/,""); if (h) return h; }
   return p || "this-week";
 }
-const TITLES = {"all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
+const TITLES = {"privacy":"Privacy","all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
 function go(id){ const path = (!id || id==="this-week") ? "/" : "/"+id; if (location.pathname!==path || location.hash) history.pushState({}, "", path); render(false); }
 document.addEventListener("click", e=>{
   if (e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -538,6 +538,39 @@ function goSubscribe(e){
   e.preventDefault();
   band.scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block:"center"});
   const i = band.querySelector("input"); if (i) setTimeout(()=>i.focus({preventScroll:true}), 500);
+}
+function privacyView(){
+  const P = t => el("p",{text:t});
+  return [el("article",{class:"article"},
+    el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"}),
+    el("header",{class:"art-head"}, el("p",{class:"eyebrow",text:"20 Blok"}), el("h1",{class:"art-title",text:"Privacy"})),
+    el("div",{class:"prose"},
+      P("20 Blok is a free magazine by Lenny Lesser. This page explains what the site collects and why. Last updated October 30, 2026."),
+      el("h3",{text:"Email"}),
+      P("If you subscribe, your email address goes to Beehiiv, the service that sends the newsletter. It's used only to send you new issues and newsletter updates. You can unsubscribe from any email."),
+      el("h3",{text:"Votes"}),
+      P("Uprating a blok doesn't ask for your name or email. Your browser gets an anonymous ID so each person counts once. Votes are stored with Supabase, which hosts the site's database."),
+      el("h3",{text:"Bot protection"}),
+      el("p",{}, "This site uses Cloudflare Turnstile to keep bots from faking votes. Turnstile checks your browser quietly in the background. Its handling of data is described in the ",
+        el("a",{href:"https://www.cloudflare.com/turnstile-privacy-policy/",target:"_blank",rel:"noopener",text:"Cloudflare Turnstile Privacy Addendum"}), "."),
+      el("h3",{text:"Embedded videos"}),
+      P("Articles include videos and posts from YouTube, Instagram and X. When they load, those services may collect data under their own privacy policies. YouTube videos use YouTube's privacy-enhanced mode."),
+      el("h3",{text:"Hosting"}),
+      P("The site is hosted by Vercel, which keeps standard server logs. 20 Blok doesn't sell your data or run advertising trackers."),
+      el("h3",{text:"Questions"}),
+      el("p",{}, "Email lennybusinessnow@gmail.com.")))];
+}
+function getTurnstileToken(){
+  return new Promise((resolve) => {
+    let done = false; const finish = v => { if (!done){ done = true; resolve(v); } };
+    setTimeout(() => finish(null), 15000);
+    const run = () => { try{
+      const box = el("div",{style:"position:fixed;left:-9999px;bottom:0;width:1px;height:1px;overflow:hidden","aria-hidden":"true"}); document.body.append(box);
+      window.turnstile.render(box, {sitekey: "0x4AAAAAAFs0zYHiwJb4Wxa7", callback: tok => finish(tok), "error-callback": () => finish(null), "expired-callback": () => finish(null)});
+    }catch(e){ finish(null); } };
+    if (window.turnstile) { run(); return; }
+    const s = document.createElement("script"); s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"; s.async = true; s.onload = run; s.onerror = () => finish(null); document.head.append(s);
+  });
 }
 function ytId(u){ const m = u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : null; }
 let embedScripts = {};
@@ -707,7 +740,7 @@ function render(keepFocus){
   const focused = keepFocus && document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.vote : null;
   const h = curRoute();
   const blok = BLOKS.find(b=>b.id===h);
-  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : gridView(false);
+  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : h==="privacy" ? privacyView() : gridView(false);
   const active = blok ? null : (["all-time","past-issues"].includes(h) ? h : "this-week");
   document.querySelectorAll("[data-route]").forEach(a=> a.dataset.route===active ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
   const extra = (h==="past-issues"||h==="issue-notes"||h==="bonus") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];
