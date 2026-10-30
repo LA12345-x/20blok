@@ -598,11 +598,7 @@ function welcomeView(){
       el("p",{}, "Bookmark ", el("b",{text:"20blok.com"}), ". That\u2019s where every issue goes up first."),
       el("h3",{text:"How it works"}),
       el("ul",{}, el("li",{text:"Every issue has 20 bloks: stories on culture, creativity and the internet."}), el("li",{text:"Tap the arrow on any blok to uprate it. No sign-in needed."}), el("li",{text:"The most uprated bloks rise to the top-left of the grid."}))),
-    (()=>{ const last = lsOK("blok20-last"); const lb = last && BLOKS.find(b=>b.id===last);
-      return el("div",{class:"wl-actions"},
-        lb ? el("a",{class:"sub",href:"/"+lb.id}, "CONTINUE READING \u2192") : el("a",{class:"sub",href:"/",text:"START READING \u2192"}),
-        lb ? el("p",{class:"wl-last",text:"Pick up where you left off: "+lb.title}) : null,
-        el("a",{class:"wl-home",href:"/",text:lb ? "Or go to the home page" : "See this issue\u2019s 20 bloks"})); })())];
+    el("div",{class:"wl-actions"}, el("a",{class:"sub",href:"/",text:"CONTINUE READING \u2192"})))];
 }
 function lsOK(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }catch(e){ return null; } }
 function rememberPage(){ const h=curRoute(); if (BLOKS.find(b=>b.id===h)) lsOK("blok20-last", h); }
