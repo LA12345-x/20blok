@@ -38,6 +38,7 @@ t = t.replace('<title>20 Blok</title>', '''<title>20 Blok — Culture, creativit
 <meta property="og:image" content="https://20blok.com/media/cover.jpg">
 <meta property="og:url" content="https://20blok.com/">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="20 Blok" href="/feed.xml">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B0B0C'/%3E%3Ctext x='32' y='43' font-family='Georgia' font-weight='900' font-size='30' text-anchor='middle' fill='%23E0483B'%3E20%3C/text%3E%3C/svg%3E">''', 1)
 style_end = t.index('</style>') + len('</style>')
 head, body = t[:style_end], t[style_end:]
@@ -183,7 +184,7 @@ SUB_JS = '''function subscribeBox(){
     try{
       const r = await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});
       const j = await r.json().catch(()=>({}));
-      if (r.ok && j.ok){ rememberPage(); markSubscribed(); form.replaceChildren(el("p",{class:"sb-done",text:"You’re in. Check your inbox for a welcome email."})); return; }
+      if (r.ok && j.ok){ rememberPage(); markSubscribed(); form.replaceChildren(el("p",{class:"sb-done",text:"Almost there. Check your inbox and tap the confirm link."})); return; }
       msg.replaceChildren(document.createTextNode(j.error==="email" ? "That email doesn’t look right. Try again." : "That didn’t go through"+(j.error?" ("+j.error+(j.status?" "+j.status:"")+")":"")+". "), j.error==="email" ? "" : el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"}));
     }catch(err){ msg.replaceChildren("That didn’t go through. ", el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"})); }
     btn.disabled=false; }}, input, btn);
@@ -272,7 +273,7 @@ function maybeNudge(){
   const close = el("button",{type:"button",class:"nd-x","aria-label":"Close",text:"\\u00d7",onclick:()=>{ lsOK("blok20-nudge-hide", String(Date.now()+7*864e5)); bar.remove(); }});
   const form = el("form",{class:"nd-form",onsubmit:async e=>{ e.preventDefault(); const email=input.value.trim(); if(!email) return; msg.textContent="Signing you up\\u2026";
       try{ const r=await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})}); const j=await r.json().catch(()=>({}));
-        if(r.ok&&j.ok){ rememberPage(); lsOK("blok20-subscribed","1"); bar.replaceChildren(el("p",{class:"nd-done",text:"You\\u2019re in. Check your inbox to confirm."})); setTimeout(()=>bar.remove(),5000); return; }
+        if(r.ok&&j.ok){ rememberPage(); lsOK("blok20-subscribed","1"); bar.replaceChildren(el("p",{class:"nd-done",text:"Almost there. Check your inbox to confirm."})); setTimeout(()=>bar.remove(),5000); return; }
         msg.textContent = j.error==="email" ? "Check that email." : "Didn\\u2019t go through. Try the form at the bottom."; }catch(err){ msg.textContent="Didn\\u2019t go through."; } }},
     input, el("button",{type:"submit",class:"sb-btn"},"Subscribe"));
   bar = el("aside",{id:"sb-nudge",class:"nudge","aria-label":"Subscribe"},
@@ -363,6 +364,14 @@ for r_, ti in [("welcome","Welcome"),("privacy","Privacy"),("all-time","All-Time
     u = page(r_, ti+" — 20 Blok", home_desc, "/media/cover.jpg", "<h1>"+ti+"</h1>")
     if r_ not in ("bonus","welcome"): urls.append(u)
 open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join("  <url><loc>"+u+"</loc></url>\n" for u in urls) + "</urlset>\n")
+import email.utils as EU, datetime as DT
+pub = EU.format_datetime(DT.datetime(2026,10,28,9,0,tzinfo=DT.timezone.utc))
+items = "".join(
+  "<item><title>"+H.escape(b["name"]+": "+b["title"])+"</title><link>"+SITE+"/"+b["id"]+"</link><guid>"+SITE+"/"+b["id"]+"</guid>"
+  "<pubDate>"+pub+"</pubDate><description>"+H.escape(short(first_para(b), 300))+"</description>"
+  + ('<enclosure url="'+SITE+paths[b["img"]]+'" type="image/jpeg" length="0"/>' if b.get("img") in paths and paths[b["img"]].endswith(".jpg") else "")
+  + "</item>\n" for b in data)
+open(os.path.join(out, "feed.xml"), "w", encoding="utf-8").write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>\n<title>20 Blok</title><link>'+SITE+'/</link><description>Culture, creativity, and the internet. Twenty stories every issue by Lenny Lesser.</description><language>en-us</language>\n<atom:link href="'+SITE+'/feed.xml" rel="self" type="application/rss+xml"/>\n'+items+'</channel></rss>\n')
 open(os.path.join(out, "robots.txt"), "w").write("User-agent: *\nAllow: /\nSitemap: https://20blok.com/sitemap.xml\n")
 open(os.path.join(out, "vercel.json"), "w").write(json.dumps({"cleanUrls": True, "headers": [{"source": "/media/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]}]}, indent=2))
 print("built", out, "media files:", len(paths))

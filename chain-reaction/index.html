@@ -12,6 +12,7 @@
 <meta property="og:url" content="https://20blok.com/chain-reaction">
 <link rel="canonical" href="https://20blok.com/chain-reaction">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" type="application/rss+xml" title="20 Blok" href="/feed.xml">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B0B0C'/%3E%3Ctext x='32' y='43' font-family='Georgia' font-weight='900' font-size='30' text-anchor='middle' fill='%23E0483B'%3E20%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -540,7 +541,7 @@ function subscribeBox(){
     try{
       const r = await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});
       const j = await r.json().catch(()=>({}));
-      if (r.ok && j.ok){ rememberPage(); markSubscribed(); form.replaceChildren(el("p",{class:"sb-done",text:"You’re in. Check your inbox for a welcome email."})); return; }
+      if (r.ok && j.ok){ rememberPage(); markSubscribed(); form.replaceChildren(el("p",{class:"sb-done",text:"Almost there. Check your inbox and tap the confirm link."})); return; }
       msg.replaceChildren(document.createTextNode(j.error==="email" ? "That email doesn’t look right. Try again." : "That didn’t go through"+(j.error?" ("+j.error+(j.status?" "+j.status:"")+")":"")+". "), j.error==="email" ? "" : el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"}));
     }catch(err){ msg.replaceChildren("That didn’t go through. ", el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"})); }
     btn.disabled=false; }}, input, btn);
@@ -618,7 +619,7 @@ function maybeNudge(){
   const close = el("button",{type:"button",class:"nd-x","aria-label":"Close",text:"\u00d7",onclick:()=>{ lsOK("blok20-nudge-hide", String(Date.now()+7*864e5)); bar.remove(); }});
   const form = el("form",{class:"nd-form",onsubmit:async e=>{ e.preventDefault(); const email=input.value.trim(); if(!email) return; msg.textContent="Signing you up\u2026";
       try{ const r=await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})}); const j=await r.json().catch(()=>({}));
-        if(r.ok&&j.ok){ rememberPage(); lsOK("blok20-subscribed","1"); bar.replaceChildren(el("p",{class:"nd-done",text:"You\u2019re in. Check your inbox to confirm."})); setTimeout(()=>bar.remove(),5000); return; }
+        if(r.ok&&j.ok){ rememberPage(); lsOK("blok20-subscribed","1"); bar.replaceChildren(el("p",{class:"nd-done",text:"Almost there. Check your inbox to confirm."})); setTimeout(()=>bar.remove(),5000); return; }
         msg.textContent = j.error==="email" ? "Check that email." : "Didn\u2019t go through. Try the form at the bottom."; }catch(err){ msg.textContent="Didn\u2019t go through."; } }},
     input, el("button",{type:"submit",class:"sb-btn"},"Subscribe"));
   bar = el("aside",{id:"sb-nudge",class:"nudge","aria-label":"Subscribe"},
