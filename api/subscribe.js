@@ -1,12 +1,12 @@
 // POST /api/subscribe  { email }  → adds the reader to Lenny's Beehiiv list.
 // Needs two Vercel environment variables: BEEHIIV_API_KEY and BEEHIIV_PUBLICATION_ID.
 module.exports = async (req, res) => {
-  if (req.method !== "POST") { res.status(200).json({ ok: true, alive: true, hasKey: !!process.env.BEEHIIV_API_KEY, hasPub: !!process.env.BEEHIIV_PUBLICATION_ID }); return; }
+  if (req.method !== "POST") { res.status(200).json({ ok: true, alive: true, hasKey: !!process.env.BEEHIIV_API_KEY, hasPub: !!process.env.BEEHIIV_PUBLICATION_ID, keyHasSpaces: /\s/.test(process.env.BEEHIIV_API_KEY || ""), pubHasSpaces: /\s/.test(process.env.BEEHIIV_PUBLICATION_ID || ""), pubLooksRight: /^pub_/.test(String(process.env.BEEHIIV_PUBLICATION_ID || "").trim()), node: process.version }); return; }
   let body = req.body;
   if (typeof body === "string") { try { body = JSON.parse(body); } catch (e) { body = {}; } }
   const email = String((body && body.email) || "").trim().toLowerCase();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) { res.status(400).json({ ok: false, error: "email" }); return; }
-  const key = process.env.BEEHIIV_API_KEY, pub = process.env.BEEHIIV_PUBLICATION_ID;
+  const key = String(process.env.BEEHIIV_API_KEY || "").replace(/\s+/g, ""), pub = String(process.env.BEEHIIV_PUBLICATION_ID || "").replace(/\s+/g, "");
   if (!key || !pub) { res.status(503).json({ ok: false, error: "setup", hasKey: !!key, hasPub: !!pub }); return; }
   try {
     const r = await fetch("https://api.beehiiv.com/v2/publications/" + encodeURIComponent(pub) + "/subscriptions", {
@@ -16,5 +16,5 @@ module.exports = async (req, res) => {
     });
     if (!r.ok) { let detail = ""; try { detail = (await r.text()).slice(0, 300); } catch (e) {} console.log("beehiiv error", r.status, detail); res.status(502).json({ ok: false, error: "beehiiv", status: r.status, detail }); return; }
     res.status(200).json({ ok: true });
-  } catch (e) { res.status(502).json({ ok: false, error: "network" }); }
+  } catch (e) { console.log("subscribe failed", e && e.message); res.status(502).json({ ok: false, error: "network", detail: String(e && e.message || e).slice(0, 200) }); }
 };
