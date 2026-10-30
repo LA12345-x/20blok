@@ -710,7 +710,8 @@ function render(keepFocus){
   const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : gridView(false);
   const active = blok ? null : (["all-time","past-issues"].includes(h) ? h : "this-week");
   document.querySelectorAll("[data-route]").forEach(a=> a.dataset.route===active ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
-  document.getElementById("view").replaceChildren(...kids);
+  const extra = (h==="past-issues"||h==="issue-notes"||h==="bonus") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];
+  document.getElementById("view").replaceChildren(...kids, ...extra);
   if (focused){ const f=document.querySelector('[data-vote="'+focused+'"]'); if (f) f.focus({preventScroll:true}); }
   if (h!==lastRoute){ if (h==="bonus"){ const s=document.getElementById("bonus-section"); if (s) s.scrollIntoView(); } else window.scrollTo(0,0); lastRoute=h; }
   

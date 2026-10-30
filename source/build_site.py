@@ -200,6 +200,7 @@ function goSubscribe(e){
 }
 '''
 R('function ytId(u){', SUB_JS + 'function ytId(u){')
+R('  document.getElementById("view").replaceChildren(...kids);', '  const extra = (h==="past-issues"||h==="issue-notes"||h==="bonus") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];\n  document.getElementById("view").replaceChildren(...kids, ...extra);')
 R('<a class="sub" href="https://lennylesser.beehiiv.com" target="_blank" rel="noopener">SUBSCRIBE</a>',
   '<a class="sub" href="https://lennylesser.beehiiv.com" target="_blank" rel="noopener" onclick="goSubscribe(event)">SUBSCRIBE</a>')
 SUB_CSS = '''.subscribe-band{display:grid;gap:14px;margin-top:24px;padding:24px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
