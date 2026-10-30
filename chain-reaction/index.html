@@ -194,6 +194,19 @@ main{padding-block:20px 64px}
 .lbx-nav.p{left:10px}.lbx-nav.n{right:10px}
 .lbx-hint{padding:10px 16px 16px;text-align:center;font-family:var(--sans);font-size:13px;color:#aaa}
 @media (max-width:640px){.lbx-stage{padding:0}.lbx-nav{display:none}}
+.nudge{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:20;width:min(720px, calc(100vw - 32px));box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 44px 14px 18px;border-radius:16px;background:#151517;border:1px solid var(--red-deep);box-shadow:0 18px 40px rgba(0,0,0,.6);animation:ndIn .35s ease}
+@keyframes ndIn{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}
+@media (prefers-reduced-motion:reduce){.nudge{animation:none}}
+.nd-copy{flex:1 1 200px;font-size:15px;color:var(--fg-soft)}.nd-copy b{color:var(--fg)}
+.nd-form{display:flex;gap:8px;flex:1 1 280px;min-width:0;max-width:100%}
+.nd-form input{width:0}
+@media (max-width:640px){.nudge{padding:14px 14px 14px 16px}.nd-copy{padding-right:28px}.nd-form{flex-basis:100%}.nd-form .sb-btn{padding:0 12px;font-size:12px;letter-spacing:.5px}}
+.nd-form input{flex:1;min-width:0;min-height:42px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:#0B0B0C;color:var(--fg);font-size:16px}
+.nd-form .sb-btn{min-height:42px;padding:0 16px;box-shadow:none}
+.nd-msg{flex-basis:100%;font-size:13px;color:var(--muted)}.nd-msg:empty{display:none}
+.nd-x{position:absolute;top:6px;right:8px;width:32px;height:32px;border:0;background:none;color:var(--muted);font-size:22px;cursor:pointer}
+.nd-done{margin:0;font-weight:700}
+body:has(#sb-nudge) .float-vote{bottom:calc(env(safe-area-inset-bottom,0px) + 150px)}
 .subscribe-band{display:grid;gap:14px;margin-top:24px;padding:24px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
 .subscribe-band h2{margin:0 0 4px;font-family:var(--display);font-weight:900;font-size:clamp(24px,3vw,32px)}
 .subscribe-band p{margin:0;color:var(--fg-soft)}
@@ -404,7 +417,7 @@ function curRoute(){
   if (!p){ const h=(location.hash||"").replace(/^#/,""); if (h) return h; }
   return p || "this-week";
 }
-const TITLES = {"privacy":"Privacy","all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
+const TITLES = {"welcome":"Welcome","privacy":"Privacy","all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
 function go(id){ const path = (!id || id==="this-week") ? "/" : "/"+id; if (location.pathname!==path || location.hash) history.pushState({}, "", path); render(false); }
 document.addEventListener("click", e=>{
   if (e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -524,7 +537,7 @@ function subscribeBox(){
     try{
       const r = await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});
       const j = await r.json().catch(()=>({}));
-      if (r.ok && j.ok){ form.replaceChildren(el("p",{class:"sb-done",text:"You’re in. Check your inbox for a welcome email."})); return; }
+      if (r.ok && j.ok){ markSubscribed(); form.replaceChildren(el("p",{class:"sb-done",text:"You’re in. Check your inbox for a welcome email."})); return; }
       msg.replaceChildren(document.createTextNode(j.error==="email" ? "That email doesn’t look right. Try again." : "That didn’t go through"+(j.error?" ("+j.error+(j.status?" "+j.status:"")+")":"")+". "), j.error==="email" ? "" : el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"}));
     }catch(err){ msg.replaceChildren("That didn’t go through. ", el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"})); }
     btn.disabled=false; }}, input, btn);
@@ -572,6 +585,44 @@ function getTurnstileToken(){
     const s = document.createElement("script"); s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"; s.async = true; s.onload = run; s.onerror = () => finish(null); document.head.append(s);
   });
 }
+function welcomeView(){
+  markSubscribed();
+  return [el("article",{class:"article"},
+    el("header",{class:"art-head"}, el("p",{class:"eyebrow",text:"20 Blok"}), el("h1",{class:"art-title",text:"You\u2019re in."})),
+    el("div",{class:"prose"},
+      el("p",{class:"lead",text:"Thanks for subscribing. Each new issue lands in your inbox, and the full magazine lives here."}),
+      el("p",{}, "Bookmark ", el("b",{text:"20blok.com"}), ". That\u2019s where every issue goes up first."),
+      el("h3",{text:"How it works"}),
+      el("ul",{}, el("li",{text:"Every issue has 20 bloks: stories on culture, creativity and the internet."}), el("li",{text:"Tap the arrow on any blok to uprate it. No sign-in needed."}), el("li",{text:"The most uprated bloks rise to the top-left of the grid."}))),
+    el("p",{style:"margin-top:28px"}, el("a",{class:"sub",href:"/",text:"START READING \u2192"})))];
+}
+function lsOK(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }catch(e){ return null; } }
+function markSubscribed(){ lsOK("blok20-subscribed","1"); const n=document.getElementById("sb-nudge"); if(n) n.remove(); }
+let nudgeShown = false, bloksSeen = 0;
+function maybeNudge(){
+  if (nudgeShown || lsOK("blok20-subscribed")) return;
+  const until = Number(lsOK("blok20-nudge-hide")||0); if (until && Date.now() < until) return;
+  const band = document.getElementById("subscribe-band"); if (band && band.getBoundingClientRect().top < innerHeight) return;
+  nudgeShown = true;
+  const input = el("input",{type:"email",required:"required",autocomplete:"email",inputmode:"email",placeholder:"you@email.com","aria-label":"Your email"});
+  const msg = el("span",{class:"nd-msg","aria-live":"polite"});
+  let bar;
+  const close = el("button",{type:"button",class:"nd-x","aria-label":"Close",text:"\u00d7",onclick:()=>{ lsOK("blok20-nudge-hide", String(Date.now()+7*864e5)); bar.remove(); }});
+  const form = el("form",{class:"nd-form",onsubmit:async e=>{ e.preventDefault(); const email=input.value.trim(); if(!email) return; msg.textContent="Signing you up\u2026";
+      try{ const r=await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})}); const j=await r.json().catch(()=>({}));
+        if(r.ok&&j.ok){ lsOK("blok20-subscribed","1"); bar.replaceChildren(el("p",{class:"nd-done",text:"You\u2019re in. Check your inbox to confirm."})); setTimeout(()=>bar.remove(),5000); return; }
+        msg.textContent = j.error==="email" ? "Check that email." : "Didn\u2019t go through. Try the form at the bottom."; }catch(err){ msg.textContent="Didn\u2019t go through."; } }},
+    input, el("button",{type:"submit",class:"sb-btn"},"Subscribe"));
+  bar = el("aside",{id:"sb-nudge",class:"nudge","aria-label":"Subscribe"},
+    el("div",{class:"nd-copy"}, el("b",{text:"Enjoying 20 Blok?"}), el("span",{text:" Get the next issue free."})), form, msg, close);
+  document.body.append(bar);
+}
+function nudgeWatch(){
+  const h = curRoute(); if (BLOKS.find(b=>b.id===h)) bloksSeen++;
+  if (bloksSeen >= 2) setTimeout(maybeNudge, 1500);
+}
+window.addEventListener("scroll", ()=>{ if (nudgeShown) return; const h=curRoute(); if (!BLOKS.find(b=>b.id===h)) return;
+  const d=document.documentElement; if ((scrollY+innerHeight)/d.scrollHeight > 0.6) maybeNudge(); }, {passive:true});
 function ytId(u){ const m = u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : null; }
 let embedScripts = {};
 function loadScript(src, done){ if (embedScripts[src]) { done && done(); return; } embedScripts[src]=1; const s=document.createElement("script"); s.src=src; s.async=true; s.onload=()=>done&&done(); document.body.append(s); }
@@ -740,7 +791,7 @@ function render(keepFocus){
   const focused = keepFocus && document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.vote : null;
   const h = curRoute();
   const blok = BLOKS.find(b=>b.id===h);
-  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : h==="privacy" ? privacyView() : gridView(false);
+  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : h==="privacy" ? privacyView() : h==="welcome" ? welcomeView() : gridView(false);
   const active = blok ? null : (["all-time","past-issues"].includes(h) ? h : "this-week");
   document.querySelectorAll("[data-route]").forEach(a=> a.dataset.route===active ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
   const extra = (h==="past-issues"||h==="issue-notes"||h==="bonus") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];
@@ -750,6 +801,7 @@ function render(keepFocus){
   
   document.title = blok ? blok.title+" — 20 Blok" : (TITLES[h] ? TITLES[h]+" — 20 Blok" : "20 Blok — Culture, creativity, and the internet.");
   setTimeout(hydrateEmbeds,0);
+  nudgeWatch();
   if (false){}
   else if (commentsUnsub){ commentsUnsub(); commentsUnsub=null; commentsFor=null; }
 }
