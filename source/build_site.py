@@ -284,7 +284,10 @@ window.addEventListener("scroll", ()=>{ if (nudgeShown) return; const h=curRoute
   const d=document.documentElement; if ((scrollY+innerHeight)/d.scrollHeight > 0.6) maybeNudge(); }, {passive:true});
 '''
 R('function ytId(u){', NUDGE_JS + 'function ytId(u){')
-SHARE_JS = '''function shareBar(b, bottom){
+SHARE_JS = '''function swoosh(){ const s=document.createElementNS(NS,"svg");
+  [["width","22"],["height","22"],["viewBox","0 0 24 24"],["fill","none"],["stroke","currentColor"],["stroke-width","1.1"],["stroke-linejoin","round"],["stroke-linecap","round"],["aria-hidden","true"]].forEach(([k,v])=>s.setAttribute(k,v));
+  const p=document.createElementNS(NS,"path"); p.setAttribute("d","M13.5 4.5 L21 11 L13.5 17.5 V13.7 C8.8 13.5 5.6 15.2 3 19.5 C3.5 13 7.4 8.9 13.5 8.3 Z"); s.append(p); return s; }
+function shareBar(b, bottom){
   const url = "https://20blok.com/"+b.id, title = b.title+" \\u2014 20 Blok";
   const u = encodeURIComponent(url), tt = encodeURIComponent(title), both = encodeURIComponent(title+" "+url);
   const links = [["X","https://twitter.com/intent/tweet?text="+tt+"&url="+u],["Threads","https://www.threads.net/intent/post?text="+both],
@@ -295,7 +298,7 @@ SHARE_JS = '''function shareBar(b, bottom){
   menu.append(copy, ...links.map(([n,h])=>el("a",{class:"sh-item",role:"menuitem",href:h,target:"_blank",rel:"noopener",text:n})));
   if (navigator.share) menu.append(el("button",{type:"button",class:"sh-item",role:"menuitem",text:"Other apps\\u2026",onclick:()=>{ navigator.share({title, url}).catch(()=>{}); }}));
   const btn = el("button",{type:"button",class:"sh-btn","aria-haspopup":"true","aria-expanded":"false",onclick:e=>{ e.stopPropagation(); const open=menu.hidden; document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); menu.hidden=!open; btn.setAttribute("aria-expanded",String(open)); }},
-    icon("M14 5l7 7-7 7M21 12H10a6 6 0 0 0-6 6v1"));
+    swoosh());
   btn.setAttribute("aria-label","Share this blok"); btn.setAttribute("title","Share");
   return el("div",{class:"share"+(bottom?" share-bottom":"")}, btn, menu);
 }
@@ -303,7 +306,7 @@ document.addEventListener("click", e=>{ if (!e.target.closest(".share")) documen
 document.addEventListener("keydown", e=>{ if (e.key==="Escape") document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); });
 '''
 R('function ytId(u){', SHARE_JS + 'function ytId(u){')
-R('" min read"), voteBox(b))),', '" min read"), el("div",{class:"byline-actions"}, shareBar(b,false), voteBox(b)))),')
+R('" min read"), voteBox(b))),', '" min read", shareBar(b,false)), voteBox(b))),')
 R('    commentsSection(b),', '    shareBar(b,true),\n    commentsSection(b),')
 R('  setTimeout(hydrateEmbeds,0);\n  if (false){}', '  setTimeout(hydrateEmbeds,0);\n  nudgeWatch();\n  if (false){}')
 R('if (!session){ const r = await sb.auth.signInAnonymously(); session = r.data && r.data.session; }',
@@ -313,9 +316,13 @@ R('const TITLES = {"all-time":"All-Time"', 'const TITLES = {"welcome":"Welcome",
 SUB_CSS = '''.byline-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .share{position:relative;display:inline-block}
 .share-bottom{margin:28px 0 8px}
-.sh-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-weight:800;font-size:12px;letter-spacing:1.5px;cursor:pointer}
-.sh-btn svg{width:20px;height:20px}
-.sh-btn:hover,.sh-btn[aria-expanded="true"]{border-color:var(--red)}
+.share-bottom .sh-btn{width:44px;height:44px;border:1px solid var(--line);border-radius:12px}
+.sh-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;border-radius:10px;border:0;background:transparent;color:var(--fg);font-weight:800;font-size:12px;letter-spacing:1.5px;cursor:pointer}
+.sh-btn svg{width:22px;height:22px}
+.byline .share{vertical-align:middle;margin-left:6px}
+.byline .sh-btn{color:var(--fg-soft)}
+@media (max-width:820px){.byline{flex-wrap:nowrap}.byline p{flex:1 1 auto;min-width:0}.byline .vote{width:auto;flex:0 0 auto;justify-content:flex-start;gap:4px;padding:3px 10px 3px 3px;border-radius:12px}.byline .vote button{width:34px;height:34px}.byline p{font-size:12px;letter-spacing:.2px;white-space:nowrap}.byline .share{margin-left:2px}.byline .sh-btn{width:30px;height:30px}.byline .sh-btn svg{width:20px;height:20px}}
+.sh-btn:hover,.sh-btn[aria-expanded="true"]{color:var(--red)}
 .sh-menu{position:absolute;z-index:15;top:calc(100% + 8px);left:0;min-width:200px;display:grid;padding:6px;border-radius:14px;background:#151517;border:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.6)}
 .share-bottom .sh-menu{top:auto;bottom:calc(100% + 8px)}
 .sh-item{display:block;width:100%;text-align:left;padding:10px 12px;border:0;border-radius:9px;background:none;color:var(--fg);font:600 15px var(--sans,inherit);text-decoration:none;cursor:pointer}
