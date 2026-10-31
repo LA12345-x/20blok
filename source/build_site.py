@@ -314,10 +314,11 @@ R('if (!session){ const r = await sb.auth.signInAnonymously(); session = r.data 
   'if (!session){ const captchaToken = await getTurnstileToken(); const r = await sb.auth.signInAnonymously(captchaToken ? {options:{captchaToken}} : undefined); session = r.data && r.data.session; }')
 R('const TITLES = {"all-time":"All-Time"', 'const TITLES = {"welcome":"Welcome","privacy":"Privacy","all-time":"All-Time"')
 
-SUB_CSS = '''.rank-top{position:relative;display:inline-grid;place-items:center;width:clamp(44px,22cqi,72px);aspect-ratio:1;color:#fff}
-.rank-top::before{content:"";position:absolute;inset:0;background:var(--red);clip-path:polygon(50% 0%,61% 11%,75% 7%,79% 21%,93% 25%,89% 39%,100% 50%,89% 61%,93% 75%,79% 79%,75% 93%,61% 89%,50% 100%,39% 89%,25% 93%,21% 79%,7% 75%,11% 61%,0% 50%,11% 39%,7% 25%,21% 21%,25% 7%,39% 11%);box-shadow:none;transform:rotate(-8deg)}
-.rank-top .rt-num{position:relative;font-size:clamp(17px,9cqi,30px);line-height:1;margin-top:-6%}
-.rank-top .rt-tag{position:absolute;bottom:22%;font-family:var(--sans,inherit);font-weight:900;font-size:clamp(5.5px,2.6cqi,9px);letter-spacing:.08em;white-space:nowrap}
+SUB_CSS = '''.tile.top{border:1px solid var(--fg);box-shadow:0 0 0 1px var(--fg),0 6px 0 #000,0 18px 30px rgba(0,0,0,.45)}
+.rank-top{position:relative;display:inline-block;width:1.2em;height:.84em;color:#fff}
+.rank-top::before{content:"";position:absolute;left:50%;top:50%;width:1.75em;height:1.75em;transform:translate(-50%,-50%) rotate(-8deg);background:var(--red);clip-path:polygon(50% 0%,61% 11%,75% 7%,79% 21%,93% 25%,89% 39%,100% 50%,89% 61%,93% 75%,79% 79%,75% 93%,61% 89%,50% 100%,39% 89%,25% 93%,21% 79%,7% 75%,11% 61%,0% 50%,11% 39%,7% 25%,21% 21%,25% 7%,39% 11%)}
+.rank-top .rt-num{position:absolute;left:-.3em;right:-.3em;top:50%;transform:translateY(-62%);text-align:center;font-size:.72em;line-height:1}
+.rank-top .rt-tag{position:absolute;left:50%;top:50%;transform:translate(-50%,.42em);font-family:var(--sans,inherit);font-weight:900;font-size:.2em;letter-spacing:.06em;white-space:nowrap}
 .byline-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .share{position:relative;display:inline-block}
 .share-bottom{margin:28px 0 8px}
