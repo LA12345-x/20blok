@@ -290,9 +290,9 @@ SHARE_JS = '''function swoosh(){ const s=document.createElementNS(NS,"svg");
 function shareBar(b, bottom){
   const url = "https://20blok.com/"+b.id, title = b.title+" \\u2014 20 Blok";
   const u = encodeURIComponent(url), tt = encodeURIComponent(title), both = encodeURIComponent(title+" "+url);
-  const links = [["X","https://twitter.com/intent/tweet?text="+tt+"&url="+u],["Threads","https://www.threads.net/intent/post?text="+both],
-    ["LinkedIn","https://www.linkedin.com/sharing/share-offsite/?url="+u],["WhatsApp","https://wa.me/?text="+both],["Telegram","https://t.me/share/url?url="+u+"&text="+tt],
-    ["Reddit","https://www.reddit.com/submit?url="+u+"&title="+tt],["Facebook","https://www.facebook.com/sharer/sharer.php?u="+u],["Email","mailto:?subject="+tt+"&body="+both]];
+  const links = [["X","https://twitter.com/intent/tweet?text="+tt+"&url="+u],["Reddit","https://www.reddit.com/submit?url="+u+"&title="+tt],
+    ["LinkedIn","https://www.linkedin.com/sharing/share-offsite/?url="+u],["Telegram","https://t.me/share/url?url="+u+"&text="+tt],
+    ["Facebook","https://www.facebook.com/sharer/sharer.php?u="+u],["Threads","https://www.threads.net/intent/post?text="+both],["Email","mailto:?subject="+tt+"&body="+both]];
   const menu = el("div",{class:"sh-menu",role:"menu",hidden:"hidden"});
   const copy = el("button",{type:"button",class:"sh-item",role:"menuitem",text:"Copy link",onclick:async()=>{ try{ await navigator.clipboard.writeText(url); copy.textContent="Link copied"; }catch(e){ copy.textContent=url; } setTimeout(()=>copy.textContent="Copy link",2000); }});
   menu.append(copy, ...links.map(([n,h])=>el("a",{class:"sh-item",role:"menuitem",href:h,target:"_blank",rel:"noopener",text:n})));
