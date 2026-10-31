@@ -195,6 +195,16 @@ main{padding-block:20px 64px}
 .lbx-nav.p{left:10px}.lbx-nav.n{right:10px}
 .lbx-hint{padding:10px 16px 16px;text-align:center;font-family:var(--sans);font-size:13px;color:#aaa}
 @media (max-width:640px){.lbx-stage{padding:0}.lbx-nav{display:none}}
+.byline-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.share{position:relative;display:inline-block}
+.share-bottom{margin:28px 0 8px}
+.sh-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-weight:800;font-size:12px;letter-spacing:1.5px;cursor:pointer}
+.sh-btn svg{width:20px;height:20px}
+.sh-btn:hover,.sh-btn[aria-expanded="true"]{border-color:var(--red)}
+.sh-menu{position:absolute;z-index:15;top:calc(100% + 8px);left:0;min-width:200px;display:grid;padding:6px;border-radius:14px;background:#151517;border:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.share-bottom .sh-menu{top:auto;bottom:calc(100% + 8px)}
+.sh-item{display:block;width:100%;text-align:left;padding:10px 12px;border:0;border-radius:9px;background:none;color:var(--fg);font:600 15px var(--sans,inherit);text-decoration:none;cursor:pointer}
+.sh-item:hover,.sh-item:focus-visible{background:rgba(255,255,255,.08)}
 .nudge{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:20;width:min(720px, calc(100vw - 32px));box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 44px 14px 18px;border-radius:16px;background:#151517;border:1px solid var(--red-deep);box-shadow:0 18px 40px rgba(0,0,0,.6);animation:ndIn .35s ease}
 @keyframes ndIn{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}
 @media (prefers-reduced-motion:reduce){.nudge{animation:none}}
@@ -628,6 +638,23 @@ function nudgeWatch(){
 }
 window.addEventListener("scroll", ()=>{ if (nudgeShown) return; const h=curRoute(); if (!BLOKS.find(b=>b.id===h)) return;
   const d=document.documentElement; if ((scrollY+innerHeight)/d.scrollHeight > 0.6) maybeNudge(); }, {passive:true});
+function shareBar(b, bottom){
+  const url = "https://20blok.com/"+b.id, title = b.title+" \u2014 20 Blok";
+  const u = encodeURIComponent(url), tt = encodeURIComponent(title), both = encodeURIComponent(title+" "+url);
+  const links = [["X","https://twitter.com/intent/tweet?text="+tt+"&url="+u],["Threads","https://www.threads.net/intent/post?text="+both],
+    ["LinkedIn","https://www.linkedin.com/sharing/share-offsite/?url="+u],["WhatsApp","https://wa.me/?text="+both],["Telegram","https://t.me/share/url?url="+u+"&text="+tt],
+    ["Reddit","https://www.reddit.com/submit?url="+u+"&title="+tt],["Facebook","https://www.facebook.com/sharer/sharer.php?u="+u],["Email","mailto:?subject="+tt+"&body="+both]];
+  const menu = el("div",{class:"sh-menu",role:"menu",hidden:"hidden"});
+  const copy = el("button",{type:"button",class:"sh-item",role:"menuitem",text:"Copy link",onclick:async()=>{ try{ await navigator.clipboard.writeText(url); copy.textContent="Link copied"; }catch(e){ copy.textContent=url; } setTimeout(()=>copy.textContent="Copy link",2000); }});
+  menu.append(copy, ...links.map(([n,h])=>el("a",{class:"sh-item",role:"menuitem",href:h,target:"_blank",rel:"noopener",text:n})));
+  if (navigator.share) menu.append(el("button",{type:"button",class:"sh-item",role:"menuitem",text:"Other apps\u2026",onclick:()=>{ navigator.share({title, url}).catch(()=>{}); }}));
+  const btn = el("button",{type:"button",class:"sh-btn","aria-haspopup":"true","aria-expanded":"false",onclick:e=>{ e.stopPropagation(); const open=menu.hidden; document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); menu.hidden=!open; btn.setAttribute("aria-expanded",String(open)); }},
+    icon("M14 5l7 7-7 7M21 12H10a6 6 0 0 0-6 6v1"));
+  btn.setAttribute("aria-label","Share this blok"); btn.setAttribute("title","Share");
+  return el("div",{class:"share"+(bottom?" share-bottom":"")}, btn, menu);
+}
+document.addEventListener("click", e=>{ if (!e.target.closest(".share")) document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); });
+document.addEventListener("keydown", e=>{ if (e.key==="Escape") document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); });
 function ytId(u){ const m = u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : null; }
 let embedScripts = {};
 function loadScript(src, done){ if (embedScripts[src]) { done && done(); return; } embedScripts[src]=1; const s=document.createElement("script"); s.src=src; s.async=true; s.onload=()=>done&&done(); document.body.append(s); }
@@ -737,9 +764,10 @@ function articleView(b){
     el("div",{class:"art-head"},
       el("span",{class:"art-label",text:label}),
       el("h1",{text:b.title}),
-      el("div",{class:"byline"}, el("p",{}, "By ", el("b",{text:"Lenny Lesser"}), " · Issue 7 · "+readTime(b)+" min read"), voteBox(b))),
+      el("div",{class:"byline"}, el("p",{}, "By ", el("b",{text:"Lenny Lesser"}), " · Issue 7 · "+readTime(b)+" min read"), el("div",{class:"byline-actions"}, shareBar(b,false), voteBox(b)))),
     b.editor ? el("figure",{class:"art-hero"}, el("img",{src:IMG.cover,alt:"Issue 7 cover: Retail Mindset."})) : null,
     el("div",{class:"prose"}, body),
+    shareBar(b,true),
     commentsSection(b),
     upNext(idx),
     el("nav",{class:"pager","aria-label":"More bloks"},

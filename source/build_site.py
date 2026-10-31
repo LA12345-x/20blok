@@ -284,12 +284,43 @@ window.addEventListener("scroll", ()=>{ if (nudgeShown) return; const h=curRoute
   const d=document.documentElement; if ((scrollY+innerHeight)/d.scrollHeight > 0.6) maybeNudge(); }, {passive:true});
 '''
 R('function ytId(u){', NUDGE_JS + 'function ytId(u){')
+SHARE_JS = '''function shareBar(b, bottom){
+  const url = "https://20blok.com/"+b.id, title = b.title+" \\u2014 20 Blok";
+  const u = encodeURIComponent(url), tt = encodeURIComponent(title), both = encodeURIComponent(title+" "+url);
+  const links = [["X","https://twitter.com/intent/tweet?text="+tt+"&url="+u],["Threads","https://www.threads.net/intent/post?text="+both],
+    ["LinkedIn","https://www.linkedin.com/sharing/share-offsite/?url="+u],["WhatsApp","https://wa.me/?text="+both],["Telegram","https://t.me/share/url?url="+u+"&text="+tt],
+    ["Reddit","https://www.reddit.com/submit?url="+u+"&title="+tt],["Facebook","https://www.facebook.com/sharer/sharer.php?u="+u],["Email","mailto:?subject="+tt+"&body="+both]];
+  const menu = el("div",{class:"sh-menu",role:"menu",hidden:"hidden"});
+  const copy = el("button",{type:"button",class:"sh-item",role:"menuitem",text:"Copy link",onclick:async()=>{ try{ await navigator.clipboard.writeText(url); copy.textContent="Link copied"; }catch(e){ copy.textContent=url; } setTimeout(()=>copy.textContent="Copy link",2000); }});
+  menu.append(copy, ...links.map(([n,h])=>el("a",{class:"sh-item",role:"menuitem",href:h,target:"_blank",rel:"noopener",text:n})));
+  if (navigator.share) menu.append(el("button",{type:"button",class:"sh-item",role:"menuitem",text:"Other apps\\u2026",onclick:()=>{ navigator.share({title, url}).catch(()=>{}); }}));
+  const btn = el("button",{type:"button",class:"sh-btn","aria-haspopup":"true","aria-expanded":"false",onclick:e=>{ e.stopPropagation(); const open=menu.hidden; document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); menu.hidden=!open; btn.setAttribute("aria-expanded",String(open)); }},
+    icon("M14 5l7 7-7 7M21 12H10a6 6 0 0 0-6 6v1"));
+  btn.setAttribute("aria-label","Share this blok"); btn.setAttribute("title","Share");
+  return el("div",{class:"share"+(bottom?" share-bottom":"")}, btn, menu);
+}
+document.addEventListener("click", e=>{ if (!e.target.closest(".share")) document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); });
+document.addEventListener("keydown", e=>{ if (e.key==="Escape") document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); });
+'''
+R('function ytId(u){', SHARE_JS + 'function ytId(u){')
+R('" min read"), voteBox(b))),', '" min read"), el("div",{class:"byline-actions"}, shareBar(b,false), voteBox(b)))),')
+R('    commentsSection(b),', '    shareBar(b,true),\n    commentsSection(b),')
 R('  setTimeout(hydrateEmbeds,0);\n  if (false){}', '  setTimeout(hydrateEmbeds,0);\n  nudgeWatch();\n  if (false){}')
 R('if (!session){ const r = await sb.auth.signInAnonymously(); session = r.data && r.data.session; }',
   'if (!session){ const captchaToken = await getTurnstileToken(); const r = await sb.auth.signInAnonymously(captchaToken ? {options:{captchaToken}} : undefined); session = r.data && r.data.session; }')
 R('const TITLES = {"all-time":"All-Time"', 'const TITLES = {"welcome":"Welcome","privacy":"Privacy","all-time":"All-Time"')
 
-SUB_CSS = '''.nudge{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:20;width:min(720px, calc(100vw - 32px));box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 44px 14px 18px;border-radius:16px;background:#151517;border:1px solid var(--red-deep);box-shadow:0 18px 40px rgba(0,0,0,.6);animation:ndIn .35s ease}
+SUB_CSS = '''.byline-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.share{position:relative;display:inline-block}
+.share-bottom{margin:28px 0 8px}
+.sh-btn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font-weight:800;font-size:12px;letter-spacing:1.5px;cursor:pointer}
+.sh-btn svg{width:20px;height:20px}
+.sh-btn:hover,.sh-btn[aria-expanded="true"]{border-color:var(--red)}
+.sh-menu{position:absolute;z-index:15;top:calc(100% + 8px);left:0;min-width:200px;display:grid;padding:6px;border-radius:14px;background:#151517;border:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.share-bottom .sh-menu{top:auto;bottom:calc(100% + 8px)}
+.sh-item{display:block;width:100%;text-align:left;padding:10px 12px;border:0;border-radius:9px;background:none;color:var(--fg);font:600 15px var(--sans,inherit);text-decoration:none;cursor:pointer}
+.sh-item:hover,.sh-item:focus-visible{background:rgba(255,255,255,.08)}
+.nudge{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 16px);z-index:20;width:min(720px, calc(100vw - 32px));box-sizing:border-box;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 44px 14px 18px;border-radius:16px;background:#151517;border:1px solid var(--red-deep);box-shadow:0 18px 40px rgba(0,0,0,.6);animation:ndIn .35s ease}
 @keyframes ndIn{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}
 @media (prefers-reduced-motion:reduce){.nudge{animation:none}}
 .nd-copy{flex:1 1 200px;font-size:15px;color:var(--fg-soft)}.nd-copy b{color:var(--fg)}
