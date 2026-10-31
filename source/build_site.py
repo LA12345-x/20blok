@@ -306,6 +306,7 @@ document.addEventListener("click", e=>{ if (!e.target.closest(".share")) documen
 document.addEventListener("keydown", e=>{ if (e.key==="Escape") document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); });
 '''
 R('function ytId(u){', SHARE_JS + 'function ytId(u){')
+R('el("span",{class:"rank",text:String(r+1).padStart(2,"0")})', '(r===0 && (tallies[b.id]||0)>0 ? el("span",{class:"rank rank-top",title:"Top pick: most uprated","aria-label":"Number 1, top pick"}, el("span",{class:"rt-num",text:"01"}), el("span",{class:"rt-tag",text:"TOP PICK"})) : el("span",{class:"rank",text:String(r+1).padStart(2,"0")}))')
 R('" min read"), voteBox(b))),', '" min read", shareBar(b,false)), voteBox(b))),')
 R('    commentsSection(b),', '    shareBar(b,true),\n    commentsSection(b),')
 R('  setTimeout(hydrateEmbeds,0);\n  if (false){}', '  setTimeout(hydrateEmbeds,0);\n  nudgeWatch();\n  if (false){}')
@@ -313,7 +314,11 @@ R('if (!session){ const r = await sb.auth.signInAnonymously(); session = r.data 
   'if (!session){ const captchaToken = await getTurnstileToken(); const r = await sb.auth.signInAnonymously(captchaToken ? {options:{captchaToken}} : undefined); session = r.data && r.data.session; }')
 R('const TITLES = {"all-time":"All-Time"', 'const TITLES = {"welcome":"Welcome","privacy":"Privacy","all-time":"All-Time"')
 
-SUB_CSS = '''.byline-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+SUB_CSS = '''.rank-top{position:relative;display:inline-grid;place-items:center;width:clamp(44px,22cqi,72px);aspect-ratio:1;color:#fff}
+.rank-top::before{content:"";position:absolute;inset:0;background:var(--red);clip-path:polygon(50% 0%,61% 11%,75% 7%,79% 21%,93% 25%,89% 39%,100% 50%,89% 61%,93% 75%,79% 79%,75% 93%,61% 89%,50% 100%,39% 89%,25% 93%,21% 79%,7% 75%,11% 61%,0% 50%,11% 39%,7% 25%,21% 21%,25% 7%,39% 11%);box-shadow:none;transform:rotate(-8deg)}
+.rank-top .rt-num{position:relative;font-size:clamp(17px,9cqi,30px);line-height:1;margin-top:-6%}
+.rank-top .rt-tag{position:absolute;bottom:22%;font-family:var(--sans,inherit);font-weight:900;font-size:clamp(5.5px,2.6cqi,9px);letter-spacing:.08em;white-space:nowrap}
+.byline-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .share{position:relative;display:inline-block}
 .share-bottom{margin:28px 0 8px}
 .share-bottom .sh-btn{width:44px;height:44px;border:1px solid var(--line);border-radius:12px}
