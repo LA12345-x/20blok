@@ -430,7 +430,7 @@ async function downloadPdf(btn,fname){
 (function(){
   const box=document.getElementById("join"); if(!box) return;
   let subbed=null;
-  try{ if(new URLSearchParams(location.search).get("sub")==="1") localStorage.setItem("blok20-subscribed","1"); }catch(e){}
+  try{ if(new URLSearchParams(location.search).get("sub")==="1"){ localStorage.setItem("blok20-subscribed","1"); history.replaceState(null,"",location.pathname+location.hash); } }catch(e){}
   try{subbed=localStorage.getItem("blok20-subscribed")}catch(e){}
   if(subbed){box.hidden=true;return}
   const onSite=/(^|\.)20blok\.com$|vercel\.app$/.test(location.hostname);
