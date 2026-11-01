@@ -328,6 +328,7 @@ SUB_CSS = '''.fb-form{display:grid;gap:14px;margin:8px 0 20px}
 .fb-chips{display:flex;flex-wrap:wrap;gap:8px}
 .fb-chip{min-height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:600 14px var(--sans);cursor:pointer}
 .fb-chip[aria-pressed="true"]{border-color:var(--red);background:var(--red-deep);color:#fff}
+.fb-blok{min-height:38px;padding:0 12px;font-size:12px;letter-spacing:.06em}
 .fb-form textarea,.fb-form input[type=email]{width:100%;box-sizing:border-box;min-height:46px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:16px/1.5 var(--sans)}
 .fb-form textarea{min-height:120px;resize:vertical}
 .fb-check{display:flex;align-items:center;gap:8px;font:15px var(--sans);color:var(--fg-soft);cursor:pointer}

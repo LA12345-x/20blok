@@ -15,6 +15,11 @@ function feedbackForm(){
     }});
     return b;
   });
+  const picked = new Set();
+  const blokChips = BLOKS.map(b => el("button",{type:"button",class:"fb-chip fb-blok","aria-pressed":"false",onclick:e => {
+      const btn = e.currentTarget; picked.has(b.name) ? picked.delete(b.name) : picked.add(b.name);
+      btn.setAttribute("aria-pressed", String(picked.has(b.name)));
+    }}, (b.emoji ? b.emoji + " " : "") + b.name));
   const ta = el("textarea",{rows:"3",maxlength:"3000",placeholder:"What should I add, cut or change?","aria-label":"What should I add, cut or change?"});
   const pitch = el("input",{type:"checkbox",id:"fb-pitch"});
   const email = el("input",{type:"email",maxlength:"254",autocomplete:"email",inputmode:"email",placeholder:"Your email (so I can reply)","aria-label":"Your email"});
@@ -24,16 +29,18 @@ function feedbackForm(){
   const form = el("form",{class:"fb-form",onsubmit:async e => {
       e.preventDefault(); msg.textContent = "";
       const text = ta.value.trim(), em = email.value.trim();
-      if (!freq && !text){ msg.textContent = "Pick one or write a line first."; return; }
+      if (!freq && !text && !picked.size){ msg.textContent = "Pick something or write a line first."; return; }
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ msg.textContent = "Add your email so I know who it’s from."; email.focus(); return; }
       send.disabled = true; msg.textContent = "Sending…";
-      const r = await sendMessage({kind:"feedback", read_freq:freq || null, body:text || null, pitch:pitch.checked, email:em});
+      const r = await sendMessage({kind:"feedback", read_freq:freq || null, body:text || null, bloks: picked.size ? [...picked] : null, pitch:pitch.checked, email:em});
       send.disabled = false;
       if (r === "ok"){ form.replaceChildren(el("p",{class:"fb-done",text:"Got it. Thank you, this shapes the next issue."})); return; }
       msg.textContent = r === "slow" ? "One at a time. Try again in a few seconds." : "That didn’t send. Try again in a moment.";
     }},
     el("p",{class:"fb-q",text:"How often do you read 20 Blok?"}),
     el("div",{class:"fb-chips",role:"group","aria-label":"How often do you read 20 Blok?"}, chips),
+    el("p",{class:"fb-q",text:"Which bloks do you enjoy most? Pick all that apply."}),
+    el("div",{class:"fb-chips fb-bloks",role:"group","aria-label":"Which bloks do you enjoy most?"}, blokChips),
     ta,
     email,
     el("label",{class:"fb-check",for:"fb-pitch"}, pitch, " I’d like to pitch or collaborate"),

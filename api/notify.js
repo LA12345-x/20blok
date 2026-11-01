@@ -42,7 +42,7 @@ async function sendMessageMail(m, key, res) {
   const subject = isInquiry ? `New inquiry (${m.topic || "Other"}) from ${String(who).slice(0, 60)}` : `New feedback on 20 Blok${m.pitch ? " (wants to pitch)" : ""}`;
   const rows = [
     isInquiry ? ["Topic", m.topic] : ["Reads", m.read_freq],
-    ["Name", m.name], ["Email", m.email], ["Wants to pitch/collaborate", m.pitch ? "Yes" : ""]
+    ["Enjoys", Array.isArray(m.bloks) && m.bloks.length ? m.bloks.join(", ") : ""], ["Name", m.name], ["Email", m.email], ["Wants to pitch/collaborate", m.pitch ? "Yes" : ""]
   ].filter(r => r[1]);
   const html = `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;color:#111">
     <p style="margin:0 0 10px;font-size:12px;letter-spacing:2px;color:#E0483B;font-weight:bold">${isInquiry ? "NEW INQUIRY · CONTACT PAGE" : "NEW FEEDBACK · GOT A MINUTE?"}</p>

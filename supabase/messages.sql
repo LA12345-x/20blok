@@ -11,7 +11,6 @@ create table if not exists public.messages (
   pitch      boolean not null default false,
   sender     uuid default auth.uid(),
   created_at timestamptz not null default now(),
-  check (coalesce(body,'') <> '' or coalesce(read_freq,'') <> ''),
   check (email ~ '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$')
 );
 alter table public.messages enable row level security;
@@ -32,3 +31,14 @@ begin
 end $$;
 drop trigger if exists messages_rate_limit on public.messages;
 create trigger messages_rate_limit before insert on public.messages for each row execute function public.messages_rate_limit();
+
+-- Added Nov 1: which bloks the reader enjoys (feedback page picker)
+alter table public.messages add column if not exists bloks text[];
+do $$ declare c text; begin
+  for c in select conname from pg_constraint where conrelid = 'public.messages'::regclass and contype = 'c'
+           and pg_get_constraintdef(oid) like '%body%' and pg_get_constraintdef(oid) like '%read_freq%' loop
+    execute format('alter table public.messages drop constraint %I', c);
+  end loop;
+end $$;
+alter table public.messages drop constraint if exists messages_has_content;
+alter table public.messages add constraint messages_has_content check (coalesce(body,'') <> '' or coalesce(read_freq,'') <> '' or coalesce(array_length(bloks,1),0) > 0);
