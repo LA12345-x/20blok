@@ -81,9 +81,9 @@ function cCompose(){
   try{ const d = localStorage.getItem(cDraftKey(blokId)); if (d) ta.value = d; }catch(e){}
   ta.addEventListener("input", () => { try{ ta.value ? localStorage.setItem(cDraftKey(blokId), ta.value) : localStorage.removeItem(cDraftKey(blokId)); }catch(e){} });
   const needName = !!me && !cName(me);
-  const nameIn = el("input",{type:"text",id:"c-name",maxlength:"40",placeholder:"Name shown with your comments",autocomplete:"nickname","aria-label":"Name shown with your comments"});
+  const nameIn = el("input",{type:"text",id:"c-name",maxlength:"40",placeholder:"Your first name",autocomplete:"nickname","aria-label":"Name shown with your comments"});
   if (me && !cName(me)) nameIn.value = cSuggest(me);
-  const nameHint = el("p",{class:"c-fine",text:"This is the only thing shown with your comment. Use any name or nickname; you can change it later."});
+  const nameHint = el("p",{class:"c-fine",text:"Your first name is shown with your comment. Your email stays private."});
   let editingName = needName;
   const status = el("span",{class:"c-status","aria-live":"polite"});
   const post = el("button",{type:"submit",class:"c-post"},"Post");
