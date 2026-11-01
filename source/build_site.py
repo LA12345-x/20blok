@@ -331,6 +331,7 @@ SUB_CSS = '''.c-form input[type=text]{width:100%;box-sizing:border-box;min-heigh
 .c-email{display:flex;flex-wrap:wrap;gap:8px}
 .c-email input{flex:1 1 200px;min-width:0;min-height:46px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:#0B0B0C;color:var(--fg);font-size:16px}
 .c-fine{margin:0;font-size:12px;color:var(--muted)}
+.c-namebox{display:grid;gap:6px}
 .c-gmsg{margin:0;font-size:14px;color:var(--fg-soft)}.c-gmsg:empty{display:none}
 .tile.top{border:1px solid var(--fg);box-shadow:0 0 0 1px var(--fg),0 6px 0 #000,0 18px 30px rgba(0,0,0,.45)}
 .rank-top{position:relative;display:inline-block;width:1.2em;height:.84em;color:#fff}

@@ -2,7 +2,8 @@
 const ADMINS = ["soundsoflife@gmail.com", "lennybusinessnow@gmail.com"];
 const cState = { blok: null, rows: [], me: null, admin: false, ch: null };
 const cDraftKey = id => "blok20-draft-" + id;
-function cName(u){ const m = (u && u.user_metadata) || {}; return String(m.display_name || m.full_name || m.name || "").trim().slice(0, 40); }
+function cName(u){ const m = (u && u.user_metadata) || {}; return String(m.display_name || "").trim().slice(0, 40); }
+function cSuggest(u){ const m = (u && u.user_metadata) || {}; return String(m.given_name || String(m.full_name || m.name || "").split(" ")[0] || "").trim().slice(0, 40); }
 async function cUser(){
   await sbReady; if (!sb) return null;
   try{ const { data:{ session } } = await sb.auth.getSession(); const u = session && session.user; return (u && !u.is_anonymous) ? u : null; }catch(e){ return null; }
@@ -80,7 +81,10 @@ function cCompose(){
   try{ const d = localStorage.getItem(cDraftKey(blokId)); if (d) ta.value = d; }catch(e){}
   ta.addEventListener("input", () => { try{ ta.value ? localStorage.setItem(cDraftKey(blokId), ta.value) : localStorage.removeItem(cDraftKey(blokId)); }catch(e){} });
   const needName = !!me && !cName(me);
-  const nameIn = el("input",{type:"text",id:"c-name",maxlength:"40",placeholder:"Your name (shown with your comment)",autocomplete:"name","aria-label":"Your name"});
+  const nameIn = el("input",{type:"text",id:"c-name",maxlength:"40",placeholder:"Name shown with your comments",autocomplete:"nickname","aria-label":"Name shown with your comments"});
+  if (me && !cName(me)) nameIn.value = cSuggest(me);
+  const nameHint = el("p",{class:"c-fine",text:"This is the only thing shown with your comment. Use any name or nickname; you can change it later."});
+  let editingName = needName;
   const status = el("span",{class:"c-status","aria-live":"polite"});
   const post = el("button",{type:"submit",class:"c-post"},"Post");
   const gate = el("div",{id:"c-gate",hidden:"hidden"});
@@ -88,21 +92,22 @@ function cCompose(){
       e.preventDefault(); status.textContent = "";
       const text = ta.value.trim(); if (!text){ ta.focus(); return; }
       if (!cState.me){ cGate(gate); return; }
-      let name = cName(cState.me) || nameIn.value.trim();
-      if (!name){ status.textContent = "Add your name first."; nameIn.focus(); return; }
+      let name = editingName ? nameIn.value.trim() : cName(cState.me);
+      if (!name){ status.textContent = "Add the name to show with your comment."; nameIn.focus(); return; }
       post.disabled = true;
-      if (!cName(cState.me)){ try{ await sb.auth.updateUser({data:{display_name:name}}); const u = await cUser(); if (u) cState.me = u; }catch(err){} }
+      if (name !== cName(cState.me)){ try{ await sb.auth.updateUser({data:{display_name:name}}); const u = await cUser(); if (u) cState.me = u; }catch(err){} }
       const { error } = await sb.from("comments").insert({issue:ISSUE, blok:blokId, name:name.slice(0,40), body:text.slice(0,600)});
       post.disabled = false;
       if (error){ const m = String(error.message||""); status.textContent = /slow down/.test(m) ? "One comment every 15 seconds. Try again in a moment." : /row-level|policy/i.test(m) ? "You can’t comment right now." : "That didn’t post. Try again in a moment."; return; }
       ta.value = ""; try{ localStorage.removeItem(cDraftKey(blokId)); }catch(err){}
-      if (needName) nameIn.remove();
+      if (editingName){ cCompose(); }
       cLoad();
     }},
     el("label",{for:"comment-text",class:"c-label",text:"Your comment"}), ta,
-    needName ? nameIn : null,
+    el("div",{class:"c-namebox",hidden: needName ? null : "hidden"}, nameIn, nameHint),
     el("div",{class:"c-actions"},
-      me ? el("span",{class:"c-who"}, "Commenting as ", el("b",{text: cName(me) || me.email}), " · ",
+      me ? el("span",{class:"c-who"}, "Commenting as ", el("b",{text: cName(me) || "you"}), " · ",
+             el("button",{type:"button",class:"c-link",onclick:e => { const box = e.target.closest("form").querySelector(".c-namebox"); box.hidden = false; editingName = true; nameIn.value = cName(cState.me) || cSuggest(cState.me); nameIn.focus(); }},"Change name"), " · ",
              el("button",{type:"button",class:"c-link",onclick:async () => { try{ await sb.auth.signOut(); }catch(err){} location.reload(); }},"Sign out"))
          : el("span",{class:"c-who",text:"Comments are for 20 Blok subscribers. It’s free."}),
       status, post));
