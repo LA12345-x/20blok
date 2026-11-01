@@ -75,7 +75,7 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
 .intro{display:grid;gap:26px}
 .intro-left{display:grid;gap:18px;align-content:start}
 .qs{display:grid;gap:10px}
-@media (min-width:900px){
+@media screen and (min-width:900px){
   body{padding-block:48px 80px}
   .wrap{max-width:1120px}
   h1{font-size:60px;max-width:22ch}
@@ -96,14 +96,46 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
 .join-form .btn{min-height:44px}
 .join-link{justify-self:start;text-decoration:none}
 .join-msg{margin:0;font-size:14px;color:var(--muted)}.join-msg:empty{display:none}
-@media (min-width:900px){.join{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;padding:28px 32px}.join-msg{grid-column:2}}
+@media screen and (min-width:900px){.join{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;padding:28px 32px}.join-msg{grid-column:2}}
 @media print{
-  @page{margin:14mm}
+  @page{size:letter;margin:12mm}
   :root,:root[data-theme="dark"]{--bg:#fff;--surface:#fff;--field:#fff;--fg:#151A22;--muted:#4a5360;--line:#9aa5b1;--accent:#C23A2E;--accent-soft:#FBECEA}
+  :root{color-scheme:light}
+  html{background:#fff}
+  body{font-size:11px!important;line-height:1.35}
+  .wrap>*,#sections>*{margin-bottom:10px}
+  header .eyebrow{font-size:9px}
+  h1{font-size:22px!important}
+  .q{padding:7px 10px 8px!important;margin-bottom:6px;border-radius:6px!important}
+  .q .top{grid-template-columns:22px minmax(0,1fr)!important;margin-bottom:4px}
+  .q .n,.slot .n{font-size:10px!important}
+  .q .t{font-size:11px!important}.q .hint{font-size:9.5px!important}
+  .slots{gap:4px}.slot{grid-template-columns:22px minmax(0,1fr)!important}
+  .slot .n{padding-top:5px!important}
+  .with-gutter{margin-left:30px!important;width:calc(100% - 30px)!important}
+  textarea{min-height:22px!important;padding:3px 8px!important;border-radius:4px!important}
+  .sec-no{font-size:8.5px!important}
+  .sec-head{margin-bottom:5px}.sec-head h2{font-size:14px!important}.sec-note{font-size:10px!important}
+  .month{padding:8px 10px!important;max-width:4.2in!important;gap:6px!important}
+  .month-head h2{font-size:13px!important}
+  .cal{gap:2px!important}.day{max-height:20px!important;font-size:9px!important;aspect-ratio:auto!important;padding:2px 0}
+  .dow{font-size:8px!important}.weeks{font-size:9px!important}.weeks b{font-size:9px!important}
+  .closing{font-size:13px!important}
+  footer{font-size:9px}
   body{background:#fff;padding:0;font-size:12px}
   .bar,.saved,.no-print{display:none!important}
   .wrap{gap:16px;max-width:none}
-  .intro,.sec,.qs{display:block}.q{margin-bottom:10px}.sec-head{position:static}
+  html,body,.wrap,#sections,.intro,.intro-left,.sec,.qs{display:block!important;height:auto!important;overflow:visible!important}
+  .wrap>*,#sections>*{margin-bottom:16px}
+  .q{display:block;margin-bottom:10px}.q .top{margin-bottom:6px}
+  .sec-head{position:static;margin-bottom:8px}
+  h1{font-size:28px!important;max-width:none!important;margin:4px 0 6px}
+  h2,.sec-head h2{font-size:17px!important}
+  .lede{font-size:12px!important}
+  .q .t{font-size:12.5px}.q .hint{font-size:11px}
+  textarea{font-size:12px;min-height:30px}
+  .day{max-height:30px;font-size:11px}
+  .month{max-width:5.2in}
   textarea{border-color:#9aa5b1;overflow:visible}
   .q,.month{break-inside:avoid}
   .sec-head{break-after:avoid}
