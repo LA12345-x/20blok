@@ -41,6 +41,14 @@ function feedbackForm(){
     el("div",{class:"fb-row"}, send, msg));
   return form;
 }
+function feedbackView(){
+  return [el("article",{class:"article"},
+    el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"}),
+    el("header",{class:"art-head"}, el("p",{class:"eyebrow",text:"20 Blok"}), el("h1",{class:"art-title",text:"Feedback"})),
+    el("div",{class:"prose"},
+      el("p",{text:"The votes tell me what landed. Tell me what you want next."}),
+      feedbackForm()))];
+}
 function contactView(){
   const topics = ["Collaboration","Press","Write for 20 Blok","Sponsorship / brand","Other"];
   const name = el("input",{type:"text",id:"ct-name",maxlength:"80",autocomplete:"name",required:"required"});

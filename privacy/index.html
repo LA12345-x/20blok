@@ -195,27 +195,26 @@ main{padding-block:20px 64px}
 .lbx-nav.p{left:10px}.lbx-nav.n{right:10px}
 .lbx-hint{padding:10px 16px 16px;text-align:center;font-family:var(--sans);font-size:13px;color:#aaa}
 @media (max-width:640px){.lbx-stage{padding:0}.lbx-nav{display:none}}
-.feedback .fb-form{flex:1 1 100%;display:grid;gap:12px;max-width:640px}
-.fb-q{margin:0;font-weight:700;color:var(--ink)}
+.fb-form{display:grid;gap:14px;margin:8px 0 20px}
+.fb-q{margin:0;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:var(--sans)}
 .fb-chips{display:flex;flex-wrap:wrap;gap:8px}
-.fb-chip{min-height:40px;padding:0 16px;border-radius:999px;border:1.5px solid #c9c9cf;background:#fff;color:var(--ink);font:600 14px var(--sans);cursor:pointer}
-.fb-chip[aria-pressed="true"]{border-color:var(--red-deep);background:var(--red-deep);color:#fff}
-.feedback textarea,.feedback input[type=email]{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:12px;border:1.5px solid #c9c9cf;background:#fff;color:var(--ink);font:16px/1.5 var(--sans)}
-.feedback textarea{min-height:90px;resize:vertical}
-.fb-check{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--ink);cursor:pointer}
-.fb-check input{width:18px;height:18px;accent-color:var(--red-deep)}
+.fb-chip{min-height:42px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:600 14px var(--sans);cursor:pointer}
+.fb-chip[aria-pressed="true"]{border-color:var(--red);background:var(--red-deep);color:#fff}
+.fb-form textarea,.fb-form input[type=email]{width:100%;box-sizing:border-box;min-height:46px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:16px/1.5 var(--sans)}
+.fb-form textarea{min-height:120px;resize:vertical}
+.fb-check{display:flex;align-items:center;gap:8px;font:15px var(--sans);color:var(--fg-soft);cursor:pointer}
+.fb-check input{width:18px;height:18px;accent-color:var(--red)}
 .fb-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
 .fb-row .fb-btn{border:0;cursor:pointer}
 .fb-msg{margin:0;font-size:14px}.fb-msg:empty{display:none}
-.fb-fine{margin:-4px 0 0;font-size:13px;color:#5a5a62}
-.feedback .fb-msg{color:var(--red-deep)}
+.fb-fine{margin:-4px 0 0;font:13px var(--sans);color:var(--muted)}
 .fb-done{margin:0;font-weight:700;font-size:17px}
 .ct-form{display:grid;gap:14px;margin:8px 0 20px}
 .ct-field{display:grid;gap:6px}
 .ct-field label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
 .ct-field input,.ct-field select,.ct-field textarea{width:100%;box-sizing:border-box;min-height:46px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:16px/1.5 var(--sans)}
 .ct-field textarea{min-height:140px;resize:vertical}
-.ct-form .fb-msg{color:var(--fg-soft)}
+.fb-form .fb-msg,.ct-form .fb-msg{color:var(--fg-soft);font-family:var(--sans)}
 .ct-alt{color:var(--muted);font-size:14px}.ct-alt b{color:var(--fg)}
 .c-form input[type=text]{width:100%;box-sizing:border-box;min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:16px var(--sans)}
 .c-actions{flex-wrap:wrap}
@@ -485,7 +484,7 @@ function curRoute(){
   if (!p){ const h=(location.hash||"").replace(/^#/,""); if (h && !isAuthHash(h)) return h; }
   return p || "this-week";
 }
-const TITLES = {"contact":"Contact","welcome":"Welcome","privacy":"Privacy","all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
+const TITLES = {"feedback":"Feedback","contact":"Contact","welcome":"Welcome","privacy":"Privacy","all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
 function go(id){ const path = (!id || id==="this-week") ? "/" : "/"+id; if (location.pathname!==path || location.hash) history.pushState({}, "", path); render(false); }
 document.addEventListener("click", e=>{
   if (e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -746,8 +745,8 @@ function gridView(all){
       el("p",{text: (shared ? "Ranked live by readers. " : "Ranked by readers. ") + "Uprate what you want more of. The most uprated blok sits top-left; ties keep the table of contents order."})),
     grid,
     el("section",{class:"feedback","aria-labelledby":"fb-head"},
-      el("div",{}, el("h2",{id:"fb-head",text:"Got a minute?"}), el("p",{text:"The votes tell me what landed. Tell me what you want next."})),
-      feedbackForm()),
+      el("div",{}, el("h2",{id:"fb-head",text:"Got a minute?"}), el("p",{text:"Tell me which bloks actually resonate and what you want more of next issue."})),
+      el("a",{class:"fb-btn",href:"/feedback"},"Share your feedback →")),
     subscribeBox(),
     el("a",{class:"notes-link",href:"/issue-notes"}, el("span",{text:"THE BACK PAGE"}), el("b",{text:"Issue notes: what changed, the bonus pick and the sign-off →"}))];
 }
@@ -914,6 +913,14 @@ function feedbackForm(){
     el("p",{class:"fb-fine",text:"No newsletter signup needed. Your email is only for replies."}),
     el("div",{class:"fb-row"}, send, msg));
   return form;
+}
+function feedbackView(){
+  return [el("article",{class:"article"},
+    el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"}),
+    el("header",{class:"art-head"}, el("p",{class:"eyebrow",text:"20 Blok"}), el("h1",{class:"art-title",text:"Feedback"})),
+    el("div",{class:"prose"},
+      el("p",{text:"The votes tell me what landed. Tell me what you want next."}),
+      feedbackForm()))];
 }
 function contactView(){
   const topics = ["Collaboration","Press","Write for 20 Blok","Sponsorship / brand","Other"];
@@ -1117,7 +1124,7 @@ function render(keepFocus){
   const focused = keepFocus && document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.vote : null;
   const h = curRoute();
   const blok = BLOKS.find(b=>b.id===h);
-  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : h==="privacy" ? privacyView() : h==="welcome" ? welcomeView() : h==="contact" ? contactView() : gridView(false);
+  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : h==="privacy" ? privacyView() : h==="welcome" ? welcomeView() : h==="contact" ? contactView() : h==="feedback" ? feedbackView() : gridView(false);
   const active = blok ? null : (["all-time","past-issues"].includes(h) ? h : "this-week");
   document.querySelectorAll("[data-route]").forEach(a=> a.dataset.route===active ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
   const extra = (h==="past-issues"||h==="issue-notes"||h==="bonus") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];
