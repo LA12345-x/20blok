@@ -529,6 +529,7 @@ function articleView(b){
     else if (x.t==="card") body.push(el("div",{class:"lcard-wrap"}, el("p",{class:"lcard-kicker",text:x.kicker+" ↓"}), el("a",{class:"lcard",href:x.href,target:"_blank",rel:"noopener"}, el("b",{text:x.title}), el("span",{text:x.sub}), el("em",{text:x.cta}))));
     else if (x.t==="link") body.push(el("p",{class:"shop"}, el("a", x.href.startsWith("#") ? {href:x.href,text:x.label} : {href:x.href,target:"_blank",rel:"noopener",text:x.label})));
     else if (x.t==="loop"){ const v=el("video",{src:IMG[x.src],poster:IMG[x.poster],autoplay:"",loop:"",playsinline:"","aria-label":x.alt}); v.muted=true; v.defaultMuted=true; v.setAttribute("muted",""); body.push(el("figure",{class:"fig loop"+(x.narrow?" narrow":"")}, el("div",{class:"frame"}, v))); }
+    else if (x.t==="clip"){ const v=el("video",{src:IMG[x.src],poster:IMG[x.poster],controls:"",playsinline:"",preload:"metadata","aria-label":x.alt}); body.push(el("figure",{class:"fig loop"}, el("div",{class:"frame"}, v), x.cap?el("figcaption",{text:x.cap}):null)); }
     else if (x.t==="carousel") body.push(carousel(x));
     else if (x.t==="pair") body.push(el("figure",{class:"fig"}, el("div",{class:"pair"}, x.items.map(it=>{ const im=el("img",{src:IMG[it.src],alt:it.alt}); const fit=()=>{ if(im.naturalWidth) im.style.flex=(im.naturalWidth/im.naturalHeight)+" 1 0"; }; im.addEventListener("load",fit); if(im.complete) fit(); return im; })), x.cap?el("figcaption",{text:x.cap}):null));
     else if (x.tail) body.push(el("p",{}, x.text+" ", el("strong",{class:"em-red",text:x.tail})));

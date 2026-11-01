@@ -124,6 +124,13 @@
     "keepThumb": true
    },
    {
+    "t": "clip",
+    "src": "ms_moment",
+    "poster": "ms_moment_poster",
+    "cap": "The moment: “No back and forth without the speaker accepting.” Sound on.",
+    "alt": "Clip from the Cambridge Union debate: “No back and forth without the speaker accepting.”"
+   },
+   {
     "t": "img",
     "src": "shirt",
     "cap": "The moderator’s response to an audience member’s interjection was so dry it became a meme of its own.",
