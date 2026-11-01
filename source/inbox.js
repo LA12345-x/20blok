@@ -42,7 +42,7 @@ function feedbackForm(){
   return form;
 }
 function contactView(){
-  const topics = ["Collaboration","Press / interview","Write for 20 Blok","Sponsorship / brand","Other"];
+  const topics = ["Collaboration","Press","Write for 20 Blok","Sponsorship / brand","Other"];
   const name = el("input",{type:"text",id:"ct-name",maxlength:"80",autocomplete:"name",required:"required"});
   const email = el("input",{type:"email",id:"ct-email",maxlength:"254",autocomplete:"email",inputmode:"email",required:"required"});
   const topic = el("select",{id:"ct-topic"}, topics.map(t => el("option",{value:t,text:t})));
