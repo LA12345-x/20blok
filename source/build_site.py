@@ -428,11 +428,11 @@ dd = json.dumps(data, ensure_ascii=False).replace('</', '<\\/')
 t = t.replace('__DATA__', dd).replace('__IMAGES__', json.dumps(paths))
 import html as H
 SITE = "https://20blok.com"
-def page(route, title, desc, img, body_html):
+def page(route, title, desc, img, body_html, og_title=None):
     p = t
     p = p.replace("<title>20 Blok — Culture, creativity, and the internet.</title>", "<title>"+H.escape(title)+"</title>", 1)
     p = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="'+H.escape(desc)+'">', p, 1)
-    p = re.sub(r'<meta property="og:title" content="[^"]*">', '<meta property="og:title" content="'+H.escape(title)+'">', p, 1)
+    p = re.sub(r'<meta property="og:title" content="[^"]*">', '<meta property="og:title" content="'+H.escape(og_title or title)+'">', p, 1)
     p = re.sub(r'<meta property="og:description" content="[^"]*">', '<meta property="og:description" content="'+H.escape(desc)+'">', p, 1)
     p = re.sub(r'<meta property="og:image" content="[^"]*">', '<meta property="og:image" content="'+SITE+img+'">', p, 1)
     url = SITE + ("/" if route=="" else "/"+route)
@@ -452,7 +452,9 @@ def short(s, n=155):
 urls = []
 grid = "".join('<li><a href="/'+b["id"]+'">'+H.escape(b["name"])+': '+H.escape(b["title"])+'</a></li>' for b in data)
 home_desc = "20 Blok by Lenny Lesser: twenty stories every issue on culture, creativity and the internet. You pick the winners."
-urls.append(page("", "20 Blok — Culture, creativity, and the internet.", home_desc, BRAND, '<h1>20 Blok, Issue 7: Retail Mindset</h1><ul>'+grid+'</ul>'))
+ISSUE_TITLE = next((b["title"] for b in data if b["id"]=="straight-up"), "")
+urls.append(page("", "20 Blok — Culture, creativity, and the internet.", home_desc, BRAND, '<h1>20 Blok, Issue %d: %s</h1><ul>' % (ISSUE_NO, H.escape(ISSUE_TITLE))+grid+'</ul>',
+                 og_title="20 Blok · Issue %d: %s" % (ISSUE_NO, ISSUE_TITLE)))
 for b in data:
     body = "".join("<p>"+txt(x)+"</p>" if x.get("t") in ("p","q","pull") else ("<h2>"+txt(x)+"</h2>" if x.get("t")=="h" else "") for x in b["body"])
     img = paths.get(b.get("img") or "cover", BRAND)
