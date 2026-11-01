@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>November Plan — 20 Blok</title>
+<meta property="og:title" content="How to Build a November Plan That Creates Momentum">
+<meta property="og:description" content="Free from 20 Blok: twenty questions, one clear month. Fill it in here, download it, or print it.">
+<meta property="og:image" content="https://20blok.com/media/cover.jpg">
+<meta property="og:url" content="https://20blok.com/november">
+<link rel="canonical" href="https://20blok.com/november">
+<meta name="description" content="A free monthly plan: twenty questions, one clear month. Type your answers, print it, or save it as a PDF.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#E4E9EF; --surface:#FFFFFF; --field:#F3F5F8; --fg:#151A22; --muted:#5B6573; --line:#C3CCD6;
+  --accent:#2747C7; --accent-soft:#DCE3FA; --accent-fg:#FFFFFF;
+  --display:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E131C; --surface:#151C27; --field:#0F151F; --fg:#E7ECF3; --muted:#97A3B4; --line:#2A3443;
+  --accent:#8EA5FF; --accent-soft:#1E2847; --accent-fg:#0E131C; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0E131C; --surface:#151C27; --field:#0F151F; --fg:#E7ECF3; --muted:#97A3B4; --line:#2A3443;
+  --accent:#8EA5FF; --accent-soft:#1E2847; --accent-fg:#0E131C; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.55;padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:720px;margin:0 auto;display:grid;gap:26px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(30px,6.4vw,46px);line-height:1.05;letter-spacing:-.02em;margin:8px 0 10px;text-wrap:balance}
+h2{font-family:var(--display);font-weight:700;font-size:22px;margin:0;line-height:1.2;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:60ch}
+.howto{background:var(--accent-soft);border-radius:4px;padding:12px 14px;display:grid;gap:4px;font-size:14px}
+.howto b{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;font-weight:500;color:var(--accent)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{font:500 14px/1 var(--body);padding:11px 16px;border-radius:4px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.btn:hover{border-color:var(--accent)}
+.btn:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.btn.danger.armed{border-color:#B3261E;color:#B3261E;font-weight:600}
+.saved{font-family:var(--mono);font-size:12px;color:var(--muted)}
+
+.month{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:14px 16px;display:grid;gap:10px}
+.month-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.month-head span{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.dow{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;letter-spacing:.05em}
+.day{aspect-ratio:1/0.75;max-height:52px;border:1px solid var(--line);border-radius:3px;display:grid;place-items:center;font-family:var(--mono);font-size:13px;background:var(--surface)}
+.day.blank{border-color:transparent;background:none}
+.weeks{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13px;color:var(--muted)}
+.weeks b{font-family:var(--mono);font-weight:500;font-size:12px;color:var(--accent)}
+
+.sec{display:grid;gap:10px}
+.sec-head{display:grid;gap:2px}
+.sec-no{font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.sec-note{margin:0;color:var(--muted);font-size:14px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:13px 14px 14px;display:grid;gap:8px;min-width:0;break-inside:avoid}
+.q .top{display:grid;grid-template-columns:30px minmax(0,1fr);gap:2px 8px;align-items:baseline}
+.q .n{font-family:var(--mono);font-size:13px;color:var(--accent)}
+.q .t{font-weight:600}
+.q .hint{grid-column:2;font-size:13px;color:var(--muted);font-style:italic}
+.slots{display:grid;gap:7px}
+.slot{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;align-items:start}
+.slot .n{font-family:var(--mono);font-size:13px;color:var(--accent);padding-top:9px}
+textarea{width:100%;display:block;font:400 15px/1.5 var(--body);color:var(--fg);background:var(--field);border:1px solid var(--line);border-radius:3px;padding:8px 10px;resize:none;overflow:hidden;min-height:42px}
+textarea::placeholder{color:transparent}
+.with-gutter{margin-left:38px;width:calc(100% - 38px)}
+footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;gap:14px}
+.back{display:inline-block;margin-bottom:18px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);text-decoration:none}.back:hover{color:var(--accent)}
+.sub{color:var(--accent)}
+.closing{font-family:var(--display);font-weight:700;font-size:18px;margin:0}
+
+@media print{
+  @page{margin:14mm}
+  :root,:root[data-theme="dark"]{--bg:#fff;--surface:#fff;--field:#fff;--fg:#151A22;--muted:#4a5360;--line:#9aa5b1;--accent:#2747C7;--accent-soft:#EEF1FB}
+  body{background:#fff;padding:0;font-size:12px}
+  .bar,.saved,.no-print{display:none!important}
+  .wrap{gap:16px;max-width:none}
+  textarea{border-color:#9aa5b1;overflow:visible}
+  .q,.month{break-inside:avoid}
+  .sec-head{break-after:avoid}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="back no-print" href="/">← 20 BLOK</a>
+    <div class="eyebrow">Lenny Lesser · FIND YOUR EDGE™ monthly plan system</div>
+    <h1>How to Build a November Plan That Creates Momentum</h1>
+    <p class="lede">Twenty questions. One clear month. Look back at October, pick a theme, then give every week one big move.</p>
+  </header>
+
+  <div class="howto no-print">
+    <b>How to use</b>
+    <span>Type your answers right here. They save on your own device as you go, so you can close the page and come back. Nobody else can see them. When you finish, download your answers as a PDF to keep or print, or clear everything and start over.</span>
+  </div>
+
+  <div class="bar no-print" id="bar-top">
+    <button class="btn primary" type="button" data-act="pdf">Download my answers (PDF)</button>
+    <button class="btn" type="button" data-act="print" data-printbtn>Print</button>
+    <button class="btn danger" type="button" data-act="clear">Clear all answers</button>
+    <span class="saved" data-saved>Saved on this device</span>
+    <span class="saved" data-printnote hidden>Printing is blocked inside this viewer, so Print saves a print-ready PDF. Open it, then print from there.</span>
+  </div>
+
+  <section class="month" aria-label="November 2026">
+    <div class="month-head"><h2>November 2026</h2><span>Weeks run Sun–Sat</span></div>
+    <div class="cal" id="cal"></div>
+    <div class="weeks">
+      <span class="wk"><b>Wk 1</b>&nbsp; Nov 1–7</span><span class="wk"><b>Wk 2</b>&nbsp; Nov 8–14</span><span class="wk"><b>Wk 3</b>&nbsp; Nov 15–21</span><span class="wk"><b>Wk 4</b>&nbsp; Nov 22–28</span><span class="wk"><b>Last two days</b>&nbsp; Nov 29–30</span>
+    </div>
+  </section>
+
+  <div id="sections" class="wrap" style="gap:26px;width:100%"></div>
+
+  <p class="closing">Read it out loud once. Then get started on Week 1.</p>
+
+  <div class="bar no-print" id="bar-bottom">
+    <button class="btn primary" type="button" data-act="pdf">Download my answers (PDF)</button>
+    <button class="btn" type="button" data-act="print" data-printbtn>Print</button>
+    <button class="btn danger" type="button" data-act="clear">Clear all answers</button>
+  </div>
+
+  <footer>
+    <span>FIND YOUR EDGE™ monthly plan system · Lenny Lesser · @l.nny13</span>
+    <span class="no-print">Free from <a class="sub" href="/">20 Blok</a>. Get the next issue free at <a class="sub" href="/">20blok.com</a>.</span>
+  </footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const SECTIONS=[
+  {h:"Closing October",note:"Look back before you plan forward.",q:[
+    {id:"q01",n:"01",t:"What am I most proud of from October?",hint:"Your top three.",slots:3},
+    {id:"q02",n:"02",t:"What am I leaving behind in October?",hint:"Habits, worries, unfinished business. Name it, then drop it.",rows:2},
+    {id:"q03",n:"03",t:"What is one lesson I’m carrying into November?",rows:2}
+  ]},
+  {h:"November theme",q:[
+    {id:"q04",n:"04",t:"My November motto or phrase",hint:"A line you can say to yourself when it gets hard.",rows:1},
+    {id:"q05",n:"05",t:"What does “winning November” mean to me?",rows:2},
+    {id:"q06",n:"06",t:"What will be different by December 1?",rows:2}
+  ]},
+  {h:"Focus areas",note:"One primary for each.",q:[
+    {id:"q07",n:"07",t:"Work / career: my primary focus",rows:2},
+    {id:"q08",n:"08",t:"A skill or capacity I will strengthen",rows:2},
+    {id:"q09",n:"09",t:"My mind and body standard",hint:"The minimum you hold yourself to. Sleep, movement, stillness, food.",rows:2},
+    {id:"q10",n:"10",t:"My life and relationships priority",rows:2}
+  ]},
+  {h:"Playbook",q:[
+    {id:"q11",n:"11",t:"Finish: what gets done and put away this month?",hint:"Be specific. A list is fine.",rows:4},
+    {id:"q12",n:"12",t:"Fix: what is broken that I will repair?",rows:2},
+    {id:"q13",n:"13",t:"Foundation: what do I set up now that December will benefit from?",rows:2}
+  ]},
+  {h:"Weekly momentum",note:"One big move per week.",q:[
+    {id:"q14",n:"14",t:"Week 1 · Nov 1–7",rows:1},
+    {id:"q15",n:"15",t:"Week 2 · Nov 8–14",rows:1},
+    {id:"q16",n:"16",t:"Week 3 · Nov 15–21",rows:1},
+    {id:"q17",n:"17",t:"Week 4 · Nov 22–28",rows:1},
+    {id:"q17b",n:"",t:"Nov 29–30 · optional",hint:"The last two days. Leave blank if you want them off.",rows:1}
+  ]},
+  {h:"My edge",q:[
+    {id:"q18",n:"18",t:"One habit that gives me an advantage",rows:1},
+    {id:"q19",n:"19",t:"One pattern or distraction I will remove",rows:1}
+  ]},
+  {h:"Wins",q:[
+    {id:"q20",n:"20",t:"If I achieve these 3 things, November was a success.",hint:"Pick three you can actually check off on November 30.",slots:3}
+  ]}
+];
+
+const KEY="fye-november-2026-plan-v1";
+const el=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e};
+let store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){store={}}
+const fields=[];
+
+function grow(t){t.style.height="auto";t.style.height=(t.scrollHeight+2)+"px"}
+function makeField(id,rows,label){
+  const t=document.createElement("textarea");
+  t.rows=rows;t.id=id;t.setAttribute("aria-label",label);t.value=store[id]||"";
+  t.addEventListener("input",()=>{store[id]=t.value;if(!t.value)delete store[id];grow(t);save()});
+  fields.push(t);return t;
+}
+
+/* calendar: Nov 1, 2026 is a Sunday */
+const cal=document.getElementById("cal");
+["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].forEach(d=>cal.appendChild(el("div","dow",d)));
+for(let d=1;d<=30;d++)cal.appendChild(el("div","day",String(d)));
+for(let i=0;i<5;i++)cal.appendChild(el("div","day blank",""));
+
+const host=document.getElementById("sections");
+SECTIONS.forEach((s,i)=>{
+  const sec=el("section","sec");
+  const head=el("div","sec-head");
+  head.appendChild(el("div","sec-no","Section "+(i+1)));
+  head.appendChild(el("h2",null,s.h));
+  if(s.note)head.appendChild(el("p","sec-note",s.note));
+  sec.appendChild(head);
+  s.q.forEach(q=>{
+    const card=el("div","q");
+    const top=el("div","top");
+    top.appendChild(el("span","n",q.n));
+    top.appendChild(el("span","t",q.t));
+    if(q.hint)top.appendChild(el("span","hint",q.hint));
+    card.appendChild(top);
+    if(q.slots){
+      const wrap=el("div","slots");
+      for(let k=1;k<=q.slots;k++){
+        const row=el("div","slot");
+        row.appendChild(el("span","n",k+"."));
+        row.appendChild(makeField(q.id+"_"+k,1,q.t+" ("+k+" of "+q.slots+")"));
+        wrap.appendChild(row);
+      }
+      card.appendChild(wrap);
+    }else{
+      const f=makeField(q.id,q.rows,q.t);f.classList.add("with-gutter");card.appendChild(f);
+    }
+    sec.appendChild(card);
+  });
+  host.appendChild(sec);
+});
+
+let timer=null;
+function save(){
+  try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}
+  document.querySelectorAll("[data-saved]").forEach(s=>{s.textContent="Saved on this device"});
+}
+function growAll(){fields.forEach(grow)}
+growAll();
+window.addEventListener("resize",growAll);
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(growAll);
+window.addEventListener("beforeprint",growAll);
+
+/* buttons */
+let armed=null,armTimer=null;
+function disarm(){document.querySelectorAll('[data-act="clear"]').forEach(b=>{b.textContent="Clear all answers";b.classList.remove("armed")});armed=null}
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-act]");if(!b)return;
+  if(b.dataset.act==="print"){
+    if(dlCap===undefined){resolveDownloads().then(()=>b.click());return}
+    if(dlCap){document.querySelectorAll("[data-printnote]").forEach(n=>n.hidden=false);downloadPdf(b,"My-November-Plan-print.pdf");return}
+    growAll();window.print();return}
+  if(b.dataset.act==="pdf"){downloadPdf(b);return}
+  if(b.dataset.act==="clear"){
+    if(!armed){
+      armed=true;
+      document.querySelectorAll('[data-act="clear"]').forEach(x=>{x.textContent="Press again to erase everything";x.classList.add("armed")});
+      clearTimeout(armTimer);armTimer=setTimeout(disarm,4000);return;
+    }
+    clearTimeout(armTimer);
+    store={};fields.forEach(f=>{f.value=""});growAll();
+    try{localStorage.removeItem(KEY)}catch(err){}
+    disarm();
+    document.querySelectorAll("[data-saved]").forEach(s=>{s.textContent="Cleared"});
+  }
+});
+
+/* ---- PDF of the viewer's own answers, built in the browser ---- */
+const clean=t=>String(t).replace(/[^\x09\x0A\x20-\x7E\xA0-\xFF\u2013\u2014\u2018\u2019\u201C\u201D\u2022\u2026\u2122]/g,"?");
+function buildPdf(){
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:"pt",format:"letter"});
+  const PW=612,PH=792,M=54,CWd=PW-2*M;
+  let y=M,page=1;
+  const ACC=[39,71,199],INK=[21,26,34],MUT=[91,101,115],LN=[185,194,205];
+  const foot=()=>{doc.setFont("helvetica","normal");doc.setFontSize(7.5);doc.setTextColor(...MUT);
+    doc.text("FIND YOUR EDGE\u2122 monthly plan system  \u00b7  Lenny Lesser  \u00b7  @l.nny13",M,PH-30);
+    doc.text("Page "+page,PW-M,PH-30,{align:"right"})};
+  const need=h=>{if(y+h>PH-52){foot();doc.addPage();page++;y=M}};
+  doc.setFont("helvetica","bold");doc.setFontSize(8);doc.setTextColor(...MUT);
+  doc.text("LENNY LESSER  \u00b7  FIND YOUR EDGE\u2122 MONTHLY PLAN SYSTEM",M,y);y+=26;
+  doc.setFontSize(24);doc.setTextColor(...INK);doc.text("My November Plan",M,y);y+=18;
+  doc.setFont("helvetica","normal");doc.setFontSize(10);doc.setTextColor(...MUT);
+  doc.text("November 2026  \u00b7  weeks run Sunday to Saturday",M,y);y+=30;
+  const line=()=>{need(22);doc.setDrawColor(...LN);doc.setLineWidth(0.6);doc.line(M+22,y+10,PW-M,y+10);y+=22};
+  const answer=(txt,indent,blankLines)=>{
+    const v=(txt||"").trim();
+    if(!v){for(let i=0;i<blankLines;i++)line();return}
+    doc.setFont("helvetica","normal");doc.setFontSize(10.5);doc.setTextColor(...INK);
+    const lines=doc.splitTextToSize(clean(v),CWd-indent);
+    lines.forEach(l=>{need(15);doc.text(l,M+indent,y+9);y+=15});y+=4;
+  };
+  SECTIONS.forEach((sec,si)=>{
+    need(120);
+    doc.setFont("helvetica","bold");doc.setFontSize(7.5);doc.setTextColor(...ACC);doc.text("SECTION "+(si+1),M,y);y+=17;
+    doc.setFontSize(14);doc.setTextColor(...INK);doc.text(clean(sec.h),M,y);y+=8;
+    doc.setDrawColor(...ACC);doc.setLineWidth(1);doc.line(M,y,PW-M,y);y+=18;
+    sec.q.forEach(q=>{
+      need(54);
+      doc.setFont("helvetica","bold");doc.setFontSize(10.5);
+      if(q.n){doc.setTextColor(...ACC);doc.text(q.n,M,y)}
+      doc.setTextColor(...INK);doc.text(clean(q.t),M+(q.n?22:0),y);y+=16;
+      if(q.slots){for(let k=1;k<=q.slots;k++){
+        need(20);doc.setFont("helvetica","bold");doc.setFontSize(10.5);doc.setTextColor(...ACC);doc.text(k+".",M+22,y+9);
+        const v=(store[q.id+"_"+k]||"").trim();
+        if(v){doc.setFont("helvetica","normal");doc.setTextColor(...INK);
+          const ls=doc.splitTextToSize(clean(v),CWd-40);ls.forEach((l,i)=>{if(i)need(15);doc.text(l,M+40,y+9);y+=15});y+=3}
+        else{doc.setDrawColor(...LN);doc.line(M+40,y+11,PW-M,y+11);y+=22}
+      }}
+      else answer(store[q.id],22,q.rows>=3?3:2);
+      y+=10;
+    });
+    y+=6;
+  });
+  need(30);doc.setFont("helvetica","bold");doc.setFontSize(12);doc.setTextColor(...INK);
+  doc.text("Read it out loud once. Then get started on Week 1.",M,y);
+  foot();
+  return doc;
+}
+let dlCap=undefined; /* undefined = unknown yet, null = none, object = Claude downloads */
+async function resolveDownloads(){
+  try{ if(window.claude&&typeof window.claude.use==="function"){dlCap=await window.claude.use("downloads")}else{dlCap=null} }catch(e){dlCap=null}
+}
+resolveDownloads();
+async function downloadPdf(btn,fname){
+  const label=btn.textContent;
+  try{
+    if(!window.jspdf){btn.textContent="PDF tool did not load";setTimeout(()=>btn.textContent=label,2500);return}
+    btn.textContent="Building…";
+    const doc=buildPdf();
+    const name=fname||"My-November-Plan.pdf";
+    if(dlCap===undefined)await resolveDownloads();
+    if(dlCap){ await dlCap.save({filename:name,data:doc.output("arraybuffer")}); }
+    else{
+      const url=URL.createObjectURL(doc.output("blob"));
+      const a=document.createElement("a");a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+      setTimeout(()=>URL.revokeObjectURL(url),4000);
+    }
+    btn.textContent="Done";
+  }catch(e){
+    btn.textContent=(e&&e.code==="declined")?"Not saved":"Could not save";
+  }
+  setTimeout(()=>btn.textContent=label,2200);
+}
+</script>
+</body>
+</html>
