@@ -87,6 +87,14 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
   .qs{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
   .q.wide{grid-column:1/-1}
 }
+.share{position:relative;display:inline-block}
+.sh-btn{display:inline-flex;align-items:center;gap:8px;font:500 14px/1 var(--body);padding:9px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.sh-btn svg{width:20px;height:20px}
+.sh-btn:hover,.sh-btn[aria-expanded="true"]{border-color:var(--accent);color:var(--accent)}
+.sh-menu{position:absolute;z-index:15;top:calc(100% + 8px);left:0;min-width:200px;display:grid;padding:6px;border-radius:14px;background:#151517;border:1px solid var(--line);box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.share-up .sh-menu{top:auto;bottom:calc(100% + 8px)}
+.sh-item{display:block;width:100%;text-align:left;padding:10px 12px;border:0;border-radius:9px;background:none;color:var(--fg);font:600 15px var(--body);text-decoration:none;cursor:pointer}
+.sh-item:hover,.sh-item:focus-visible{background:rgba(255,255,255,.08)}
 .join{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:22px;display:grid;gap:14px}
 .join h2{font-size:26px}
 .join p{margin:4px 0 0;color:var(--muted);max-width:56ch}
@@ -163,6 +171,7 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
     <button class="btn primary" type="button" data-act="pdf">Download my answers (PDF)</button>
     <button class="btn" type="button" data-act="print" data-printbtn>Print</button>
     <button class="btn danger" type="button" data-act="clear">Clear all answers</button>
+    <div class="share" data-share></div>
     <span class="saved" data-saved>Saved on this device</span>
     <span class="saved" data-printnote hidden>Printing is blocked inside this viewer, so Print saves a print-ready PDF. Open it, then print from there.</span>
   </div>
@@ -185,6 +194,7 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
     <button class="btn primary" type="button" data-act="pdf">Download my answers (PDF)</button>
     <button class="btn" type="button" data-act="print" data-printbtn>Print</button>
     <button class="btn danger" type="button" data-act="clear">Clear all answers</button>
+    <div class="share share-up" data-share></div>
   </div>
 
   <section class="join no-print" id="join" aria-labelledby="join-h">
@@ -433,6 +443,33 @@ async function downloadPdf(btn,fname){
       msg.textContent=j.error==="email"?"Check that email.":"That didn’t go through. Try again in a moment.";
     }catch(err){msg.textContent="That didn’t go through. Try again in a moment."}
   });
+})();
+</script>
+<script>
+/* share arrow + menu, same as the bloks on 20blok.com */
+(function(){
+  const url="https://20blok.com/find-your-edge/monthly-plan-november-2026", title="Find Your Edge: November Plan \u2014 20 Blok";
+  const u=encodeURIComponent(url), tt=encodeURIComponent(title), both=encodeURIComponent(title+" "+url);
+  const links=[["X","https://twitter.com/intent/tweet?text="+tt+"&url="+u],["Reddit","https://www.reddit.com/submit?url="+u+"&title="+tt],
+    ["LinkedIn","https://www.linkedin.com/sharing/share-offsite/?url="+u],["Telegram","https://t.me/share/url?url="+u+"&text="+tt],
+    ["Facebook","https://www.facebook.com/sharer/sharer.php?u="+u],["Threads","https://www.threads.net/intent/post?text="+both],["Email","mailto:?subject="+tt+"&body="+both]];
+  const NS="http://www.w3.org/2000/svg";
+  function swoosh(){const s=document.createElementNS(NS,"svg");[["viewBox","0 0 24 24"],["fill","none"],["stroke","currentColor"],["stroke-width","1.1"],["stroke-linejoin","round"],["stroke-linecap","round"],["aria-hidden","true"]].forEach(([k,v])=>s.setAttribute(k,v));
+    const p=document.createElementNS(NS,"path");p.setAttribute("d","M13.5 4.5 L21 11 L13.5 17.5 V13.7 C8.8 13.5 5.6 15.2 3 19.5 C3.5 13 7.4 8.9 13.5 8.3 Z");s.append(p);return s}
+  document.querySelectorAll("[data-share]").forEach(host=>{
+    const menu=document.createElement("div");menu.className="sh-menu";menu.setAttribute("role","menu");menu.hidden=true;
+    const copy=document.createElement("button");copy.type="button";copy.className="sh-item";copy.textContent="Copy link";
+    copy.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(url);copy.textContent="Link copied"}catch(e){copy.textContent=url}setTimeout(()=>copy.textContent="Copy link",2000)});
+    menu.append(copy);
+    links.forEach(([n,h])=>{const a=document.createElement("a");a.className="sh-item";a.href=h;a.target="_blank";a.rel="noopener";a.textContent=n;menu.append(a)});
+    if(navigator.share){const o=document.createElement("button");o.type="button";o.className="sh-item";o.textContent="Other apps\u2026";o.addEventListener("click",()=>{navigator.share({title,url}).catch(()=>{})});menu.append(o)}
+    const btn=document.createElement("button");btn.type="button";btn.className="sh-btn";btn.setAttribute("aria-haspopup","true");btn.setAttribute("aria-expanded","false");
+    btn.append(swoosh(),document.createTextNode("Share"));
+    btn.addEventListener("click",e=>{e.stopPropagation();const open=menu.hidden;document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true);menu.hidden=!open;btn.setAttribute("aria-expanded",String(open))});
+    host.append(btn,menu);
+  });
+  document.addEventListener("click",e=>{if(!e.target.closest(".share"))document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true)});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape")document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true)});
 })();
 </script>
 </body>
