@@ -195,6 +195,28 @@ main{padding-block:20px 64px}
 .lbx-nav.p{left:10px}.lbx-nav.n{right:10px}
 .lbx-hint{padding:10px 16px 16px;text-align:center;font-family:var(--sans);font-size:13px;color:#aaa}
 @media (max-width:640px){.lbx-stage{padding:0}.lbx-nav{display:none}}
+.feedback .fb-form{flex:1 1 100%;display:grid;gap:12px;max-width:640px}
+.fb-q{margin:0;font-weight:700;color:var(--ink)}
+.fb-chips{display:flex;flex-wrap:wrap;gap:8px}
+.fb-chip{min-height:40px;padding:0 16px;border-radius:999px;border:1.5px solid #c9c9cf;background:#fff;color:var(--ink);font:600 14px var(--sans);cursor:pointer}
+.fb-chip[aria-pressed="true"]{border-color:var(--red-deep);background:var(--red-deep);color:#fff}
+.feedback textarea,.feedback input[type=email]{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:12px;border:1.5px solid #c9c9cf;background:#fff;color:var(--ink);font:16px/1.5 var(--sans)}
+.feedback textarea{min-height:90px;resize:vertical}
+.fb-check{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--ink);cursor:pointer}
+.fb-check input{width:18px;height:18px;accent-color:var(--red-deep)}
+.fb-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.fb-row .fb-btn{border:0;cursor:pointer}
+.fb-msg{margin:0;font-size:14px}.fb-msg:empty{display:none}
+.fb-fine{margin:-4px 0 0;font-size:13px;color:#5a5a62}
+.feedback .fb-msg{color:var(--red-deep)}
+.fb-done{margin:0;font-weight:700;font-size:17px}
+.ct-form{display:grid;gap:14px;margin:8px 0 20px}
+.ct-field{display:grid;gap:6px}
+.ct-field label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.ct-field input,.ct-field select,.ct-field textarea{width:100%;box-sizing:border-box;min-height:46px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:16px/1.5 var(--sans)}
+.ct-field textarea{min-height:140px;resize:vertical}
+.ct-form .fb-msg{color:var(--fg-soft)}
+.ct-alt{color:var(--muted);font-size:14px}.ct-alt b{color:var(--fg)}
 .c-form input[type=text]{width:100%;box-sizing:border-box;min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:16px var(--sans)}
 .c-actions{flex-wrap:wrap}
 .c-who{flex:1 1 220px;font-size:13px;color:var(--muted)}.c-who b{color:var(--fg)}
@@ -373,7 +395,7 @@ footer .inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px
 <main class="wrap" id="view" aria-live="polite"><article><p>INDUSTRY FREEKS</p><h1>Taavi.TV: The Artist Whisperer</h1><p>Taavi is a spiritual guide, a creative’s best friend and a mentor all in one. Every day on his channel, he takes on doubt, momentum and energy—the things that stand between your creative side and the work you want to make.</p><p>For decades, creators have been handed bad advice: follow your passion and be unapologetically you. Do that, and everything works out.</p><p>That was brutally reckless.</p><p>It helped create a sea of people online making content while still searching for direction and significance. This is where Taavi comes in.</p><p>One of his mantras is “keep it gutter.” Keep it fresh, keep it moving, keep the main thing the main thing. It’s not about the equipment, and it’s not about the excuse. It’s about the thing you came to do.</p><p>Keep it gutter.</p><p>He speaks directly to the lack of confidence and the lizard brain that somehow chooses failure over winning. He gets into the parts of creative life most advice skips, and steers people toward acting on their ideas and getting the results they set out for. And this is key: finishing, even when it’s not perfect.</p></article></main>
 
 <footer class="foot"><div class="wrap"><div class="inner">
-  <span>20 Blok · Culture, creativity, and the internet. · <a href="/issue-notes">Issue notes</a> · <a href="/privacy">Privacy</a> · <a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a></span>
+  <span>20 Blok · Culture, creativity, and the internet. · <a href="/issue-notes">Issue notes</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a></span>
   <span>© 2026 Lenny Lesser</span>
 </div></div></footer>
 
@@ -463,7 +485,7 @@ function curRoute(){
   if (!p){ const h=(location.hash||"").replace(/^#/,""); if (h && !isAuthHash(h)) return h; }
   return p || "this-week";
 }
-const TITLES = {"welcome":"Welcome","privacy":"Privacy","all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
+const TITLES = {"contact":"Contact","welcome":"Welcome","privacy":"Privacy","all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
 function go(id){ const path = (!id || id==="this-week") ? "/" : "/"+id; if (location.pathname!==path || location.hash) history.pushState({}, "", path); render(false); }
 document.addEventListener("click", e=>{
   if (e.defaultPrevented || e.button!==0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -724,8 +746,8 @@ function gridView(all){
       el("p",{text: (shared ? "Ranked live by readers. " : "Ranked by readers. ") + "Uprate what you want more of. The most uprated blok sits top-left; ties keep the table of contents order."})),
     grid,
     el("section",{class:"feedback","aria-labelledby":"fb-head"},
-      el("div",{}, el("h2",{id:"fb-head",text:"Got a minute?"}), el("p",{text:"Tell me which bloks actually resonate and what you want more of next issue."})),
-      el("a",{class:"fb-btn",href:SURVEY,target:"_blank",rel:"noopener"},"Take the quick survey →")),
+      el("div",{}, el("h2",{id:"fb-head",text:"Got a minute?"}), el("p",{text:"The votes tell me what landed. Tell me what you want next."})),
+      feedbackForm()),
     subscribeBox(),
     el("a",{class:"notes-link",href:"/issue-notes"}, el("span",{text:"THE BACK PAGE"}), el("b",{text:"Issue notes: what changed, the bonus pick and the sign-off →"}))];
 }
@@ -767,6 +789,8 @@ function privacyView(){
       P("Uprating a blok doesn't ask for your name or email. Your browser gets an anonymous ID so each person counts once. Votes are stored with Supabase, which hosts the site's database."),
       el("h3",{text:"Comments"}),
       P("To comment, you confirm your email, either with Google sign-in or with a one-time link sent to your inbox (sent through Resend). Your sign-in is handled by Supabase. Commenting subscribes you to the 20 Blok newsletter, which you can leave any time. Your comment and the name you choose are shown publicly; your email is never shown."),
+      el("h3",{text:"Feedback and contact"}),
+      P("The feedback box and the contact page send what you write, plus your name and email if you give them, to Lenny. Messages are stored with Supabase and emailed to Lenny through Resend. They're never published."),
       el("h3",{text:"Bot protection"}),
       el("p",{}, "This site uses Cloudflare Turnstile to keep bots from faking votes. Turnstile checks your browser quietly in the background. Its handling of data is described in the ",
         el("a",{href:"https://www.cloudflare.com/turnstile-privacy-policy/",target:"_blank",rel:"noopener",text:"Cloudflare Turnstile Privacy Addendum"}), "."),
@@ -848,6 +872,80 @@ function shareBar(b, bottom){
 }
 document.addEventListener("click", e=>{ if (!e.target.closest(".share")) document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); });
 document.addEventListener("keydown", e=>{ if (e.key==="Escape") document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); });
+/* ---------- feedback box + contact page (saved to Supabase, emailed to Lenny) ---------- */
+async function sendMessage(row){
+  await sbReady;
+  if (!sb) return "offline";
+  const { error } = await sb.from("messages").insert(row);
+  if (!error) return "ok";
+  return /slow down/.test(String(error.message || "")) ? "slow" : "error";
+}
+function feedbackForm(){
+  let freq = "";
+  const chips = ["Every issue","Sometimes","First time"].map(label => {
+    const b = el("button",{type:"button",class:"fb-chip","aria-pressed":"false",text:label,onclick:() => {
+      freq = freq === label ? "" : label;
+      chips.forEach(x => x.setAttribute("aria-pressed", String(x.textContent === freq)));
+    }});
+    return b;
+  });
+  const ta = el("textarea",{rows:"3",maxlength:"3000",placeholder:"What should I add, cut or change?","aria-label":"What should I add, cut or change?"});
+  const pitch = el("input",{type:"checkbox",id:"fb-pitch"});
+  const email = el("input",{type:"email",maxlength:"254",autocomplete:"email",inputmode:"email",placeholder:"Your email (so I can reply)","aria-label":"Your email"});
+  try{ if (typeof cState !== "undefined" && cState.me && cState.me.email) email.value = cState.me.email; }catch(e){}
+  const msg = el("p",{class:"fb-msg","aria-live":"polite"});
+  const send = el("button",{type:"submit",class:"fb-btn"},"Send feedback");
+  const form = el("form",{class:"fb-form",onsubmit:async e => {
+      e.preventDefault(); msg.textContent = "";
+      const text = ta.value.trim(), em = email.value.trim();
+      if (!freq && !text){ msg.textContent = "Pick one or write a line first."; return; }
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ msg.textContent = "Add your email so I know who it’s from."; email.focus(); return; }
+      send.disabled = true; msg.textContent = "Sending…";
+      const r = await sendMessage({kind:"feedback", read_freq:freq || null, body:text || null, pitch:pitch.checked, email:em});
+      send.disabled = false;
+      if (r === "ok"){ form.replaceChildren(el("p",{class:"fb-done",text:"Got it. Thank you, this shapes the next issue."})); return; }
+      msg.textContent = r === "slow" ? "One at a time. Try again in a few seconds." : "That didn’t send. Try again in a moment.";
+    }},
+    el("p",{class:"fb-q",text:"How often do you read 20 Blok?"}),
+    el("div",{class:"fb-chips",role:"group","aria-label":"How often do you read 20 Blok?"}, chips),
+    ta,
+    email,
+    el("label",{class:"fb-check",for:"fb-pitch"}, pitch, " I’d like to pitch or collaborate"),
+    el("p",{class:"fb-fine",text:"No newsletter signup needed. Your email is only for replies."}),
+    el("div",{class:"fb-row"}, send, msg));
+  return form;
+}
+function contactView(){
+  const topics = ["Collaboration","Press / interview","Write for 20 Blok","Sponsorship / brand","Other"];
+  const name = el("input",{type:"text",id:"ct-name",maxlength:"80",autocomplete:"name",required:"required"});
+  const email = el("input",{type:"email",id:"ct-email",maxlength:"254",autocomplete:"email",inputmode:"email",required:"required"});
+  const topic = el("select",{id:"ct-topic"}, topics.map(t => el("option",{value:t,text:t})));
+  const body = el("textarea",{id:"ct-body",rows:"6",maxlength:"3000",required:"required"});
+  try{ if (typeof cState !== "undefined" && cState.me && cState.me.email) email.value = cState.me.email; }catch(e){}
+  const msg = el("p",{class:"fb-msg","aria-live":"polite"});
+  const send = el("button",{type:"submit",class:"sub"},"Send");
+  const field = (id, label, input) => el("div",{class:"ct-field"}, el("label",{for:id,text:label}), input);
+  const form = el("form",{class:"ct-form",onsubmit:async e => {
+      e.preventDefault(); msg.textContent = "";
+      const n = name.value.trim(), em = email.value.trim(), b = body.value.trim();
+      if (!n || !b){ msg.textContent = "Add your name and a message."; return; }
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ msg.textContent = "Check that email so I can reply."; email.focus(); return; }
+      send.disabled = true; msg.textContent = "Sending…";
+      const r = await sendMessage({kind:"inquiry", topic:topic.value, name:n, email:em, body:b});
+      send.disabled = false;
+      if (r === "ok"){ form.replaceChildren(el("p",{class:"fb-done",text:"Sent. I’ll reply to " + em + " soon."})); return; }
+      msg.textContent = r === "slow" ? "One at a time. Try again in a few seconds." : "That didn’t send. Email lennybusinessnow@gmail.com instead.";
+    }},
+    field("ct-name","Your name",name), field("ct-email","Your email",email), field("ct-topic","What it’s about",topic), field("ct-body","Message",body),
+    el("div",{class:"fb-row"}, send, msg));
+  return [el("article",{class:"article"},
+    el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"}),
+    el("header",{class:"art-head"}, el("p",{class:"eyebrow",text:"20 Blok"}), el("h1",{class:"art-title",text:"Contact"})),
+    el("div",{class:"prose"},
+      el("p",{text:"Want to collaborate, interview me, write for 20 Blok, or bring a brand on board? This goes straight to my inbox, and I reply from lennybusinessnow@gmail.com."}),
+      form,
+      el("p",{class:"ct-alt"}, "Rather email? ", el("b",{text:"lennybusinessnow@gmail.com"}))))];
+}
 function ytId(u){ const m = u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : null; }
 let embedScripts = {};
 function loadScript(src, done){ if (embedScripts[src]) { done && done(); return; } embedScripts[src]=1; const s=document.createElement("script"); s.src=src; s.async=true; s.onload=()=>done&&done(); document.body.append(s); }
@@ -1000,6 +1098,7 @@ function notesView(){
         el("ul",{}, R.map(([a,b])=>el("li",{text:a+" → "+b}))),
         el("p",{},el("strong",{text:"Email vs. web: "}),"The email is now a micro issue: a short note and a few picks. The full issue lives here.")),
       sec("Work with me",
+        el("p",{},"Collaborations, interviews, writing for 20 Blok, brands → ", el("a",{href:"/contact",text:"use the contact form →"})),
         el("p",{},"Need video ads for your brand or business? ", el("a",{href:"https://unruly-reels-apqmcno.gamma.site/",target:"_blank",rel:"noopener",text:"UnrulyReels.com →"})),
         el("p",{class:"email-row"}, "Collaborations + features → email me: ", el("a",{href:"mailto:lennybusinessnow@gmail.com",class:"email-addr",text:"lennybusinessnow@gmail.com"}), " ",
           el("button",{type:"button",class:"c-del",onclick:async e=>{ const b=e.currentTarget; try{ await navigator.clipboard.writeText("lennybusinessnow@gmail.com"); b.textContent="Copied"; }catch(err){ const r=document.createRange(); r.selectNodeContents(document.querySelector(".email-addr")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent="Selected"; } }},"Copy"))),
@@ -1018,7 +1117,7 @@ function render(keepFocus){
   const focused = keepFocus && document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.vote : null;
   const h = curRoute();
   const blok = BLOKS.find(b=>b.id===h);
-  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : h==="privacy" ? privacyView() : h==="welcome" ? welcomeView() : gridView(false);
+  const kids = blok ? articleView(blok) : h==="all-time" ? gridView(true) : h==="past-issues" ? pastView() : (h==="issue-notes"||h==="bonus") ? notesView() : h==="privacy" ? privacyView() : h==="welcome" ? welcomeView() : h==="contact" ? contactView() : gridView(false);
   const active = blok ? null : (["all-time","past-issues"].includes(h) ? h : "this-week");
   document.querySelectorAll("[data-route]").forEach(a=> a.dataset.route===active ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
   const extra = (h==="past-issues"||h==="issue-notes"||h==="bonus") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];

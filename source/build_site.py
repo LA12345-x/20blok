@@ -218,6 +218,8 @@ PRIV_JS = '''function privacyView(){
       P("Uprating a blok doesn't ask for your name or email. Your browser gets an anonymous ID so each person counts once. Votes are stored with Supabase, which hosts the site's database."),
       el("h3",{text:"Comments"}),
       P("To comment, you confirm your email, either with Google sign-in or with a one-time link sent to your inbox (sent through Resend). Your sign-in is handled by Supabase. Commenting subscribes you to the 20 Blok newsletter, which you can leave any time. Your comment and the name you choose are shown publicly; your email is never shown."),
+      el("h3",{text:"Feedback and contact"}),
+      P("The feedback box and the contact page send what you write, plus your name and email if you give them, to Lenny. Messages are stored with Supabase and emailed to Lenny through Resend. They're never published."),
       el("h3",{text:"Bot protection"}),
       el("p",{}, "This site uses Cloudflare Turnstile to keep bots from faking votes. Turnstile checks your browser quietly in the background. Its handling of data is described in the ",
         el("a",{href:"https://www.cloudflare.com/turnstile-privacy-policy/",target:"_blank",rel:"noopener",text:"Cloudflare Turnstile Privacy Addendum"}), "."),
@@ -313,7 +315,38 @@ R('if (!session){ const r = await sb.auth.signInAnonymously(); session = r.data 
   'if (!session){ const captchaToken = await getTurnstileToken(); const r = await sb.auth.signInAnonymously(captchaToken ? {options:{captchaToken}} : undefined); session = r.data && r.data.session; }')
 R('const TITLES = {"all-time":"All-Time"', 'const TITLES = {"welcome":"Welcome","privacy":"Privacy","all-time":"All-Time"')
 
-SUB_CSS = '''.c-form input[type=text]{width:100%;box-sizing:border-box;min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:16px var(--sans)}
+# ---------- feedback box + contact page ----------
+R('function ytId(u){', open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "inbox.js")).read() + 'function ytId(u){')
+R('el("a",{class:"fb-btn",href:SURVEY,target:"_blank",rel:"noopener"},"Take the quick survey →")),', 'feedbackForm()),')
+R('el("p",{text:"Tell me which bloks actually resonate and what you want more of next issue."})', 'el("p",{text:"The votes tell me what landed. Tell me what you want next."})')
+R('<a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a>', '<a href="/contact">Contact</a>')
+R('h==="welcome" ? welcomeView() : gridView(false);', 'h==="welcome" ? welcomeView() : h==="contact" ? contactView() : gridView(false);')
+R('const TITLES = {"welcome":"Welcome",', 'const TITLES = {"contact":"Contact","welcome":"Welcome",')
+R('sec("Work with me",', 'sec("Work with me",\n        el("p",{},"Collaborations, interviews, writing for 20 Blok, brands → ", el("a",{href:"/contact",text:"use the contact form →"})),')
+
+SUB_CSS = '''.feedback .fb-form{flex:1 1 100%;display:grid;gap:12px;max-width:640px}
+.fb-q{margin:0;font-weight:700;color:var(--ink)}
+.fb-chips{display:flex;flex-wrap:wrap;gap:8px}
+.fb-chip{min-height:40px;padding:0 16px;border-radius:999px;border:1.5px solid #c9c9cf;background:#fff;color:var(--ink);font:600 14px var(--sans);cursor:pointer}
+.fb-chip[aria-pressed="true"]{border-color:var(--red-deep);background:var(--red-deep);color:#fff}
+.feedback textarea,.feedback input[type=email]{width:100%;box-sizing:border-box;padding:12px 14px;border-radius:12px;border:1.5px solid #c9c9cf;background:#fff;color:var(--ink);font:16px/1.5 var(--sans)}
+.feedback textarea{min-height:90px;resize:vertical}
+.fb-check{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--ink);cursor:pointer}
+.fb-check input{width:18px;height:18px;accent-color:var(--red-deep)}
+.fb-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.fb-row .fb-btn{border:0;cursor:pointer}
+.fb-msg{margin:0;font-size:14px}.fb-msg:empty{display:none}
+.fb-fine{margin:-4px 0 0;font-size:13px;color:#5a5a62}
+.feedback .fb-msg{color:var(--red-deep)}
+.fb-done{margin:0;font-weight:700;font-size:17px}
+.ct-form{display:grid;gap:14px;margin:8px 0 20px}
+.ct-field{display:grid;gap:6px}
+.ct-field label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.ct-field input,.ct-field select,.ct-field textarea{width:100%;box-sizing:border-box;min-height:46px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:16px/1.5 var(--sans)}
+.ct-field textarea{min-height:140px;resize:vertical}
+.ct-form .fb-msg{color:var(--fg-soft)}
+.ct-alt{color:var(--muted);font-size:14px}.ct-alt b{color:var(--fg)}
+.c-form input[type=text]{width:100%;box-sizing:border-box;min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:16px var(--sans)}
 .c-actions{flex-wrap:wrap}
 .c-who{flex:1 1 220px;font-size:13px;color:var(--muted)}.c-who b{color:var(--fg)}
 .c-link{border:0;background:none;padding:0;color:var(--muted);text-decoration:underline;font:inherit;cursor:pointer}
@@ -419,7 +452,7 @@ for b in data:
     body = "".join("<p>"+txt(x)+"</p>" if x.get("t") in ("p","q","pull") else ("<h2>"+txt(x)+"</h2>" if x.get("t")=="h" else "") for x in b["body"])
     img = paths.get(b.get("img") or "cover", "/media/cover.jpg")
     urls.append(page(b["id"], b["title"]+" — 20 Blok", short(first_para(b)) or home_desc, img, '<article><p>'+H.escape(b["name"])+'</p><h1>'+H.escape(b["title"])+'</h1>'+body+'</article>'))
-for r_, ti in [("welcome","Welcome"),("privacy","Privacy"),("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue Notes"),("bonus","Issue Notes")]:
+for r_, ti in [("contact","Contact"),("welcome","Welcome"),("privacy","Privacy"),("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue Notes"),("bonus","Issue Notes")]:
     u = page(r_, ti+" — 20 Blok", home_desc, "/media/cover.jpg", "<h1>"+ti+"</h1>")
     if r_ not in ("bonus","welcome"): urls.append(u)
 open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join("  <url><loc>"+u+"</loc></url>\n" for u in urls) + "</urlset>\n")

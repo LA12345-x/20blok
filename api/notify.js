@@ -13,9 +13,10 @@ module.exports = async (req, res) => {
   let body = req.body;
   if (typeof body === "string") { try { body = JSON.parse(body); } catch (e) { body = {}; } }
   const c = (body && body.record) || {};
-  if (!body || body.table !== "comments" || body.type !== "INSERT" || !c.blok) { res.status(200).json({ ok: true, skipped: true }); return; }
   const key = String(process.env.RESEND_API_KEY || "").replace(/\s+/g, "");
   if (!key) { res.status(503).json({ ok: false, error: "setup" }); return; }
+  if (body && body.table === "messages" && body.type === "INSERT") { await sendMessageMail(c, key, res); return; }
+  if (!body || body.table !== "comments" || body.type !== "INSERT" || !c.blok) { res.status(200).json({ ok: true, skipped: true }); return; }
   const blokName = String(c.blok).replace(/-/g, " ").toUpperCase();
   const link = "https://20blok.com/" + encodeURIComponent(c.blok);
   const html = `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;color:#111">
@@ -34,3 +35,26 @@ module.exports = async (req, res) => {
     res.status(200).json({ ok: true });
   } catch (e) { res.status(502).json({ ok: false, error: "network" }); }
 };
+
+async function sendMessageMail(m, key, res) {
+  const isInquiry = m.kind === "inquiry";
+  const who = m.name || (m.email ? m.email : "a reader");
+  const subject = isInquiry ? `New inquiry (${m.topic || "Other"}) from ${String(who).slice(0, 60)}` : `New feedback on 20 Blok${m.pitch ? " (wants to pitch)" : ""}`;
+  const rows = [
+    isInquiry ? ["Topic", m.topic] : ["Reads", m.read_freq],
+    ["Name", m.name], ["Email", m.email], ["Wants to pitch/collaborate", m.pitch ? "Yes" : ""]
+  ].filter(r => r[1]);
+  const html = `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;color:#111">
+    <p style="margin:0 0 10px;font-size:12px;letter-spacing:2px;color:#E0483B;font-weight:bold">${isInquiry ? "NEW INQUIRY · CONTACT PAGE" : "NEW FEEDBACK · GOT A MINUTE?"}</p>
+    ${rows.map(r => `<p style="margin:0 0 4px"><b>${esc(r[0])}:</b> ${esc(r[1])}</p>`).join("")}
+    ${m.body ? `<blockquote style="margin:12px 0 16px;padding:10px 14px;border-left:3px solid #E0483B;background:#f6f6f6;white-space:pre-wrap">${esc(m.body)}</blockquote>` : ""}
+    <p style="margin:0">${m.email ? "Hit reply to answer them directly. · " : ""}<a href="https://20blok.com/admin">Admin page → Inbox</a></p>
+  </div>`;
+  const payload = { from: FROM, to: [TO], subject, html, text: rows.map(r => r[0] + ": " + r[1]).join("\n") + (m.body ? "\n\n" + m.body : "") };
+  if (m.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m.email)) payload.reply_to = m.email;
+  try {
+    const r = await fetch("https://api.resend.com/emails", { method: "POST", headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+    if (!r.ok) { let d = ""; try { d = (await r.text()).slice(0, 300); } catch (e) {} console.log("resend error", r.status, d); res.status(502).json({ ok: false, error: "resend", status: r.status }); return; }
+    res.status(200).json({ ok: true });
+  } catch (e) { res.status(502).json({ ok: false, error: "network" }); }
+}

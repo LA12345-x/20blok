@@ -41,7 +41,7 @@ li{padding:14px 16px;border-radius:12px;background:var(--panel);border:1px solid
     <p class="muted" id="msg"></p>
   </section>
   <section id="panel" hidden>
-    <div class="tabs"><button class="tab" data-tab="comments" aria-pressed="true">Comments</button><button class="tab" data-tab="blocked" aria-pressed="false">Blocked</button></div>
+    <div class="tabs"><button class="tab" data-tab="inbox" aria-pressed="false">Inbox</button><button class="tab" data-tab="comments" aria-pressed="true">Comments</button><button class="tab" data-tab="blocked" aria-pressed="false">Blocked</button></div>
     <p class="muted" id="count"></p>
     <ul id="list"></ul>
   </section>
@@ -70,6 +70,16 @@ async function load(){
         el("span",{class:"tools"},twoTap("Delete","Tap again to delete",async()=>{await sb.from("comments").delete().eq("id",c.id);load()}),
           twoTap("Block","Tap again to block",async()=>{await sb.from("blocked").upsert({user_id:c.user_id,note:c.name});load()}))),
       el("p",{class:"body",text:c.body}))));
+  } else if(tab==="inbox"){
+    const {data,error}=await sb.from("messages").select("id,kind,topic,read_freq,name,email,body,pitch,created_at").order("created_at",{ascending:false}).limit(300);
+    if(error){list.replaceChildren(el("li",{class:"empty",text:"Couldn't load the inbox."}));return}
+    $("count").textContent=data.length?data.length+" messages, newest first":"";
+    if(!data.length){list.replaceChildren(el("li",{class:"empty",text:"No messages yet."}));return}
+    list.replaceChildren(...data.map(m=>el("li",{},
+      el("div",{class:"meta"},el("b",{text:m.kind==="inquiry"?"Inquiry · "+(m.topic||"Other"):"Feedback"+(m.read_freq?" · reads "+m.read_freq.toLowerCase():"")}),
+        m.name?el("span",{text:m.name}):null, m.email?el("a",{href:"mailto:"+m.email,text:m.email}):null, m.pitch?el("span",{text:"wants to pitch"}):null, el("span",{text:when(m.created_at)}),
+        el("span",{class:"tools"},twoTap("Delete","Tap again to delete",async()=>{await sb.from("messages").delete().eq("id",m.id);load()}))),
+      m.body?el("p",{class:"body",text:m.body}):null)));
   } else {
     const {data,error}=await sb.from("blocked").select("user_id,note,created_at").order("created_at",{ascending:false});
     if(error){list.replaceChildren(el("li",{class:"empty",text:"Couldn't load the blocked list."}));return}
