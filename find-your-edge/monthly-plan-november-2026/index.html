@@ -71,12 +71,28 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
 .sub{color:var(--accent)}
 .closing{font-family:var(--display);font-weight:700;font-size:18px;margin:0}
 
+.intro{display:grid;gap:26px}
+.intro-left{display:grid;gap:18px;align-content:start}
+.qs{display:grid;gap:10px}
+@media (min-width:900px){
+  body{padding-block:48px 80px}
+  .wrap{max-width:1120px}
+  h1{font-size:60px;max-width:22ch}
+  .lede{font-size:18px}
+  .intro{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start}
+  .sec{grid-template-columns:240px minmax(0,1fr);gap:32px;align-items:start;padding-top:28px;border-top:1px solid var(--line)}
+  .sec-head{position:sticky;top:24px}
+  .sec-head h2{font-size:28px}
+  .qs{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+  .q.wide{grid-column:1/-1}
+}
 @media print{
   @page{margin:14mm}
   :root,:root[data-theme="dark"]{--bg:#fff;--surface:#fff;--field:#fff;--fg:#151A22;--muted:#4a5360;--line:#9aa5b1;--accent:#C23A2E;--accent-soft:#FBECEA}
   body{background:#fff;padding:0;font-size:12px}
   .bar,.saved,.no-print{display:none!important}
   .wrap{gap:16px;max-width:none}
+  .intro,.sec,.qs{display:block}.q{margin-bottom:10px}.sec-head{position:static}
   textarea{border-color:#9aa5b1;overflow:visible}
   .q,.month{break-inside:avoid}
   .sec-head{break-after:avoid}
@@ -93,6 +109,8 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
     <p class="lede">Twenty questions. One clear month. Look back at October, pick a theme, then give every week one big move.</p>
   </header>
 
+  <div class="intro">
+  <div class="intro-left">
   <div class="howto no-print">
     <b>How to use</b>
     <span>Type your answers right here. They save on your own device as you go, so you can close the page and come back. Nobody else can see them. When you finish, download your answers as a PDF to keep or print, or clear everything and start over.</span>
@@ -106,6 +124,7 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
     <span class="saved" data-printnote hidden>Printing is blocked inside this viewer, so Print saves a print-ready PDF. Open it, then print from there.</span>
   </div>
 
+  </div>
   <section class="month" aria-label="November 2026">
     <div class="month-head"><h2>November 2026</h2><span>Weeks run Sun–Sat</span></div>
     <div class="cal" id="cal"></div>
@@ -113,6 +132,7 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
       <span class="wk"><b>Wk 1</b>&nbsp; Nov 1–7</span><span class="wk"><b>Wk 2</b>&nbsp; Nov 8–14</span><span class="wk"><b>Wk 3</b>&nbsp; Nov 15–21</span><span class="wk"><b>Wk 4</b>&nbsp; Nov 22–28</span><span class="wk"><b>Last two days</b>&nbsp; Nov 29–30</span>
     </div>
   </section>
+  </div>
 
   <div id="sections" class="wrap" style="gap:26px;width:100%"></div>
 
@@ -198,6 +218,7 @@ SECTIONS.forEach((s,i)=>{
   head.appendChild(el("h2",null,s.h));
   if(s.note)head.appendChild(el("p","sec-note",s.note));
   sec.appendChild(head);
+  const qs=el("div","qs");
   s.q.forEach(q=>{
     const card=el("div","q");
     const top=el("div","top");
@@ -217,8 +238,10 @@ SECTIONS.forEach((s,i)=>{
     }else{
       const f=makeField(q.id,q.rows,q.t);f.classList.add("with-gutter");card.appendChild(f);
     }
-    sec.appendChild(card);
+    if(q.slots||q.rows>=3) card.classList.add("wide");
+    qs.appendChild(card);
   });
+  sec.appendChild(qs);
   host.appendChild(sec);
 });
 
