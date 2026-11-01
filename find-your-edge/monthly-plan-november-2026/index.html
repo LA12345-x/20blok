@@ -63,9 +63,9 @@ h2{font-family:var(--display);font-weight:700;font-size:22px;margin:0;line-heigh
 .q .n{font-family:var(--mono);font-size:13px;color:var(--accent)}
 .q .t{font-weight:600}
 .q .hint{grid-column:2;font-size:13px;color:var(--muted);font-style:italic}
-.slots{display:grid;gap:7px}
-.slot{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;align-items:start}
-.slot .n{font-family:var(--mono);font-size:13px;color:var(--accent);padding-top:9px}
+.slots{display:grid;gap:7px;padding-left:38px}
+.slot{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;align-items:start}
+.slot .n{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--muted);padding-top:9px}
 textarea{width:100%;display:block;font:400 15px/1.5 var(--body);color:var(--fg);background:var(--field);border:1px solid var(--line);border-radius:8px;padding:8px 10px;resize:none;overflow:hidden;min-height:42px}
 textarea::placeholder{color:transparent}
 .with-gutter{margin-left:38px;width:calc(100% - 38px)}
@@ -120,7 +120,7 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
   .q .top{grid-template-columns:22px minmax(0,1fr)!important;margin-bottom:4px}
   .q .n,.slot .n{font-size:10px!important}
   .q .t{font-size:11px!important}.q .hint{font-size:9.5px!important}
-  .slots{gap:4px}.slot{grid-template-columns:22px minmax(0,1fr)!important}
+  .slots{gap:4px;padding-left:30px!important}.slot{grid-template-columns:16px minmax(0,1fr)!important}
   .slot .n{padding-top:5px!important}
   .with-gutter{margin-left:30px!important;width:calc(100% - 30px)!important}
   textarea{min-height:22px!important;padding:3px 8px!important;border-radius:4px!important}
@@ -297,7 +297,7 @@ SECTIONS.forEach((s,i)=>{
       const wrap=el("div","slots");
       for(let k=1;k<=q.slots;k++){
         const row=el("div","slot");
-        row.appendChild(el("span","n",k+"."));
+        row.appendChild(el("span","n","abc"[k-1]+"."));
         row.appendChild(makeField(q.id+"_"+k,1,q.t+" ("+k+" of "+q.slots+")"));
         wrap.appendChild(row);
       }
@@ -383,7 +383,7 @@ function buildPdf(){
       if(q.n){doc.setTextColor(...ACC);doc.text(q.n,M,y)}
       doc.setTextColor(...INK);doc.text(clean(q.t),M+(q.n?22:0),y);y+=16;
       if(q.slots){for(let k=1;k<=q.slots;k++){
-        need(20);doc.setFont("helvetica","bold");doc.setFontSize(10.5);doc.setTextColor(...ACC);doc.text(k+".",M+22,y+9);
+        need(20);doc.setFont("helvetica","bold");doc.setFontSize(10.5);doc.setTextColor(...ACC);doc.setTextColor(...MUT);doc.text("abc"[k-1]+".",M+22,y+9);
         const v=(store[q.id+"_"+k]||"").trim();
         if(v){doc.setFont("helvetica","normal");doc.setTextColor(...INK);
           const ls=doc.splitTextToSize(clean(v),CWd-40);ls.forEach((l,i)=>{if(i)need(15);doc.text(l,M+40,y+9);y+=15});y+=3}
