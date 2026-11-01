@@ -29,13 +29,18 @@ for k, uri in IM.items():
     open(os.path.join(out, fn), "wb").write(base64.b64decode(b64))
     paths[k] = "/" + fn
 
+# share image per issue: a new file name each issue, so link previews never show an old cover
+ISSUE_NO = int(re.search(r"const ISSUE = (\d+);", t).group(1))
+COVER = "/media/cover-i%d.jpg" % ISSUE_NO
+if "cover" in paths:
+    import shutil; shutil.copyfile(os.path.join(out, paths["cover"].lstrip("/")), os.path.join(out, COVER.lstrip("/")))
 # ---------- page head: real document ----------
 R('<meta name="claude:viewport-fit-sides" content="cover">\n', '')
 t = t.replace('<title>20 Blok</title>', '''<title>20 Blok — Culture, creativity, and the internet.</title>
 <meta name="description" content="20 Blok by Lenny Lesser: twenty stories every issue on culture, creativity and the internet. You pick the winners.">
 <meta property="og:title" content="20 Blok">
 <meta property="og:description" content="Culture, creativity, and the internet. Twenty stories every issue. You pick the winners.">
-<meta property="og:image" content="https://20blok.com/media/cover.jpg">
+<meta property="og:image" content="https://20blok.com''' + COVER + '''">
 <meta property="og:url" content="https://20blok.com/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" type="application/rss+xml" title="20 Blok" href="/feed.xml">
@@ -446,13 +451,13 @@ def short(s, n=155):
 urls = []
 grid = "".join('<li><a href="/'+b["id"]+'">'+H.escape(b["name"])+': '+H.escape(b["title"])+'</a></li>' for b in data)
 home_desc = "20 Blok by Lenny Lesser: twenty stories every issue on culture, creativity and the internet. You pick the winners."
-urls.append(page("", "20 Blok — Culture, creativity, and the internet.", home_desc, "/media/cover.jpg", '<h1>20 Blok, Issue 7: Retail Mindset</h1><ul>'+grid+'</ul>'))
+urls.append(page("", "20 Blok — Culture, creativity, and the internet.", home_desc, COVER, '<h1>20 Blok, Issue 7: Retail Mindset</h1><ul>'+grid+'</ul>'))
 for b in data:
     body = "".join("<p>"+txt(x)+"</p>" if x.get("t") in ("p","q","pull") else ("<h2>"+txt(x)+"</h2>" if x.get("t")=="h" else "") for x in b["body"])
-    img = paths.get(b.get("img") or "cover", "/media/cover.jpg")
+    img = paths.get(b.get("img") or "cover", COVER)
     urls.append(page(b["id"], b["title"]+" — 20 Blok", short(first_para(b)) or home_desc, img, '<article><p>'+H.escape(b["name"])+'</p><h1>'+H.escape(b["title"])+'</h1>'+body+'</article>'))
 for r_, ti in [("feedback","Feedback"),("contact","Contact"),("welcome","Welcome"),("privacy","Privacy"),("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue Notes"),("bonus","Issue Notes")]:
-    u = page(r_, ti+" — 20 Blok", home_desc, "/media/cover.jpg", "<h1>"+ti+"</h1>")
+    u = page(r_, ti+" — 20 Blok", home_desc, COVER, "<h1>"+ti+"</h1>")
     if r_ not in ("bonus","welcome"): urls.append(u)
 open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join("  <url><loc>"+u+"</loc></url>\n" for u in urls) + "</urlset>\n")
 import email.utils as EU, datetime as DT
