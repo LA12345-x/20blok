@@ -52,7 +52,8 @@ t = ('<!doctype html>\n<html lang="en">\n<head>\n<meta charset="utf-8">\n'
 # ---------- votes through Supabase (one per browser via anonymous sign-in) ----------
 s = t.index('async function connect(){'); e = t.index('/* ---------- helpers ---------- */')
 t = t[:s] + '''const SB_URL = "%s", SB_KEY = "%s";
-let sb = null;
+let sb = null, sbReadyResolve = null;
+const sbReady = new Promise(r => { sbReadyResolve = r; });
 async function loadVotes(){
   if (!sb) return;
   const { data, error } = await sb.from("votes").select("blok,voter").eq("issue", ISSUE).limit(100000);
@@ -62,17 +63,18 @@ async function loadVotes(){
   tallies = t; mine = m; refresh();
 }
 async function connect(){
-  if (!window.supabase || SB_URL.startsWith("__")) return;
+  if (!window.supabase || SB_URL.startsWith("__")){ sbReadyResolve(); return; }
   try{
     sb = window.supabase.createClient(SB_URL, SB_KEY);
     let { data:{ session } } = await sb.auth.getSession();
     if (!session){ const r = await sb.auth.signInAnonymously(); session = r.data && r.data.session; }
-    if (!session) return;
+    if (!session){ sbReadyResolve(); return; }
     uid = session.user.id;
+    sbReadyResolve();
     await loadVotes();
     sb.channel("votes-"+ISSUE).on("postgres_changes", {event:"*", schema:"public", table:"votes", filter:"issue=eq."+ISSUE}, () => loadVotes()).subscribe();
     document.addEventListener("visibilitychange", () => { if (!document.hidden) loadVotes(); });
-  }catch(e){}
+  }catch(e){ sbReadyResolve(); }
 }
 async function vote(id, dir){
   const prev = mine[id]||0, next = prev===dir ? 0 : dir;
@@ -91,13 +93,7 @@ async function vote(id, dir){
 
 # ---------- comments: Pass 2 ----------
 s = t.index('function commentsSection(b){'); e = t.index('function linkify(text){')
-t = t[:s] + '''function commentsSection(b){
-  return el("section",{class:"comments","aria-labelledby":"c-head"},
-    el("h2",{id:"c-head"},"Comments"),
-    el("p",{class:"c-empty",text:"Comments open soon. Want in early? Subscribe and you'll be first to know."}),
-    subscribeBox());
-}
-''' + t[e:]
+t = t[:s] + open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "comments.js")).read() + t[e:]
 t = t.replace('if (blok){ drawComments(); renderComments(); }', '')
 
 # ---------- real embeds ----------
@@ -151,9 +147,10 @@ for a_, b_ in [('href="#this-week"','href="/"'),('href="#all-time"','href="/all-
                ('href:"#this-week"','href:"/"'),('href:"#issue-notes"','href:"/issue-notes"'),('href:"#must-see"','href:"/must-see"'),('href:"#straight-up"','href:"/straight-up"'),
                ('href:"#"+','href:"/"+'),('location.hash = b.id','go(b.id)'),('x.href.startsWith("#")','x.href.startsWith("/")')]:
     assert a_ in t, a_; t = t.replace(a_, b_)
-R('function curRoute(){ return (location.hash||"").replace(/^#/,"") || "this-week"; }', '''function curRoute(){
+R('function curRoute(){ return (location.hash||"").replace(/^#/,"") || "this-week"; }', '''function isAuthHash(h){ return /(^|&)(access_token|refresh_token|error|error_code|error_description|type)=/.test(h); }
+function curRoute(){
   const p = location.pathname.replace(/^\\/+|\\/+$/g,"");
-  if (!p){ const h=(location.hash||"").replace(/^#/,""); if (h) return h; }
+  if (!p){ const h=(location.hash||"").replace(/^#/,""); if (h && !isAuthHash(h)) return h; }
   return p || "this-week";
 }
 const TITLES = {"all-time":"All-Time","past-issues":"Past Issues","issue-notes":"Issue Notes","bonus":"Issue Notes"};
@@ -165,10 +162,10 @@ document.addEventListener("click", e=>{
   e.preventDefault(); go(href.replace(/^\/+|\/+$/g,"") || "this-week");
 });
 window.addEventListener("popstate", ()=>render(false));
-(function(){ const h=(location.hash||"").replace(/^#/,""); if (h && (location.pathname==="/"||location.pathname==="")) history.replaceState({}, "", "/"+(h==="this-week"?"":h)); })();''')
+(function(){ const h=(location.hash||"").replace(/^#/,""); if (h && !isAuthHash(h) && (location.pathname==="/"||location.pathname==="")) history.replaceState({}, "", "/"+(h==="this-week"?"":h)); })();''')
 R('  const h = (location.hash||"").replace(/^#/,"") || "this-week";', '  const h = curRoute();')
 R('  else if (commentsUnsub){', '  document.title = blok ? blok.title+" — 20 Blok" : (TITLES[h] ? TITLES[h]+" — 20 Blok" : "20 Blok — Culture, creativity, and the internet.");\n  setTimeout(hydrateEmbeds,0);\n  if (false){}\n  else if (commentsUnsub){')
-R('window.addEventListener("hashchange", ()=>render(false));', 'window.addEventListener("hashchange", ()=>{ const h=(location.hash||"").replace(/^#/,""); if (h) history.replaceState({}, "", "/"+(h==="this-week"?"":h)); render(false); });')
+R('window.addEventListener("hashchange", ()=>render(false));', 'window.addEventListener("hashchange", ()=>{ const h=(location.hash||"").replace(/^#/,""); if (h && isAuthHash(h)) return; if (h) history.replaceState({}, "", "/"+(h==="this-week"?"":h)); render(false); });')
 R('  window.addEventListener("hashchange",()=>{ if(root&&!root.hidden) hide(); });', '  window.addEventListener("popstate",()=>{ if(root&&!root.hidden) hide(); });')
 
 # ---------- Beehiiv subscribe box ----------
@@ -214,11 +211,13 @@ PRIV_JS = '''function privacyView(){
     el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"}),
     el("header",{class:"art-head"}, el("p",{class:"eyebrow",text:"20 Blok"}), el("h1",{class:"art-title",text:"Privacy"})),
     el("div",{class:"prose"},
-      P("20 Blok is a free magazine by Lenny Lesser. This page explains what the site collects and why. Last updated October 30, 2026."),
+      P("20 Blok is a free magazine by Lenny Lesser. This page explains what the site collects and why. Last updated November 1, 2026."),
       el("h3",{text:"Email"}),
       P("If you subscribe, your email address goes to Beehiiv, the service that sends the newsletter. It's used only to send you new issues and newsletter updates. You can unsubscribe from any email."),
       el("h3",{text:"Votes"}),
       P("Uprating a blok doesn't ask for your name or email. Your browser gets an anonymous ID so each person counts once. Votes are stored with Supabase, which hosts the site's database."),
+      el("h3",{text:"Comments"}),
+      P("To comment, you confirm your email, either with Google sign-in or with a one-time link sent to your inbox (sent through Resend). Your sign-in is handled by Supabase. Commenting subscribes you to the 20 Blok newsletter, which you can leave any time. Your comment and the name you choose are shown publicly; your email is never shown."),
       el("h3",{text:"Bot protection"}),
       el("p",{}, "This site uses Cloudflare Turnstile to keep bots from faking votes. Turnstile checks your browser quietly in the background. Its handling of data is described in the ",
         el("a",{href:"https://www.cloudflare.com/turnstile-privacy-policy/",target:"_blank",rel:"noopener",text:"Cloudflare Turnstile Privacy Addendum"}), "."),
@@ -314,7 +313,26 @@ R('if (!session){ const r = await sb.auth.signInAnonymously(); session = r.data 
   'if (!session){ const captchaToken = await getTurnstileToken(); const r = await sb.auth.signInAnonymously(captchaToken ? {options:{captchaToken}} : undefined); session = r.data && r.data.session; }')
 R('const TITLES = {"all-time":"All-Time"', 'const TITLES = {"welcome":"Welcome","privacy":"Privacy","all-time":"All-Time"')
 
-SUB_CSS = '''.tile.top{border:1px solid var(--fg);box-shadow:0 0 0 1px var(--fg),0 6px 0 #000,0 18px 30px rgba(0,0,0,.45)}
+SUB_CSS = '''.c-form input[type=text]{width:100%;box-sizing:border-box;min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:16px var(--sans)}
+.c-actions{flex-wrap:wrap}
+.c-who{flex:1 1 220px;font-size:13px;color:var(--muted)}.c-who b{color:var(--fg)}
+.c-link{border:0;background:none;padding:0;color:var(--muted);text-decoration:underline;font:inherit;cursor:pointer}
+.c-status:empty{display:none}
+.c-tools{margin-left:auto;display:flex;gap:6px}
+.c-del.armed{border-color:var(--red);color:var(--red)}
+.c-meta .c-tools .c-del{margin-left:0}
+#c-gate{margin-top:4px}
+.c-gate-box{display:grid;gap:12px;padding:20px;border-radius:16px;background:var(--panel);border:1px solid var(--red-deep)}
+.c-gate-box h3{margin:0;font-family:var(--display);font-weight:900;font-size:24px}
+.c-gate-sub{margin:-6px 0 0;color:var(--fg-soft);font-size:15px}
+.c-google{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:46px;padding:0 18px;border-radius:999px;border:0;background:#fff;color:#1f1f1f;font:600 15px var(--sans);cursor:pointer}
+.c-google svg{width:20px;height:20px}
+.c-or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:13px}.c-or::before,.c-or::after{content:"";flex:1;height:1px;background:var(--line)}
+.c-email{display:flex;flex-wrap:wrap;gap:8px}
+.c-email input{flex:1 1 200px;min-width:0;min-height:46px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:#0B0B0C;color:var(--fg);font-size:16px}
+.c-fine{margin:0;font-size:12px;color:var(--muted)}
+.c-gmsg{margin:0;font-size:14px;color:var(--fg-soft)}.c-gmsg:empty{display:none}
+.tile.top{border:1px solid var(--fg);box-shadow:0 0 0 1px var(--fg),0 6px 0 #000,0 18px 30px rgba(0,0,0,.45)}
 .rank-top{position:relative;display:inline-block;width:1.2em;height:.84em;color:#fff}
 .rank-top::before{content:"";position:absolute;left:50%;top:50%;width:1.75em;height:1.75em;transform:translate(-50%,-50%) rotate(-8deg);background:var(--red);clip-path:polygon(50% 0%,61% 11%,75% 7%,79% 21%,93% 25%,89% 39%,100% 50%,89% 61%,93% 75%,79% 79%,75% 93%,61% 89%,50% 100%,39% 89%,25% 93%,21% 79%,7% 75%,11% 61%,0% 50%,11% 39%,7% 25%,21% 21%,25% 7%,39% 11%)}
 .rank-top .rt-num{position:absolute;left:-.3em;right:-.3em;top:50%;transform:translateY(-74%);text-align:center;font-size:.72em;line-height:1}

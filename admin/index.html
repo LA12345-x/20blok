@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — 20 Blok</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B0B0C'/%3E%3Ctext x='32' y='43' font-family='Georgia' font-weight='900' font-size='30' text-anchor='middle' fill='%23E0483B'%3E20%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:wght@900&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>
+<style>
+:root{--ink:#0B0B0C;--panel:#151517;--line:#2C2C31;--fg:#fff;--soft:#D9D9DE;--muted:#A3A3AB;--red:#E0483B;color-scheme:dark}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--ink);color:var(--fg);font:15px/1.5 Inter,system-ui,sans-serif;padding:32px max(16px,env(safe-area-inset-left,0px)) 64px}
+.wrap{max-width:900px;margin:0 auto;display:grid;gap:22px}
+a{color:var(--fg)}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+h1{margin:0;font:900 40px "Playfair Display",Georgia,serif}
+h2{margin:0;font:900 24px "Playfair Display",Georgia,serif}
+.muted{color:var(--muted);font-size:13px}
+.tabs{display:flex;gap:8px}
+.tab,.btn{min-height:38px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:600 14px Inter,sans-serif;cursor:pointer}
+.tab[aria-pressed="true"]{border-color:var(--red);color:var(--red)}
+.btn.armed{border-color:var(--red);color:var(--red)}
+.google{min-height:46px;padding:0 20px;border-radius:999px;border:0;background:#fff;color:#1f1f1f;font:600 15px Inter,sans-serif;cursor:pointer}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+li{padding:14px 16px;border-radius:12px;background:var(--panel);border:1px solid var(--line);display:grid;gap:6px}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;font-size:13px;color:var(--muted)}
+.meta b{color:var(--fg);font-size:14px}
+.tools{margin-left:auto;display:flex;gap:6px}
+.body{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--soft)}
+.empty{color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top"><h1>20 Blok admin</h1><span class="muted" id="who"></span></div>
+  <section id="signin" hidden>
+    <p>This page is only for 20 Blok's editor. Sign in with your admin Google account.</p>
+    <button class="google" id="google">Continue with Google</button>
+    <p class="muted" id="msg"></p>
+  </section>
+  <section id="panel" hidden>
+    <div class="tabs"><button class="tab" data-tab="comments" aria-pressed="true">Comments</button><button class="tab" data-tab="blocked" aria-pressed="false">Blocked</button></div>
+    <p class="muted" id="count"></p>
+    <ul id="list"></ul>
+  </section>
+  <p class="muted"><a href="/">← Back to 20 Blok</a></p>
+</div>
+<script>
+const SB_URL="https://kuyhymlhaifxccovamdt.supabase.co", SB_KEY="sb_publishable_hK_MKPDnsGxDUTu2zRWYgg_d4WSwjIS";
+const ADMINS=["soundsoflife@gmail.com","lennybusinessnow@gmail.com"];
+const sb=window.supabase.createClient(SB_URL,SB_KEY);
+const $=id=>document.getElementById(id);
+let tab="comments";
+function el(tag,attrs,...kids){const n=document.createElement(tag);for(const[k,v] of Object.entries(attrs||{})){if(v==null)continue;if(k==="class")n.className=v;else if(k==="text")n.textContent=v;else n.setAttribute(k,v);}kids.flat().forEach(c=>c!=null&&n.append(c));return n}
+function twoTap(label,ask,fn){const b=el("button",{type:"button",class:"btn",text:label});let armed=false,t=null;b.addEventListener("click",async()=>{if(!armed){armed=true;b.textContent=ask;b.classList.add("armed");t=setTimeout(()=>{armed=false;b.textContent=label;b.classList.remove("armed")},4000);return}clearTimeout(t);b.disabled=true;await fn();});return b}
+const when=s=>{try{return new Date(s).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}catch(e){return""}};
+async function load(){
+  const list=$("list");list.replaceChildren(el("li",{class:"empty",text:"Loading…"}));
+  if(tab==="comments"){
+    const {data,error}=await sb.from("comments").select("id,issue,blok,user_id,name,body,created_at").order("created_at",{ascending:false}).limit(300);
+    if(error){list.replaceChildren(el("li",{class:"empty",text:"Couldn't load comments."}));return}
+    $("count").textContent=data.length+" most recent comments, newest first";
+    if(!data.length){list.replaceChildren(el("li",{class:"empty",text:"No comments yet."}));return}
+    list.replaceChildren(...data.map(c=>el("li",{},
+      el("div",{class:"meta"},el("b",{text:c.name}),el("span",{text:when(c.created_at)}),el("a",{href:"/"+c.blok,target:"_blank",rel:"noopener",text:c.blok+" · Issue "+c.issue}),
+        el("span",{class:"tools"},twoTap("Delete","Tap again to delete",async()=>{await sb.from("comments").delete().eq("id",c.id);load()}),
+          twoTap("Block","Tap again to block",async()=>{await sb.from("blocked").upsert({user_id:c.user_id,note:c.name});load()}))),
+      el("p",{class:"body",text:c.body}))));
+  } else {
+    const {data,error}=await sb.from("blocked").select("user_id,note,created_at").order("created_at",{ascending:false});
+    if(error){list.replaceChildren(el("li",{class:"empty",text:"Couldn't load the blocked list."}));return}
+    $("count").textContent=data.length?data.length+" blocked":"";
+    if(!data.length){list.replaceChildren(el("li",{class:"empty",text:"Nobody is blocked."}));return}
+    list.replaceChildren(...data.map(r=>el("li",{},el("div",{class:"meta"},el("b",{text:r.note||"Someone"}),el("span",{text:"Blocked "+when(r.created_at)}),
+      el("span",{class:"tools"},twoTap("Unblock","Tap again to unblock",async()=>{await sb.from("blocked").delete().eq("user_id",r.user_id);load()}))))));
+  }
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{tab=b.dataset.tab;document.querySelectorAll(".tab").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));load()}));
+$("google").addEventListener("click",async()=>{$("msg").textContent="Opening Google…";const{error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:location.origin+"/admin"}});if(error)$("msg").textContent="Google didn't open."});
+(async()=>{
+  const {data:{session}}=await sb.auth.getSession();const u=session&&session.user;
+  const email=String(u&&!u.is_anonymous&&u.email||"").toLowerCase();
+  if(!ADMINS.includes(email)){$("signin").hidden=false;if(email)$("msg").textContent="Signed in as "+email+", which isn't an admin account.";return}
+  $("who").textContent=email;$("panel").hidden=false;load();
+})();
+</script>
+</body>
+</html>
