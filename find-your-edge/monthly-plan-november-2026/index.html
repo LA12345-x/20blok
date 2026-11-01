@@ -167,7 +167,7 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
   <div class="howto no-print">
     <b>How to use</b>
     <span>Type your answers right here. They save on your own device as you go, so you can close the page and come back. Nobody else can see them. When you finish, download your answers as a PDF to keep or print, or clear everything and start over.</span>
-    <span class="saved" data-saved aria-live="polite"></span>
+    <span class="saved" data-saved aria-live="polite">Answers saved on this device only.</span>
   </div>
 
   <div class="bar no-print" id="bar-top">
@@ -315,7 +315,7 @@ SECTIONS.forEach((s,i)=>{
 let timer=null;
 function save(){
   try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}
-  document.querySelectorAll("[data-saved]").forEach(s=>{s.textContent="Saved on this device"});
+  document.querySelectorAll("[data-saved]").forEach(s=>{s.textContent="Answers saved on this device only."});
 }
 function growAll(){fields.forEach(grow)}
 growAll();
@@ -343,7 +343,7 @@ document.addEventListener("click",e=>{
     store={};fields.forEach(f=>{f.value=""});growAll();
     try{localStorage.removeItem(KEY)}catch(err){}
     disarm();
-    document.querySelectorAll("[data-saved]").forEach(s=>{s.textContent="Cleared"});
+    document.querySelectorAll("[data-saved]").forEach(s=>{s.textContent="Cleared."});setTimeout(()=>document.querySelectorAll("[data-saved]").forEach(s=>{s.textContent="Answers saved on this device only."}),2500);
   }
 });
 
