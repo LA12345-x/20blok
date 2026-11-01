@@ -521,8 +521,13 @@ function renderComments(){
 const ADMINS = ["soundsoflife@gmail.com", "lennybusinessnow@gmail.com"];
 const cState = { blok: null, rows: [], me: null, admin: false, ch: null };
 const cDraftKey = id => "blok20-draft-" + id;
-function cName(u){ const m = (u && u.user_metadata) || {}; return String(m.display_name || "").trim().slice(0, 40); }
-function cSuggest(u){ const m = (u && u.user_metadata) || {}; return String(m.given_name || String(m.full_name || m.name || "").split(" ")[0] || "").trim().slice(0, 40); }
+function cGoogleFirst(u){
+  const g = ((u && u.identities) || []).find(i => i.provider === "google"); const d = (g && g.identity_data) || {};
+  return String(d.given_name || String(d.full_name || d.name || "").split(" ")[0] || "").trim().slice(0, 20);
+}
+function cName(u){ if (!u) return ""; return cGoogleFirst(u) || String(((u.user_metadata) || {}).display_name || "").trim().slice(0, 20); }
+const cFirstOk = s => /^[\p{L}][\p{L}'\u2019-]{0,19}$/u.test(s);
+function cTidy(s){ s = s.trim(); return s.charAt(0).toUpperCase() + s.slice(1); }
 async function cUser(){
   await sbReady; if (!sb) return null;
   try{ const { data:{ session } } = await sb.auth.getSession(); const u = session && session.user; return (u && !u.is_anonymous) ? u : null; }catch(e){ return null; }
@@ -600,10 +605,9 @@ function cCompose(){
   try{ const d = localStorage.getItem(cDraftKey(blokId)); if (d) ta.value = d; }catch(e){}
   ta.addEventListener("input", () => { try{ ta.value ? localStorage.setItem(cDraftKey(blokId), ta.value) : localStorage.removeItem(cDraftKey(blokId)); }catch(e){} });
   const needName = !!me && !cName(me);
-  const nameIn = el("input",{type:"text",id:"c-name",maxlength:"40",placeholder:"Your first name",autocomplete:"nickname","aria-label":"Name shown with your comments"});
-  if (me && !cName(me)) nameIn.value = cSuggest(me);
-  const nameHint = el("p",{class:"c-fine",text:"Your first name is shown with your comment. Your email stays private."});
-  let editingName = needName;
+  const nameIn = el("input",{type:"text",id:"c-name",maxlength:"20",placeholder:"Your first name",autocomplete:"given-name","aria-label":"Your first name"});
+  const nameHint = el("p",{class:"c-fine",text:"Your first name is shown with your comment, and it can\u2019t be changed later. Your email stays private."});
+
   const status = el("span",{class:"c-status","aria-live":"polite"});
   const post = el("button",{type:"submit",class:"c-post"},"Post");
   const gate = el("div",{id:"c-gate",hidden:"hidden"});
@@ -611,22 +615,24 @@ function cCompose(){
       e.preventDefault(); status.textContent = "";
       const text = ta.value.trim(); if (!text){ ta.focus(); return; }
       if (!cState.me){ cGate(gate); return; }
-      let name = editingName ? nameIn.value.trim() : cName(cState.me);
-      if (!name){ status.textContent = "Add the name to show with your comment."; nameIn.focus(); return; }
+      let name = cName(cState.me);
+      if (!name){
+        name = cTidy(nameIn.value);
+        if (!cFirstOk(name)){ status.textContent = "Just your first name, letters only."; nameIn.focus(); return; }
+      }
       post.disabled = true;
       if (name !== cName(cState.me)){ try{ await sb.auth.updateUser({data:{display_name:name}}); const u = await cUser(); if (u) cState.me = u; }catch(err){} }
       const { error } = await sb.from("comments").insert({issue:ISSUE, blok:blokId, name:name.slice(0,40), body:text.slice(0,600)});
       post.disabled = false;
       if (error){ const m = String(error.message||""); status.textContent = /slow down/.test(m) ? "One comment every 15 seconds. Try again in a moment." : /row-level|policy/i.test(m) ? "You can’t comment right now." : "That didn’t post. Try again in a moment."; return; }
       ta.value = ""; try{ localStorage.removeItem(cDraftKey(blokId)); }catch(err){}
-      if (editingName){ cCompose(); }
+      if (needName){ cCompose(); }
       cLoad();
     }},
     el("label",{for:"comment-text",class:"c-label",text:"Your comment"}), ta,
     el("div",{class:"c-namebox",hidden: needName ? null : "hidden"}, nameIn, nameHint),
     el("div",{class:"c-actions"},
       me ? el("span",{class:"c-who"}, "Commenting as ", el("b",{text: cName(me) || "you"}), " · ",
-             el("button",{type:"button",class:"c-link",onclick:e => { const box = e.target.closest("form").querySelector(".c-namebox"); box.hidden = false; editingName = true; nameIn.value = cName(cState.me) || cSuggest(cState.me); nameIn.focus(); }},"Change name"), " · ",
              el("button",{type:"button",class:"c-link",onclick:async () => { try{ await sb.auth.signOut(); }catch(err){} location.reload(); }},"Sign out"))
          : el("span",{class:"c-who",text:"Comments are for 20 Blok subscribers. It’s free."}),
       status, post));
