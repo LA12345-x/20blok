@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Find Your Edge: November 2026 Monthly Plan — 20 Blok</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B0B0C'/%3E%3Ctext x='32' y='43' font-family='Georgia' font-weight='900' font-size='30' text-anchor='middle' fill='%23E0483B'%3E20%3C/text%3E%3C/svg%3E">
 <meta property="og:title" content="How to Build a November Plan That Creates Momentum">
 <meta property="og:description" content="Free from 20 Blok: twenty questions, one clear month. Fill it in here, download it, or print it.">
 <meta property="og:image" content="https://20blok.com/media/cover.jpg">
@@ -86,6 +87,16 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
   .qs{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
   .q.wide{grid-column:1/-1}
 }
+.join{border:1px solid var(--line);border-radius:16px;background:var(--surface);padding:22px;display:grid;gap:14px}
+.join h2{font-size:26px}
+.join p{margin:4px 0 0;color:var(--muted);max-width:56ch}
+.join-form{display:flex;flex-wrap:wrap;gap:10px}
+.join-form input{flex:1 1 220px;min-width:0;min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:var(--field);color:var(--fg);font:400 16px var(--body)}
+.join-form input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.join-form .btn{min-height:44px}
+.join-link{justify-self:start;text-decoration:none}
+.join-msg{margin:0;font-size:14px;color:var(--muted)}.join-msg:empty{display:none}
+@media (min-width:900px){.join{grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;padding:28px 32px}.join-msg{grid-column:2}}
 @media print{
   @page{margin:14mm}
   :root,:root[data-theme="dark"]{--bg:#fff;--surface:#fff;--field:#fff;--fg:#151A22;--muted:#4a5360;--line:#9aa5b1;--accent:#C23A2E;--accent-soft:#FBECEA}
@@ -144,9 +155,21 @@ footer{font-family:var(--mono);font-size:12px;color:var(--muted);display:grid;ga
     <button class="btn danger" type="button" data-act="clear">Clear all answers</button>
   </div>
 
+  <section class="join no-print" id="join" aria-labelledby="join-h">
+    <div class="join-copy">
+      <h2 id="join-h">Want the next one?</h2>
+      <p>Get 20 Blok free: culture, creativity and the internet, plus a new monthly plan like this one. Already subscribed? You're all set.</p>
+    </div>
+    <form class="join-form" id="join-form" novalidate>
+      <input type="email" id="join-email" required autocomplete="email" inputmode="email" placeholder="you@email.com" aria-label="Your email">
+      <button class="btn primary" type="submit">Subscribe</button>
+    </form>
+    <a class="btn primary join-link" id="join-link" href="https://20blok.com" hidden>Subscribe at 20blok.com</a>
+    <p class="join-msg" id="join-msg" aria-live="polite"></p>
+  </section>
+
   <footer>
-    <span>🗡️ FIND YOUR EDGE™ monthly plan system · a 20 Blok blok</span>
-    <span class="no-print">Free from <a class="sub" href="/">20 Blok</a>. Get the next issue free at <a class="sub" href="/">20blok.com</a>.</span>
+    <span>🗡️ FIND YOUR EDGE™ monthly plan system · a 20 Blok blok · <a class="sub" href="https://20blok.com">20blok.com</a></span>
   </footer>
 </div>
 
@@ -357,6 +380,28 @@ async function downloadPdf(btn,fname){
   }
   setTimeout(()=>btn.textContent=label,2200);
 }
+</script>
+<script>
+/* subscribe box: works on 20blok.com; elsewhere it links there. Hidden for anyone who subscribed through the site. */
+(function(){
+  const box=document.getElementById("join"); if(!box) return;
+  let subbed=null;
+  try{ if(new URLSearchParams(location.search).get("sub")==="1") localStorage.setItem("blok20-subscribed","1"); }catch(e){}
+  try{subbed=localStorage.getItem("blok20-subscribed")}catch(e){}
+  if(subbed){box.hidden=true;return}
+  const onSite=/(^|\.)20blok\.com$|vercel\.app$/.test(location.hostname);
+  const form=document.getElementById("join-form"), msg=document.getElementById("join-msg");
+  if(!onSite){form.hidden=true;document.getElementById("join-link").hidden=false;return}
+  form.addEventListener("submit",async e=>{
+    e.preventDefault(); const email=document.getElementById("join-email").value.trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){msg.textContent="Check that email.";return}
+    msg.textContent="Signing you up…";
+    try{const r=await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});const j=await r.json().catch(()=>({}));
+      if(r.ok&&j.ok){try{localStorage.setItem("blok20-subscribed","1")}catch(err){}form.hidden=true;msg.textContent="You’re in. Check your inbox to confirm.";return}
+      msg.textContent=j.error==="email"?"Check that email.":"That didn’t go through. Try again in a moment.";
+    }catch(err){msg.textContent="That didn’t go through. Try again in a moment."}
+  });
+})();
 </script>
 </body>
 </html>
