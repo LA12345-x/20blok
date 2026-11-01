@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
     const r = await fetch("https://api.beehiiv.com/v2/publications/" + encodeURIComponent(pub) + "/subscriptions", {
       method: "POST",
       headers: { "Authorization": "Bearer " + key, "Content-Type": "application/json" },
-      body: JSON.stringify({ email, reactivate_existing: false, send_welcome_email: true, utm_source: "20blok.com", utm_medium: "website", referring_site: "https://20blok.com" })
+      body: JSON.stringify({ email, reactivate_existing: true, send_welcome_email: true, utm_source: "20blok.com", utm_medium: "website", referring_site: "https://20blok.com" })
     });
     if (!r.ok) { let detail = ""; try { detail = (await r.text()).slice(0, 300); } catch (e) {} console.log("beehiiv error", r.status, detail); res.status(502).json({ ok: false, error: "beehiiv", status: r.status, detail }); return; }
     res.status(200).json({ ok: true });
