@@ -908,7 +908,7 @@ function feedbackForm(){
       send.disabled = true; msg.textContent = "Sending…";
       const r = await sendMessage({kind:"feedback", read_freq:freq || null, body:text || null, bloks: picked.size ? [...picked] : null, pitch:pitch.checked, email:em});
       send.disabled = false;
-      if (r === "ok"){ form.replaceChildren(el("p",{class:"fb-done",text:"Got it. Thank you, this shapes the next issue."})); return; }
+      if (r === "ok"){ const intro = document.getElementById("fb-intro"); if (intro) intro.remove(); form.replaceChildren(el("p",{class:"fb-done",text:"Got it. Thank you, this shapes the next issue."})); return; }
       msg.textContent = r === "slow" ? "One at a time. Try again in a few seconds." : "That didn’t send. Try again in a moment.";
     }},
     el("p",{class:"fb-q",text:"How often do you read 20 Blok?"}),
@@ -927,7 +927,7 @@ function feedbackView(){
     el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"}),
     el("header",{class:"art-head"}, el("p",{class:"eyebrow",text:"20 Blok"}), el("h1",{class:"art-title",text:"Feedback"})),
     el("div",{class:"prose"},
-      el("p",{text:"The votes tell me what landed. Tell me what you want next."}),
+      el("p",{id:"fb-intro",text:"The votes decide what landed. Here you can tell us what you want next."}),
       feedbackForm()))];
 }
 function contactView(){
