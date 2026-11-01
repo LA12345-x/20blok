@@ -56,6 +56,7 @@ let tab="comments";
 function el(tag,attrs,...kids){const n=document.createElement(tag);for(const[k,v] of Object.entries(attrs||{})){if(v==null)continue;if(k==="class")n.className=v;else if(k==="text")n.textContent=v;else n.setAttribute(k,v);}kids.flat().forEach(c=>c!=null&&n.append(c));return n}
 function twoTap(label,ask,fn){const b=el("button",{type:"button",class:"btn",text:label});let armed=false,t=null;b.addEventListener("click",async()=>{if(!armed){armed=true;b.textContent=ask;b.classList.add("armed");t=setTimeout(()=>{armed=false;b.textContent=label;b.classList.remove("armed")},4000);return}clearTimeout(t);b.disabled=true;await fn();});return b}
 const when=s=>{try{return new Date(s).toLocaleString(undefined,{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}catch(e){return""}};
+async function emailsFor(ids){const out={};try{const{data}=await sb.rpc("admin_comment_emails",{ids:[...new Set(ids)]});(data||[]).forEach(r=>out[r.user_id]=r.email)}catch(e){}return out}
 async function load(){
   const list=$("list");list.replaceChildren(el("li",{class:"empty",text:"Loading…"}));
   if(tab==="comments"){
@@ -63,8 +64,9 @@ async function load(){
     if(error){list.replaceChildren(el("li",{class:"empty",text:"Couldn't load comments."}));return}
     $("count").textContent=data.length+" most recent comments, newest first";
     if(!data.length){list.replaceChildren(el("li",{class:"empty",text:"No comments yet."}));return}
+    const emails=await emailsFor(data.map(c=>c.user_id));
     list.replaceChildren(...data.map(c=>el("li",{},
-      el("div",{class:"meta"},el("b",{text:c.name}),el("span",{text:when(c.created_at)}),el("a",{href:"/"+c.blok,target:"_blank",rel:"noopener",text:c.blok+" · Issue "+c.issue}),
+      el("div",{class:"meta"},el("b",{text:c.name}),el("span",{text:emails[c.user_id]||""}),el("span",{text:when(c.created_at)}),el("a",{href:"/"+c.blok,target:"_blank",rel:"noopener",text:c.blok+" · Issue "+c.issue}),
         el("span",{class:"tools"},twoTap("Delete","Tap again to delete",async()=>{await sb.from("comments").delete().eq("id",c.id);load()}),
           twoTap("Block","Tap again to block",async()=>{await sb.from("blocked").upsert({user_id:c.user_id,note:c.name});load()}))),
       el("p",{class:"body",text:c.body}))));
@@ -73,7 +75,8 @@ async function load(){
     if(error){list.replaceChildren(el("li",{class:"empty",text:"Couldn't load the blocked list."}));return}
     $("count").textContent=data.length?data.length+" blocked":"";
     if(!data.length){list.replaceChildren(el("li",{class:"empty",text:"Nobody is blocked."}));return}
-    list.replaceChildren(...data.map(r=>el("li",{},el("div",{class:"meta"},el("b",{text:r.note||"Someone"}),el("span",{text:"Blocked "+when(r.created_at)}),
+    const emails=await emailsFor(data.map(r=>r.user_id));
+    list.replaceChildren(...data.map(r=>el("li",{},el("div",{class:"meta"},el("b",{text:r.note||"Someone"}),el("span",{text:emails[r.user_id]||""}),el("span",{text:"Blocked "+when(r.created_at)}),
       el("span",{class:"tools"},twoTap("Unblock","Tap again to unblock",async()=>{await sb.from("blocked").delete().eq("user_id",r.user_id);load()}))))));
   }
 }
