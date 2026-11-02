@@ -178,6 +178,8 @@ R('  window.addEventListener("hashchange",()=>{ if(root&&!root.hidden) hide(); }
 R(' Or leave a comment on any blok.', '')
 R('    el("a",{class:"notes-link",href:"/issue-notes"}', '    subscribeBox(),\n    el("a",{class:"notes-link",href:"/issue-notes"}')
 SUB_JS = '''function subscribeBox(){
+  if (lsOK("blok20-subscribed")) return el("section",{class:"subscribe-band sb-known",id:"subscribe-band"},
+    el("p",{}, el("b",{text:"You\u2019re on the list."}), " New issues land in your inbox. Know someone who\u2019d like 20 Blok? Send them this page."));
   const input = el("input",{type:"email",name:"email",required:"required",autocomplete:"email",inputmode:"email",placeholder:"you@email.com","aria-label":"Your email"});
   const btn = el("button",{type:"submit",class:"sb-btn"},"Subscribe");
   const msg = el("p",{class:"sb-msg","aria-live":"polite"});
@@ -195,6 +197,7 @@ SUB_JS = '''function subscribeBox(){
     el("div",{}, el("h2",{id:"sb-head",text:"Get the next issue"}), el("p",{text:"New stories every issue, straight to your inbox. Free."})),
     form, msg);
 }
+(function(){ try{ const q=new URLSearchParams(location.search); if (q.get("utm_medium")==="newsletter" || /beehiiv|lennylesser/i.test(q.get("utm_source")||"")) localStorage.setItem("blok20-subscribed","1"); }catch(e){} })();
 function goSubscribe(e){
   const band = document.getElementById("subscribe-band");
   if (!band) return;
@@ -406,6 +409,7 @@ SUB_CSS = '''.fb-form{display:grid;gap:14px;margin:8px 0 20px}
 .wl-last{margin:0;font-size:14px;color:var(--muted)}
 .wl-home{font-size:14px;color:var(--fg-soft)}
 body:has(#sb-nudge) .float-vote{bottom:calc(env(safe-area-inset-bottom,0px) + 150px)}
+.sb-known{padding:16px 20px!important}.sb-known p{color:var(--fg-soft)}.sb-known b{color:var(--fg)}
 .subscribe-band{display:grid;gap:14px;margin-top:24px;padding:24px;border-radius:16px;background:var(--panel);border:1px solid var(--line)}
 .subscribe-band h2{margin:0 0 4px;font-family:var(--display);font-weight:900;font-size:clamp(24px,3vw,32px)}
 .subscribe-band p{margin:0;color:var(--fg-soft)}
