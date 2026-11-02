@@ -530,6 +530,50 @@ ARCH_JS = '''function archNotesView(){
 R('function ytId(u){', ARCH_JS + 'function ytId(u){')
 R('.fig.embed .embed-frame{', '.more-wrap{display:flex;justify-content:center;margin:28px 0 8px}\n.fig.embed .embed-frame{')
 
+# ---------- header switch: THIS WEEK / ALL-TIME slides like a real switch (tap or drag) ----------
+R('<div class="seg"><a ', '<div class="seg"><span class="seg-thumb" aria-hidden="true"></span><a ')
+R('.seg a[aria-current="page"]{background:var(--fg);color:var(--ink)}', """.seg{position:relative;touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.seg a{position:relative;z-index:1;transition:color .28s ease;-webkit-user-drag:none}
+.seg a[aria-current="page"]{color:var(--ink)}
+.seg-thumb{position:absolute;z-index:0;top:3px;bottom:3px;left:0;width:0;border-radius:999px;background:var(--fg);box-shadow:0 2px 8px rgba(0,0,0,.35);transition:transform .32s cubic-bezier(.3,1.25,.5,1),width .32s cubic-bezier(.3,1.25,.5,1),opacity .2s ease;opacity:0;cursor:grab}
+.seg-thumb.on{opacity:1}
+.seg.dragging .seg-thumb{transition:none;cursor:grabbing}
+@media (max-width:640px){.seg-thumb{top:2px;bottom:2px}}
+@media (prefers-reduced-motion:reduce){.seg-thumb{transition:opacity .2s ease}}""")
+R('  document.querySelectorAll("[data-route]").forEach(a=> a.dataset.route===active ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));',
+  '  document.querySelectorAll("[data-route]").forEach(a=> a.dataset.route===active ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));\n  segThumb();')
+SEG_JS = """function segThumb(){
+  const seg=document.querySelector(".seg"), th=seg&&seg.querySelector(".seg-thumb"); if(!th) return;
+  const cur=seg.querySelector('a[aria-current="page"]');
+  if(!cur){ th.classList.remove("on"); return; }
+  th.style.width=cur.offsetWidth+"px"; th.style.transform="translateX("+cur.offsetLeft+"px)"; th.classList.add("on");
+  if(!th.dataset.ready){ th.style.transition="none"; th.offsetWidth; th.style.transition=""; th.dataset.ready="1"; }
+}
+(function(){
+  const seg=document.querySelector(".seg"); if(!seg) return;
+  const th=seg.querySelector(".seg-thumb"), links=[...seg.querySelectorAll("a")];
+  let start=null, moved=false, base=0;
+  seg.addEventListener("pointerdown",e=>{ if(e.button!==0||!th.classList.contains("on")) return;
+    const r=th.getBoundingClientRect(); if(e.clientX<r.left||e.clientX>r.right) return;
+    start=e.clientX; moved=false; base=new DOMMatrixReadOnly(getComputedStyle(th).transform).m41; seg.setPointerCapture(e.pointerId); });
+  seg.addEventListener("pointermove",e=>{ if(start===null) return; const dx=e.clientX-start; if(Math.abs(dx)>4){ moved=true; seg.classList.add("dragging"); }
+    if(!moved) return; const max=links[links.length-1].offsetLeft, min=links[0].offsetLeft;
+    const x=Math.max(min,Math.min(max,base+dx)); th.style.transform="translateX("+x+"px)";
+    const near=links.reduce((a,l)=>Math.abs(l.offsetLeft-x)<Math.abs(a.offsetLeft-x)?l:a); th.style.width=near.offsetWidth+"px"; });
+  const end=e=>{ if(start===null) return; seg.classList.remove("dragging");
+    if(moved){ const x=new DOMMatrixReadOnly(getComputedStyle(th).transform).m41;
+      const near=links.reduce((a,l)=>Math.abs(l.offsetLeft-x)<Math.abs(a.offsetLeft-x)?l:a);
+      if(near.getAttribute("aria-current")!=="page") go(near.getAttribute("href").replace(/^\/+|\/+$/g,"")||"this-week"); else segThumb();
+      const stop=ev=>{ ev.preventDefault(); ev.stopPropagation(); seg.removeEventListener("click",stop,true); }; seg.addEventListener("click",stop,true); setTimeout(()=>seg.removeEventListener("click",stop,true),0); }
+    start=null; };
+  seg.addEventListener("pointerup",end); seg.addEventListener("pointercancel",end);
+  seg.addEventListener("dragstart",e=>e.preventDefault());
+  window.addEventListener("resize",segThumb);
+  document.fonts && document.fonts.ready.then(segThumb);
+})();
+"""
+R('let lastRoute = null;', SEG_JS + 'let lastRoute = null;')
+
 # ---------- write ----------
 for b in data:
     for x in b["body"]:
