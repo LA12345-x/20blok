@@ -150,7 +150,7 @@ R('.pair{display:flex;', '''.fig.embed .embed-frame{position:relative;width:100%
 .pair{display:flex;''')
 # ---------- real addresses (20blok.com/based) instead of #based ----------
 for a_, b_ in [('href="#this-week"','href="/"'),('href="#all-time"','href="/all-time"'),('href="#past-issues"','href="/past-issues"'),('href="#issue-notes"','href="/issue-notes"'),
-               ('href:"#this-week"','href:"/"'),('href:"#issue-notes"','href:"/issue-notes"'),('href:"#must-see"','href:"/must-see"'),('href:"#straight-up"','href:"/straight-up"'),
+               ('href:"#this-week"','href:"/"'),('href:"#issue-notes"','href:"/issue-notes"'),('href:"#must-see"','href:"/issue-%d/must-see"' % ISSUE_NO),('href:"#straight-up"','href:"/straight-up"'),
                ('href:"#"+','href:"/"+'),('location.hash = b.id','go(b.id)'),('x.href.startsWith("#")','x.href.startsWith("/")')]:
     assert a_ in t, a_; t = t.replace(a_, b_)
 R('function curRoute(){ return (location.hash||"").replace(/^#/,"") || "this-week"; }', '''function isAuthHash(h){ return /(^|&)(access_token|refresh_token|error|error_code|error_description|type)=/.test(h); }
@@ -448,8 +448,8 @@ const ARCHIVE = __ARCHIVE__;
 const CUR_META = {n:ISSUE, title:"Retail Mindset", month:"October 2026", cover:"cover", cover_alt:"Issue 7 cover: Retail Mindset. Shoppers push carts down aisles stocked with headlines, charts and opinions. Are your opinions actually yours?"};
 function meta(){ return ARCHIVE[CUR] || CUR_META; }
 function idParts(id){ const m=/^issue-(\\d+)\\/(.+)$/.exec(id); return m ? [+m[1], m[2]] : [ISSUE, id]; }
-function vkey(i, b){ return i===ISSUE ? b : "issue-"+i+"/"+b; }
-function normRoute(h){ const m=/^issue-(\\d+)(?:\\/(.*))?$/.exec(h); if (m && +m[1]===ISSUE) return m[2] || "this-week"; return h; }
+function vkey(i, b){ return "issue-"+i+"/"+b; }
+function normRoute(h){ if (h==="issue-"+ISSUE) return "this-week"; if (!/\\//.test(h) && CURRENT.some(b=>b.id==="issue-"+ISSUE+"/"+h)) return "issue-"+ISSUE+"/"+h; return h; }
 function setIssueFor(h){ const m=/^issue-(\\d+)(?:\\/|$)/.exec(h); if (m && ARCHIVE[+m[1]]){ CUR=+m[1]; BLOKS=ARCHIVE[CUR].bloks; } else { CUR=ISSUE; BLOKS=CURRENT; } }
 function gridHome(){ return CUR===ISSUE ? "/" : "/issue-"+CUR; }
 function notesHref(){ return CUR===ISSUE ? "/issue-notes" : "/issue-"+CUR+"/notes"; }
@@ -482,9 +482,9 @@ R('el("p",{text:"The most uprated pieces across every issue. Issue 7 is the firs
 R('el("p",{text:"Issue 7 · October 2026 · Edited by Lenny Lesser"}), el("p",{class:"tag",text:"Retail Mindset"})',
   'el("p",{text:"Issue "+CUR+" · "+meta().month+" · Edited by Lenny Lesser"}), el("p",{class:"tag",text:meta().title})')
 R('el("a",{href:"/straight-up","aria-label":"Read Retail Mindset, the editor’s letter",style:"display:block"}, el("img",{src:IMG.cover,alt:"Issue 7 cover: Retail Mindset. Shoppers push carts down aisles stocked with headlines, charts and opinions. Are your opinions actually yours?"}))',
-  'el("a",{href:(CUR===ISSUE?"/straight-up":"/issue-"+CUR+"/straight-up"),"aria-label":"Read "+meta().title+", the editor’s letter",style:"display:block"}, el("img",{src:IMG[meta().cover],alt:meta().cover_alt}))')
+  'el("a",{href:"/issue-"+CUR+"/straight-up","aria-label":"Read "+meta().title+", the editor’s letter",style:"display:block"}, el("img",{src:IMG[meta().cover],alt:meta().cover_alt}))')
 R('COVERLINES.map(id=> el("li",{}, el("a",{href:"/"+id}, el("span",{text:byId[id].name}), el("b",{text:COVERTEXT[id]}))))',
-  '(ARCHIVE[CUR]?ARCHIVE[CUR].coverlines:COVERLINES).map(id=> el("li",{}, el("a",{href:"/"+id}, el("span",{text:byId[id].name}), el("b",{text:(ARCHIVE[CUR]?ARCHIVE[CUR].covertext:COVERTEXT)[id]}))))')
+  '(ARCHIVE[CUR]?ARCHIVE[CUR].coverlines:COVERLINES.map(x=>"issue-"+ISSUE+"/"+x)).map(id=> el("li",{}, el("a",{href:"/"+id}, el("span",{text:byId[id].name}), el("b",{text:ARCHIVE[CUR]?ARCHIVE[CUR].covertext[id]:COVERTEXT[idParts(id)[1]]}))))')
 R('    el("a",{class:"notes-link",href:"/issue-notes"}', '    el("a",{class:"notes-link",href:notesHref()}')
 R('    el("div",{class:"section-head"}, el("h2",{text:"The Grid"}),', '''    CUR===ISSUE ? el("a",{class:"past-tease",href:"/past-issues"}, el("span",{class:"pt-thumbs","aria-hidden":"true"}, PAST.filter(p=>!p.here).slice(0,3).map(p=>el("img",{src:IMG[p.img],alt:"",loading:"lazy"}))), el("span",{class:"pt-copy"}, el("b",{text:"Looking for past issues?"}), " Browse every issue \u2192")) : null,
     el("div",{class:"section-head"}, el("h2",{text:"The Grid"}),''')
@@ -585,6 +585,8 @@ def _seo_title(b):
 for b in data: b["seo_title"] = _seo_title(b)
 for a_ in ARCH.values():
     for b in a_["bloks"]: b["seo_title"] = _seo_title(b)
+for b in data:
+    b["slug"] = b["id"]; b["id"] = "issue-%d/%s" % (ISSUE_NO, b["id"])
 dd = json.dumps(data, ensure_ascii=False).replace('</', '<\\/')
 t = t.replace('__DATA__', dd).replace('__IMAGES__', json.dumps(paths)).replace('__ARCHIVE__', json.dumps({str(k): v for k, v in ARCH.items()}, ensure_ascii=False).replace('</', '<\\/'))
 t = t.replace('https://unruly-reels-apqmcno.gamma.site/', 'https://unrulyreels.com')
@@ -615,7 +617,7 @@ def short(s, n=155):
 urls = []
 grid = "".join('<li><a href="/'+b["id"]+'">'+H.escape(b["name"])+': '+H.escape(b["title"])+'</a></li>' for b in data)
 home_desc = "20 Blok by Lenny Lesser: twenty stories every issue on culture, creativity and the internet. You pick the winners."
-ISSUE_TITLE = next((b["title"] for b in data if b["id"]=="straight-up"), "")
+ISSUE_TITLE = next((b["title"] for b in data if b["slug"]=="straight-up"), "")
 urls.append(page("", "20 Blok — Culture, creativity, and the internet.", home_desc, BRAND, '<h1>20 Blok, Issue %d: %s</h1><ul>' % (ISSUE_NO, H.escape(ISSUE_TITLE))+grid+'</ul>',
                  og_title="20 Blok · Issue %d: %s" % (ISSUE_NO, ISSUE_TITLE)))
 def full_text(b):
@@ -648,7 +650,11 @@ def blok_page(route, b, n, date, canonical=None):
                 '<article><p>'+H.escape(b["name"])+' · Issue '+str(n)+'</p><h1>'+H.escape(b["title"])+'</h1>'+full_text(b)+'</article>'+article_ld(b, url, n, date, img), canonical=canonical)
 for b in data:
     urls.append(blok_page(b["id"], b, ISSUE_NO, "2026-10-28"))
-    blok_page("issue-%d/%s" % (ISSUE_NO, b["id"]), b, ISSUE_NO, "2026-10-28", canonical=b["id"])
+    old = os.path.join(out, b["slug"], "index.html")
+    if os.path.exists(old): os.remove(old)
+    try: os.rmdir(os.path.join(out, b["slug"]))
+    except OSError: pass
+REDIRECTS = [{"source": "/"+b["slug"], "destination": "/"+b["id"], "permanent": True} for b in data]
 page("issue-%d" % ISSUE_NO, "20 Blok, Issue %d: %s" % (ISSUE_NO, ISSUE_TITLE), home_desc, BRAND, '<h1>20 Blok, Issue %d: %s</h1><ul>' % (ISSUE_NO, H.escape(ISSUE_TITLE))+grid+'</ul>', canonical="")
 for n, a in sorted(ARCH.items()):
     g = "".join('<li><a href="/'+b["id"]+'">'+H.escape(b["name"])+': '+H.escape(b["title"])+'</a></li>' for b in a["bloks"])
@@ -682,5 +688,5 @@ for n, a_ in sorted(ARCH.items(), reverse=True):
     items += "".join("<item><title>"+H.escape(b["name"]+": "+b["title"])+"</title><link>"+SITE+"/"+b["id"]+"</link><guid>"+SITE+"/"+b["id"]+"</guid><pubDate>"+pub_a+"</pubDate><description>"+H.escape(short(b.get("dek") or first_para(b), 300))+"</description></item>\n" for b in a_["bloks"])
 open(os.path.join(out, "feed.xml"), "w", encoding="utf-8").write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>\n<title>20 Blok</title><link>'+SITE+'/</link><description>Culture, creativity, and the internet. Twenty stories every issue by Lenny Lesser.</description><language>en-us</language>\n<atom:link href="'+SITE+'/feed.xml" rel="self" type="application/rss+xml"/>\n'+items+'</channel></rss>\n')
 open(os.path.join(out, "robots.txt"), "w").write("User-agent: *\nAllow: /\nSitemap: https://20blok.com/sitemap.xml\n")
-open(os.path.join(out, "vercel.json"), "w").write(json.dumps({"cleanUrls": True, "headers": [{"source": "/media/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]}]}, indent=2))
+open(os.path.join(out, "vercel.json"), "w").write(json.dumps({"cleanUrls": True, "redirects": REDIRECTS, "headers": [{"source": "/media/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]}]}, indent=2))
 print("built", out, "media files:", len(paths))
