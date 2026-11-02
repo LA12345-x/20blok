@@ -204,7 +204,8 @@ function goSubscribe(e){
 }
 '''
 R('function ytId(u){', SUB_JS + 'function ytId(u){')
-R('  document.getElementById("view").replaceChildren(...kids);', '  const extra = (h==="past-issues"||h==="issue-notes"||h==="bonus") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];\n  document.getElementById("view").replaceChildren(...kids, ...extra);')
+R('    upNext(idx),', '    subscribeBox(),\n    upNext(idx),')
+R('  document.getElementById("view").replaceChildren(...kids);', '  const hasBand = kids.some(k=>k && k.nodeType===1 && (k.id==="subscribe-band" || k.querySelector("#subscribe-band")));\n  const extra = (!hasBand && h!=="welcome") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];\n  document.getElementById("view").replaceChildren(...kids, ...extra);')
 R('<a class="sub" href="https://lennylesser.beehiiv.com" target="_blank" rel="noopener">SUBSCRIBE</a>',
   '<a class="sub" href="https://lennylesser.beehiiv.com" target="_blank" rel="noopener" onclick="goSubscribe(event)">SUBSCRIBE</a>')
 # ---------- privacy page + Turnstile (invisible bot check before anonymous voting) ----------
