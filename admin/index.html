@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Admin — 20 Blok</title>
+<title>Ona Industries Admin</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230B0B0C'/%3E%3Ctext x='32' y='43' font-family='Georgia' font-weight='900' font-size='30' text-anchor='middle' fill='%23E0483B'%3E20%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Playfair+Display:wght@900&display=swap">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>
@@ -19,6 +19,9 @@ h1{margin:0;font:900 40px "Playfair Display",Georgia,serif}
 h2{margin:0;font:900 24px "Playfair Display",Georgia,serif}
 .muted{color:var(--muted);font-size:13px}
 .tabs{display:flex;gap:8px;flex-wrap:wrap}
+.groups{display:flex;flex-wrap:wrap;gap:16px 28px}
+.group{display:grid;gap:6px}
+.glabel{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .qa{display:grid;gap:4px;margin:4px 0 0}
 .qa div{color:var(--soft)}
 .qa b{color:var(--muted);font-weight:600;margin-right:6px}
@@ -39,18 +42,18 @@ li{padding:14px 16px;border-radius:12px;background:var(--panel);border:1px solid
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><h1>20 Blok admin</h1><span class="muted" id="who"></span></div>
+  <div class="top"><div><h1>Ona Industries admin</h1><p class="muted" style="margin:4px 0 0">Includes 20 Blok and Unruly Reels.</p></div><span class="muted" id="who"></span></div>
   <section id="signin" hidden>
-    <p>This page is only for 20 Blok's editor. Sign in with your admin Google account.</p>
+    <p>This page is only for Ona Industries admins. Sign in with your admin Google account.</p>
     <button class="google" id="google">Continue with Google</button>
     <p class="muted" id="msg"></p>
   </section>
   <section id="panel" hidden>
-    <div class="tabs"><button class="tab" data-tab="inbox" aria-pressed="false">Inbox</button><button class="tab" data-tab="comments" aria-pressed="true">Comments</button><button class="tab" data-tab="blocked" aria-pressed="false">Blocked</button><button class="tab" data-tab="briefs" aria-pressed="false">Unruly briefs</button></div>
+    <div class="groups"><div class="group"><span class="glabel">20 Blok</span><div class="tabs"><button class="tab" data-tab="inbox" aria-pressed="false">Inbox</button><button class="tab" data-tab="comments" aria-pressed="true">Comments</button><button class="tab" data-tab="blocked" aria-pressed="false">Blocked</button></div></div><div class="group"><span class="glabel">Unruly Reels</span><div class="tabs"><button class="tab" data-tab="briefs" aria-pressed="false">Briefs</button></div></div></div>
     <p class="muted" id="count"></p>
     <ul id="list"></ul>
   </section>
-  <p class="muted"><a href="/">← Back to 20 Blok</a></p>
+  <p class="muted"><a href="/">20blok.com</a> · <a href="https://unrulyreels.com" target="_blank" rel="noopener">unrulyreels.com</a></p>
 </div>
 <script>
 const SB_URL="https://kuyhymlhaifxccovamdt.supabase.co", SB_KEY="sb_publishable_hK_MKPDnsGxDUTu2zRWYgg_d4WSwjIS";
@@ -87,7 +90,7 @@ async function load(){
       m.body?el("p",{class:"body",text:m.body}):null)));
   } else if(tab==="briefs"){
     const {data,error}=await sb.from("briefs").select("id,brand,name,email,answers,files,created_at").order("created_at",{ascending:false}).limit(200);
-    if(error){list.replaceChildren(el("li",{class:"empty",text:"Couldn't load briefs. Has the briefs script been run in Supabase?"}));return}
+    if(error){list.replaceChildren(el("li",{class:"empty",text:"Couldn't load briefs."}));return}
     $("count").textContent=data.length?data.length+" briefs, newest first":"";
     if(!data.length){list.replaceChildren(el("li",{class:"empty",text:"No briefs yet."}));return}
     const L={name:"Name",email:"Email",brand:"Brand",approver:"Signs off",advertising:"Advertising",audience:"For",want_and_blocker:"Want / in the way",one_thing:"Remember",action:"After watching",send_to:"Send them to",tone:"Tone",brand_words:"Brand words",off_limits:"Off-limits",assets_link:"Files link",message:"Anything else",form:null};
