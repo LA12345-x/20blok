@@ -370,6 +370,12 @@ main{padding-bottom:110px}
 .un-rank{font-family:var(--display);font-weight:900;font-size:26px;line-height:1;color:var(--red);font-variant-numeric:tabular-nums lining-nums;text-shadow:0 2px 0 rgba(0,0,0,.4)}
 .un-head .un-label{align-self:auto}
 /* past issues */
+.past-tease{display:flex;align-items:center;gap:14px;margin:18px 0 0;padding:10px 14px;border-radius:12px;border:1px solid var(--line);color:var(--fg-soft);text-decoration:none;font-size:14px;width:fit-content;max-width:100%;box-sizing:border-box}
+.past-tease b{color:var(--fg)}
+.past-tease:hover{border-color:var(--fg);color:var(--fg)}
+.pt-thumbs{display:flex;flex:0 0 auto}
+.pt-thumbs img{width:34px;height:34px;object-fit:cover;border-radius:7px;border:2px solid var(--bg,#0B0B0C);margin-left:-10px}
+.pt-thumbs img:first-child{margin-left:0}
 .issue-thumb{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;margin-bottom:6px}
 .issues{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
 .issues a{display:flex;flex-direction:column;gap:8px;padding:20px;border-radius:14px;background:var(--panel);border:1px solid var(--line);text-decoration:none;color:var(--fg);box-shadow:0 5px 0 #000}
@@ -773,6 +779,7 @@ function gridView(all){
     el("div",{class:"masthead"}, el("p",{text:"Issue "+CUR+" · "+meta().month+" · Edited by Lenny Lesser"}), el("p",{class:"tag",text:meta().title})),
     el("figure",{class:"cover"}, el("a",{href:(CUR===ISSUE?"/straight-up":"/issue-"+CUR+"/straight-up"),"aria-label":"Read "+meta().title+", the editor’s letter",style:"display:block"}, el("img",{src:IMG[meta().cover],alt:meta().cover_alt}))),
     el("ul",{class:"coverlines","aria-label":"Cover stories"}, (ARCHIVE[CUR]?ARCHIVE[CUR].coverlines:COVERLINES).map(id=> el("li",{}, el("a",{href:"/"+id}, el("span",{text:byId[id].name}), el("b",{text:(ARCHIVE[CUR]?ARCHIVE[CUR].covertext:COVERTEXT)[id]}))))),
+    CUR===ISSUE ? el("a",{class:"past-tease",href:"/past-issues"}, el("span",{class:"pt-thumbs","aria-hidden":"true"}, PAST.filter(p=>!p.here).slice(0,3).map(p=>el("img",{src:IMG[p.img],alt:"",loading:"lazy"}))), el("span",{class:"pt-copy"}, el("b",{text:"Looking for past issues?"}), " Browse every issue →")) : null,
     el("div",{class:"section-head"}, el("h2",{text:"The Grid"}),
       el("p",{text: (shared ? "Ranked live by readers. " : "Ranked by readers. ") + "Uprate what you want more of. The most uprated blok sits top-left; ties keep the table of contents order."})),
     grid,

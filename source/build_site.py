@@ -481,6 +481,15 @@ R('el("a",{href:"/straight-up","aria-label":"Read Retail Mindset, the editor’s
 R('COVERLINES.map(id=> el("li",{}, el("a",{href:"/"+id}, el("span",{text:byId[id].name}), el("b",{text:COVERTEXT[id]}))))',
   '(ARCHIVE[CUR]?ARCHIVE[CUR].coverlines:COVERLINES).map(id=> el("li",{}, el("a",{href:"/"+id}, el("span",{text:byId[id].name}), el("b",{text:(ARCHIVE[CUR]?ARCHIVE[CUR].covertext:COVERTEXT)[id]}))))')
 R('    el("a",{class:"notes-link",href:"/issue-notes"}', '    el("a",{class:"notes-link",href:notesHref()}')
+R('    el("div",{class:"section-head"}, el("h2",{text:"The Grid"}),', '''    CUR===ISSUE ? el("a",{class:"past-tease",href:"/past-issues"}, el("span",{class:"pt-thumbs","aria-hidden":"true"}, PAST.filter(p=>!p.here).slice(0,3).map(p=>el("img",{src:IMG[p.img],alt:"",loading:"lazy"}))), el("span",{class:"pt-copy"}, el("b",{text:"Looking for past issues?"}), " Browse every issue \u2192")) : null,
+    el("div",{class:"section-head"}, el("h2",{text:"The Grid"}),''')
+R('.issue-thumb{', '''.past-tease{display:flex;align-items:center;gap:14px;margin:18px 0 0;padding:10px 14px;border-radius:12px;border:1px solid var(--line);color:var(--fg-soft);text-decoration:none;font-size:14px;width:fit-content;max-width:100%;box-sizing:border-box}
+.past-tease b{color:var(--fg)}
+.past-tease:hover{border-color:var(--fg);color:var(--fg)}
+.pt-thumbs{display:flex;flex:0 0 auto}
+.pt-thumbs img{width:34px;height:34px;object-fit:cover;border-radius:7px;border:2px solid var(--bg,#0B0B0C);margin-left:-10px}
+.pt-thumbs img:first-child{margin-left:0}
+.issue-thumb{''')
 R('el("b",{text:"Issue notes: what changed, the bonus pick and the sign-off →"})', 'el("b",{text:(ARCHIVE[CUR]&&ARCHIVE[CUR].notes.link_text)||"Issue notes: what changed, the bonus pick and the sign-off →"})')
 # article
 t = t.replace('el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"})', 'el("a",{class:"back",href:gridHome(),text:"← BACK TO THE GRID"})')
