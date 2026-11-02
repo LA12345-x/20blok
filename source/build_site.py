@@ -324,7 +324,7 @@ R('const TITLES = {"all-time":"All-Time"', 'const TITLES = {"welcome":"Welcome",
 # ---------- feedback box + contact page ----------
 R('function ytId(u){', open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "inbox.js")).read() + 'function ytId(u){')
 R('el("a",{class:"fb-btn",href:SURVEY,target:"_blank",rel:"noopener"},"Take the quick survey →")),', 'el("a",{class:"fb-btn",href:"/feedback"},"Share your feedback →")),')
-R('<a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a>', '<a href="/contact">Contact</a>')
+R('<a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a>', '<a href="/contact">Contact</a> · <a href="/feed.xml" target="_blank" rel="noopener" title="Follow 20 Blok in a feed reader (Feedly, Inoreader, NetNewsWire)">RSS</a>')
 R('h==="welcome" ? welcomeView() : gridView(false);', 'h==="welcome" ? welcomeView() : h==="contact" ? contactView() : h==="feedback" ? feedbackView() : gridView(false);')
 R('const TITLES = {"welcome":"Welcome",', 'const TITLES = {"feedback":"Feedback","contact":"Contact","welcome":"Welcome",')
 R('sec("Work with me",', 'sec("Work with me",\n        el("p",{},"Collaborations, interviews, writing for 20 Blok, brands → ", el("a",{href:"/contact",text:"use the contact form →"})),')
