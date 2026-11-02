@@ -58,7 +58,14 @@
    }
   ],
   "img": "cover",
-  "editor": true
+  "editor": true,
+  "tags": [
+   "Culture",
+   "Internet Culture",
+   "Media",
+   "Mindset"
+  ],
+  "people": []
  },
  {
   "id": "must-see",
@@ -158,7 +165,18 @@
     "href": "#bonus"
    }
   ],
-  "img": "shirt"
+  "img": "shirt",
+  "tags": [
+   "Culture",
+   "Internet Culture",
+   "Media"
+  ],
+  "people": [
+   "Maeve Halligan",
+   "Winston Marshall",
+   "Pearl Davis",
+   "Meredith Grace"
+  ]
  },
  {
   "id": "industry-freeks",
@@ -222,7 +240,15 @@
     "href": "https://www.instagram.com/taavi.tv"
    }
   ],
-  "img": "if_short"
+  "img": "if_short",
+  "tags": [
+   "Creativity",
+   "Mindset",
+   "Media"
+  ],
+  "people": [
+   "Taavi.TV"
+  ]
  },
  {
   "id": "newsfeed",
@@ -361,7 +387,13 @@
     "href": "https://www.youtube.com/shorts/_OC2qzEVSyE"
    }
   ],
-  "img": "nf_200m"
+  "img": "nf_200m",
+  "tags": [
+   "News"
+  ],
+  "people": [
+   "Lindsay Clancy"
+  ]
  },
  {
   "id": "word-meme",
@@ -473,7 +505,13 @@
     "href": "https://www.youtube.com/watch?v=_0cdK76ArjU"
    }
   ],
-  "img": "wm_clip"
+  "img": "wm_clip",
+  "tags": [
+   "Memes",
+   "Comedy",
+   "Culture"
+  ],
+  "people": []
  },
  {
   "id": "toolz",
@@ -523,7 +561,14 @@
     "text": "The catch: There’s some free usage, but it pushes you toward SuperGrok, the paid plan at roughly $30 a month. Still, if your work runs on internet culture or fast visual experimenting, don’t sleep on it."
    }
   ],
-  "img": "tz_grok"
+  "img": "tz_grok",
+  "tags": [
+   "AI",
+   "AI Tools"
+  ],
+  "people": [
+   "Grok"
+  ]
  },
  {
   "id": "behind-the-reel",
@@ -597,7 +642,15 @@
     "text": "If your brand needs this kind of culturally driven storytelling ➡️ 🔗 UnrulyReels.com"
    }
   ],
-  "img": "btr_spot"
+  "img": "btr_spot",
+  "tags": [
+   "AI",
+   "AI Filmmaking",
+   "Comedy"
+  ],
+  "people": [
+   "Unruly Reels"
+  ]
  },
  {
   "id": "find-your-edge",
@@ -636,7 +689,13 @@
     "text": "More about Charlie as a speaker https://charlierocket.com/"
    }
   ],
-  "img": "charlie"
+  "img": "charlie",
+  "tags": [
+   "Mindset"
+  ],
+  "people": [
+   "Charlie Rocket"
+  ]
  },
  {
   "id": "style-scene",
@@ -714,7 +773,15 @@
     "href": "https://www.youtube.com/watch?v=gIaFCy6-UDM"
    }
   ],
-  "img": "jp_portrait"
+  "img": "jp_portrait",
+  "tags": [
+   "Style",
+   "Internet Culture",
+   "AI"
+  ],
+  "people": [
+   "Jean Philanthrope"
+  ]
  },
  {
   "id": "underground",
@@ -744,7 +811,14 @@
     "href": "https://www.youtube.com/shorts/QR3P57Eym9I"
    }
   ],
-  "img": "mack"
+  "img": "mack",
+  "tags": [
+   "Music",
+   "Hip-Hop"
+  ],
+  "people": [
+   "Harry Mack"
+  ]
  },
  {
   "id": "dezign-ur-ritual",
@@ -827,7 +901,12 @@
     "href": "https://www.nordstrom.com/s/parfums-de-marly-haltane-eau-de-parfum/7423663"
    }
   ],
-  "img": "seinfeld_poster"
+  "img": "seinfeld_poster",
+  "tags": [
+   "Fragrance",
+   "Style"
+  ],
+  "people": []
  },
  {
   "id": "chain-reaction",
@@ -1028,7 +1107,17 @@
     "text": "It’s just the herd, all over again."
    }
   ],
-  "img": "conf"
+  "img": "conf",
+  "tags": [
+   "Crypto",
+   "Bitcoin",
+   "Ethereum"
+  ],
+  "people": [
+   "Michael Saylor",
+   "Vitalik Buterin",
+   "Luke Dashjr"
+  ]
  },
  {
   "id": "lolz",
@@ -1059,7 +1148,14 @@
     "href": "https://ryanlongcomedy.com/"
    }
   ],
-  "img": "lolz_clip"
+  "img": "lolz_clip",
+  "tags": [
+   "Comedy",
+   "Memes"
+  ],
+  "people": [
+   "Ryan Long"
+  ]
  },
  {
   "id": "music-flow",
@@ -1085,7 +1181,13 @@
     "href": "https://www.youtube.com/watch?v=tX1SpTUdZQM"
    }
   ],
-  "img": "mf_track"
+  "img": "mf_track",
+  "tags": [
+   "Music"
+  ],
+  "people": [
+   "Moderator"
+  ]
  },
  {
   "id": "story-beat",
@@ -1167,7 +1269,14 @@
     "href": "https://claude.ai/artifact/SUKCAPDz156symYQiV1Hst"
    }
   ],
-  "img": "sb_portrait"
+  "img": "sb_portrait",
+  "tags": [
+   "Culture",
+   "Creativity"
+  ],
+  "people": [
+   "Tejiri"
+  ]
  },
  {
   "id": "off-the-path",
@@ -1193,7 +1302,12 @@
     "href": "https://www.youtube.com/watch?v=ryd7Uq7eMoA"
    }
   ],
-  "img": "otp_video"
+  "img": "otp_video",
+  "tags": [
+   "Culture",
+   "Mindset"
+  ],
+  "people": []
  },
  {
   "id": "wall-of-sommi",
@@ -1224,7 +1338,14 @@
     "href": "https://www.youtube.com/@yourfriendsommi"
    }
   ],
-  "img": "wos_video"
+  "img": "wos_video",
+  "tags": [
+   "Crypto",
+   "Bitcoin"
+  ],
+  "people": [
+   "Sommi"
+  ]
  },
  {
   "id": "sports-talk",
@@ -1331,7 +1452,15 @@
     "video": false
    }
   ],
-  "img": "foul"
+  "img": "foul",
+  "tags": [
+   "Sports",
+   "WNBA"
+  ],
+  "people": [
+   "DiJonai Carrington",
+   "Sophie Cunningham"
+  ]
  },
  {
   "id": "now-playing",
@@ -1433,7 +1562,13 @@
     "text": "Plugged In: The Devil Wears Prada 2 review → https://www.pluggedin.com/movie-reviews/devil-wears-prada-2-2026/"
    }
   ],
-  "img": "np_clip"
+  "img": "np_clip",
+  "tags": [
+   "Film"
+  ],
+  "people": [
+   "The Devil Wears Prada 2"
+  ]
  },
  {
   "id": "based",
@@ -1475,6 +1610,13 @@
     "href": "https://www.instagram.com/reels/DXwf7pis6KT/"
    }
   ],
-  "img": "based_tile"
+  "img": "based_tile",
+  "tags": [
+   "Street Art",
+   "Culture"
+  ],
+  "people": [
+   "Banksy"
+  ]
  }
 ]
