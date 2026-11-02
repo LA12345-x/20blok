@@ -15,7 +15,9 @@ body{margin:0;background:var(--ink);color:var(--fg);font:15px/1.5 Inter,system-u
 .wrap{max-width:900px;margin:0 auto;display:grid;gap:22px}
 a{color:var(--fg)}
 .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
-h1{margin:0;font:900 40px "Playfair Display",Georgia,serif}
+h1{margin:0;font:900 40px "Playfair Display",Georgia,serif;letter-spacing:-.5px}
+h1 b{color:var(--red)}
+h1 .adm{font-weight:900;color:var(--muted)}
 h2{margin:0;font:900 24px "Playfair Display",Georgia,serif}
 .muted{color:var(--muted);font-size:13px}
 .tabs{display:flex;gap:8px;flex-wrap:wrap}
@@ -42,7 +44,7 @@ li{padding:14px 16px;border-radius:12px;background:var(--panel);border:1px solid
 </head>
 <body>
 <div class="wrap">
-  <div class="top"><h1>20 Blok admin</h1><span class="muted" id="who"></span></div>
+  <div class="top"><h1><b>20</b> BLOK <span class="adm">admin</span></h1><span class="muted" id="who"></span></div>
   <section id="signin" hidden>
     <p>This page is only for 20 Blok admins. Sign in with your admin Google account.</p>
     <button class="google" id="google">Continue with Google</button>
