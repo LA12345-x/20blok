@@ -342,7 +342,7 @@
    "feature": false,
    "title": "Who Needs an Endless Subscription? Use Qwen Instead",
    "dek": "One free tool that does the job of five paid ones.",
-   "img": "",
+   "img": "i6_qwen_tile",
    "tags": [
     "AI",
     "AI Tools"
@@ -353,7 +353,7 @@
    "body": [
     {
      "t": "img",
-     "src": "i6_qwen",
+     "src": "i6_qwen_wide",
      "cap": "",
      "alt": "Qwen logo",
      "narrow": true
@@ -848,7 +848,7 @@
    "id": "music-flow",
    "name": "MUSIC FLOW",
    "emoji": "🎧",
-   "feature": false,
+   "feature": true,
    "title": "What’s a Portishead?",
    "dek": "Out of the reference and into the source.",
    "img": "i6_portishead",
