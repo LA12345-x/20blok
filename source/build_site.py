@@ -170,7 +170,7 @@ document.addEventListener("click", e=>{
 window.addEventListener("popstate", ()=>render(false));
 (function(){ const h=(location.hash||"").replace(/^#/,""); if (h && !isAuthHash(h) && (location.pathname==="/"||location.pathname==="")) history.replaceState({}, "", "/"+(h==="this-week"?"":h)); })();''')
 R('  const h = (location.hash||"").replace(/^#/,"") || "this-week";', '  const h = curRoute();')
-R('  else if (commentsUnsub){', '  document.title = blok ? blok.title+" — 20 Blok" : (TITLES[h] ? TITLES[h]+" — 20 Blok" : "20 Blok — Culture, creativity, and the internet.");\n  setTimeout(hydrateEmbeds,0);\n  if (false){}\n  else if (commentsUnsub){')
+R('  else if (commentsUnsub){', '  document.title = blok ? (blok.seo_title||blok.title+" — 20 Blok") : (TITLES[h] ? TITLES[h]+" — 20 Blok" : "20 Blok — Culture, creativity, and the internet.");\n  setTimeout(hydrateEmbeds,0);\n  if (false){}\n  else if (commentsUnsub){')
 R('window.addEventListener("hashchange", ()=>render(false));', 'window.addEventListener("hashchange", ()=>{ const h=(location.hash||"").replace(/^#/,""); if (h && isAuthHash(h)) return; if (h) history.replaceState({}, "", "/"+(h==="this-week"?"":h)); render(false); });')
 R('  window.addEventListener("hashchange",()=>{ if(root&&!root.hidden) hide(); });', '  window.addEventListener("popstate",()=>{ if(root&&!root.hidden) hide(); });')
 
@@ -467,7 +467,7 @@ R('function curRoute(){\n  const p', 'function curRoute(){ return normRoute(rawR
 R('  const h = curRoute();\n  const blok = BLOKS.find(b=>b.id===h);', '  const h = curRoute(); setIssueFor(h);\n  const blok = BLOKS.find(b=>b.id===h);')
 R('h==="past-issues" ? pastView() :', 'h==="past-issues" ? pastView() : (/^issue-\\d+$/.test(h) && ARCHIVE[CUR]) ? gridView(false) : (/^issue-\\d+\\/notes$/.test(h) && ARCHIVE[CUR]) ? archNotesView() :')
 R('const active = blok ? null :', 'const active = (CUR!==ISSUE) ? "past-issues" : blok ? null :')
-R('  setTimeout(hydrateEmbeds,0);', '  if (CUR!==ISSUE && !blok) document.title = "Issue "+CUR+": "+meta().title+" — 20 Blok";\n  setTimeout(hydrateEmbeds,0);')
+R('  setTimeout(hydrateEmbeds,0);', '  if (CUR!==ISSUE && !blok) document.title = "Issue "+CUR+": "+meta().title+" | 20 Blok";\n  setTimeout(hydrateEmbeds,0);')
 # grid + all-time
 R('el("span",{class:"label",text:(all?"ISSUE 7 · ":"")+b.name})', 'el("span",{class:"label",text:(all?"ISSUE "+idParts(b.id)[0]+" · ":"")+b.name})')
 R('  const list = ranked();\n  const grid = el("ol",{class:"grid","aria-label": all?"All-time ranking":"This week’s bloks, ranked"}, list.map((b,r)=>tileFor(b,r,all)));',
@@ -529,10 +529,16 @@ R('.fig.embed .embed-frame{', '.more-wrap{display:flex;justify-content:center;ma
 for b in data:
     for x in b["body"]:
         if x.get("t")=="link" and x.get("href","").startswith("#"): x["href"] = "/" + x["href"][1:]
+def _seo_title(b):
+    who = next((p for p in b.get("people", []) if p and p.lower() not in b["title"].lower() and p.split()[0].lower() not in b["title"].lower()), None)
+    return b["title"] + (" — " + who if who else "") + " | 20 Blok"
+for b in data: b["seo_title"] = _seo_title(b)
+for a_ in ARCH.values():
+    for b in a_["bloks"]: b["seo_title"] = _seo_title(b)
 dd = json.dumps(data, ensure_ascii=False).replace('</', '<\\/')
 t = t.replace('__DATA__', dd).replace('__IMAGES__', json.dumps(paths)).replace('__ARCHIVE__', json.dumps({str(k): v for k, v in ARCH.items()}, ensure_ascii=False).replace('</', '<\\/'))
 t = t.replace('https://unruly-reels-apqmcno.gamma.site/', 'https://unrulyreels.com')
-import html as H
+import html as H, datetime as DT0
 SITE = "https://20blok.com"
 def page(route, title, desc, img, body_html, og_title=None, canonical=None):
     p = t
@@ -580,10 +586,15 @@ def article_ld(b, url, n, date, img):
           "isPartOf":{"@type":"PublicationIssue","issueNumber":str(n),"isPartOf":{"@type":"Periodical","name":"20 Blok"}},
           "keywords":", ".join(b.get("tags",[])+b.get("people",[]))}
     return '<script type="application/ld+json">'+json.dumps(ld, ensure_ascii=False).replace("</","<\\/")+'</script>'
+def seo_desc(b):
+    fp = first_para(b); dk = (b.get("dek") or "").strip()
+    if dk and fp and dk.rstrip(".") not in fp: d = dk.rstrip(".") + ". " + fp
+    else: d = fp or dk
+    return short(d) or home_desc
 def blok_page(route, b, n, date, canonical=None):
     img = paths.get(b.get("img") or "", BRAND) if b.get("img") else BRAND
     url = SITE+"/"+(canonical or route)
-    return page(route, b["title"]+" — 20 Blok", short(b.get("dek") or first_para(b)) or home_desc, img,
+    return page(route, b["seo_title"], seo_desc(b), img,
                 '<article><p>'+H.escape(b["name"])+' · Issue '+str(n)+'</p><h1>'+H.escape(b["title"])+'</h1>'+full_text(b)+'</article>'+article_ld(b, url, n, date, img), canonical=canonical)
 for b in data:
     urls.append(blok_page(b["id"], b, ISSUE_NO, "2026-10-28"))
@@ -592,15 +603,23 @@ page("issue-%d" % ISSUE_NO, "20 Blok, Issue %d: %s" % (ISSUE_NO, ISSUE_TITLE), h
 for n, a in sorted(ARCH.items()):
     g = "".join('<li><a href="/'+b["id"]+'">'+H.escape(b["name"])+': '+H.escape(b["title"])+'</a></li>' for b in a["bloks"])
     cov = paths.get(a["cover"], BRAND)
-    urls.append(page("issue-%d" % n, "Issue %d: %s — 20 Blok" % (n, a["title"]), "20 Blok Issue %d (%s): %s. Twenty stories on culture, creativity and the internet by Lenny Lesser." % (n, a["date"], a["title"]), cov,
-                     '<h1>20 Blok, Issue %d: %s</h1><ul>' % (n, H.escape(a["title"]))+g+'</ul>'))
+    urls.append(page("issue-%d" % n, "Issue %d: %s | 20 Blok" % (n, a["title"]), "20 Blok Issue %d (%s): %s %d stories on culture, creativity and the internet by Lenny Lesser, ranked by readers." % (n, a["date"], a["title"].rstrip(".")+("" if a["title"][-1] in "?!" else "."), len(a["bloks"])), cov,
+                     '<h1>20 Blok, Issue %d: %s</h1><ul>' % (n, H.escape(a["title"]))+g+'</ul>'
+                     + '<script type="application/ld+json">'+json.dumps({"@context":"https://schema.org","@type":"PublicationIssue","issueNumber":str(n),"name":a["title"],"datePublished":a["pub"],"image":SITE+cov,"url":SITE+"/issue-%d" % n,
+                        "author":{"@type":"Person","name":"Lenny Lesser"},"isPartOf":{"@type":"Periodical","name":"20 Blok","url":SITE},
+                        "hasPart":[{"@type":"Article","headline":b["title"],"url":SITE+"/"+b["id"]} for b in a["bloks"]]}, ensure_ascii=False).replace("</","<\\/")+'</script>'))
     for b in a["bloks"]:
         urls.append(blok_page(b["id"], b, n, a["pub"]))
-    urls.append(page("issue-%d/notes" % n, "Issue %d Notes — 20 Blok" % n, "The Back Page of 20 Blok Issue %d." % n, cov, "<h1>Issue %d Notes</h1>" % n))
+    N = a["notes"]
+    nt = "<h1>Issue %d Notes</h1><p>%s</p>" % (n, H.escape(N["signoff"]))
+    if N.get("treasure"): nt += "<h2>Treasure Hunt</h2><p>%s</p>" % H.escape(N["treasure"]["text"])
+    if N.get("editor_notes"): nt += "<h2>Editor notes</h2><p>%s</p>" % H.escape(N["editor_notes"])
+    nt += "<h2>Alpha close</h2><p>%s</p>" % H.escape(N["alpha"])
+    urls.append(page("issue-%d/notes" % n, "Issue %d Notes: the Back Page | 20 Blok" % n, "The Back Page of 20 Blok Issue %d (%s): the sign-off, the treasure hunt answer, editor notes and the Alpha Close: %s" % (n, a["title"], N["alpha"]), cov, nt))
 for r_, ti in [("feedback","Feedback"),("contact","Contact"),("welcome","Welcome"),("privacy","Privacy"),("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue Notes"),("bonus","Issue Notes")]:
     u = page(r_, ti+" — 20 Blok", home_desc, BRAND, "<h1>"+ti+"</h1>")
     if r_ not in ("bonus","welcome"): urls.append(u)
-open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join("  <url><loc>"+u+"</loc></url>\n" for u in urls) + "</urlset>\n")
+open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join("  <url><loc>"+u+"</loc><lastmod>"+DT0.date.today().isoformat()+"</lastmod></url>\n" for u in urls) + "</urlset>\n")
 import email.utils as EU, datetime as DT
 pub = EU.format_datetime(DT.datetime(2026,10,28,9,0,tzinfo=DT.timezone.utc))
 items = "".join(
