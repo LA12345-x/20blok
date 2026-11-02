@@ -96,7 +96,7 @@ async function load(){
       (b.files||[]).forEach(async f=>{const{data:u}=await sb.storage.from("unruly-briefs").createSignedUrl(f.path,3600);if(!u)return;
         if(/^audio\//.test(f.type)){files.append(el("div",{},el("div",{class:"muted",text:"Voice note"}),el("audio",{controls:"",src:u.signedUrl})))}
         else files.append(el("a",{href:u.signedUrl,target:"_blank",rel:"noopener",text:f.name+" ("+Math.max(1,Math.round(f.size/1024))+" KB)"}))});
-      const qa=el("div",{class:"qa"},...Object.entries(b.answers||{}).filter(([k])=>L[k]!==null&&!["name","email","brand"].includes(k)).map(([k,v])=>el("div",{},el("b",{text:(L[k]||k)+":"}),String(v))));
+      const qa=el("div",{class:"qa"},...Object.keys(L).filter(k=>L[k]&&!["name","email","brand"].includes(k)&&(b.answers||{})[k]).map(k=>[k,b.answers[k]]).concat(Object.entries(b.answers||{}).filter(([k])=>!(k in L))).map(([k,v])=>el("div",{},el("b",{text:(L[k]||k)+":"}),String(v))));
       return el("li",{},
         el("div",{class:"meta"},el("b",{text:(b.brand||"Brief")+(b.name?" · "+b.name:"")}),b.email?el("a",{href:"mailto:"+b.email,text:b.email}):null,el("span",{text:when(b.created_at)}),
           el("span",{class:"tools"},twoTap("Delete","Tap again to delete",async()=>{const paths=(b.files||[]).map(f=>f.path);if(paths.length)await sb.storage.from("unruly-briefs").remove(paths);await sb.from("briefs").delete().eq("id",b.id);load()}))),
