@@ -503,6 +503,7 @@ R('el("img",{src:IMG.cover,alt:"Issue 7 cover: Retail Mindset."})', 'el("img",{s
 # past issues
 R('{n:6,t:"Do you have what it takes to be early?",d:"Apr 24, 2026",img:"issue6",', '{n:6,t:"Do You Have What It Takes to Be Early?",d:"Apr 24, 2026",img:"i6_cover",path:"/issue-6",')
 R('p.here?{href:"/"}:', 'p.path?{href:p.path}:p.here?{href:"/"}:')
+R('{n:7,t:"Retail Mindset",d:"Oct 28, 2026",here:true,', '{n:7,t:"Retail Mindset",d:"Oct 28, 2026",here:true,path:"/issue-7",')
 R('p.d+(p.here?" · on this site":" · on the newsletter")', 'p.d+((p.here||p.path)?" · on this site":" · on the newsletter")')
 R('"Issues 1 through 6 live on the newsletter. Tap a cover to read it. Issue 7 is the first one built as 20 Blok."',
   '"Every issue, newest first. Tap a cover to read it. Issues 1 through 5 still live on the newsletter while they move over."')
