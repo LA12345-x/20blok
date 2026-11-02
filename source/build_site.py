@@ -420,15 +420,113 @@ body:has(#sb-nudge) .float-vote{bottom:calc(env(safe-area-inset-bottom,0px) + 15
 '''
 R('.fig.embed .embed-frame{', SUB_CSS + '.fig.embed .embed-frame{')
 
+# ---------- back issues (backfill): 20blok.com/issue-6, /issue-6/<blok>, /issue-6/notes ----------
+import glob, shutil
+ARCH = {}
+for f in sorted(glob.glob(os.path.join(HERE, "issues", "*.json"))):
+    a = json.load(open(f, encoding="utf-8")); n = a["n"]
+    if n == ISSUE_NO: continue
+    mdir = os.path.join(HERE, "archive", "i%d" % n)
+    os.makedirs(os.path.join(out, "media", "i%d" % n), exist_ok=True)
+    for mf in sorted(os.listdir(mdir)):
+        shutil.copyfile(os.path.join(mdir, mf), os.path.join(out, "media", "i%d" % n, mf))
+        paths["i%d_%s" % (n, os.path.splitext(mf)[0])] = "/media/i%d/%s" % (n, mf)
+    for b in a["bloks"]:
+        b["slug"] = b["id"]; b["id"] = "issue-%d/%s" % (n, b["id"])
+        b.setdefault("links", []); b.setdefault("media", "")
+    a["coverlines"] = ["issue-%d/%s" % (n, c) for c in a["coverlines"]]
+    a["covertext"] = {"issue-%d/%s" % (n, k): v for k, v in a["covertext"].items()}
+    ARCH[n] = a
+R('const BLOKS = __DATA__;', 'const CURRENT = __DATA__;\nlet BLOKS = CURRENT;')
+R('const ISSUE = %d;' % ISSUE_NO, '''const ISSUE = %d;
+let CUR = ISSUE;
+const ARCHIVE = __ARCHIVE__;
+const CUR_META = {n:ISSUE, title:"Retail Mindset", month:"October 2026", cover:"cover", cover_alt:"Issue 7 cover: Retail Mindset. Shoppers push carts down aisles stocked with headlines, charts and opinions. Are your opinions actually yours?"};
+function meta(){ return ARCHIVE[CUR] || CUR_META; }
+function idParts(id){ const m=/^issue-(\\d+)\\/(.+)$/.exec(id); return m ? [+m[1], m[2]] : [ISSUE, id]; }
+function vkey(i, b){ return i===ISSUE ? b : "issue-"+i+"/"+b; }
+function normRoute(h){ const m=/^issue-(\\d+)(?:\\/(.*))?$/.exec(h); if (m && +m[1]===ISSUE) return m[2] || "this-week"; return h; }
+function setIssueFor(h){ const m=/^issue-(\\d+)(?:\\/|$)/.exec(h); if (m && ARCHIVE[+m[1]]){ CUR=+m[1]; BLOKS=ARCHIVE[CUR].bloks; } else { CUR=ISSUE; BLOKS=CURRENT; } }
+function gridHome(){ return CUR===ISSUE ? "/" : "/issue-"+CUR; }
+function notesHref(){ return CUR===ISSUE ? "/issue-notes" : "/issue-"+CUR+"/notes"; }
+let ALL_N = 20;
+function allRanked(){
+  const all = [...CURRENT.map((b,i)=>({...b,iss:ISSUE,i}))];
+  Object.values(ARCHIVE).forEach(a => a.bloks.forEach((b,i)=>all.push({...b,iss:a.n,i})));
+  return all.map(b=>({...b,score:tallies[b.id]||0})).sort((a,b)=>(b.score-a.score)||(b.iss-a.iss)||(a.i-b.i));
+}''' % ISSUE_NO)
+# votes: every issue stays open; keys are "must-see" (current) or "issue-6/must-see"
+R('.select("blok,voter").eq("issue", ISSUE).limit(100000);', '.select("issue,blok,voter").limit(100000);')
+R('data.forEach(v => { t[v.blok] = (t[v.blok]||0) + 1; if (v.voter === uid) m[v.blok] = 1; });',
+  'data.forEach(v => { const k = vkey(v.issue, v.blok); t[k] = (t[k]||0) + 1; if (v.voter === uid) m[k] = 1; });')
+R('sb.channel("votes-"+ISSUE).on("postgres_changes", {event:"*", schema:"public", table:"votes", filter:"issue=eq."+ISSUE}',
+  'sb.channel("votes-all").on("postgres_changes", {event:"*", schema:"public", table:"votes"}')
+R('insert({issue:ISSUE, blok:id, voter:uid})', 'insert({issue:idParts(id)[0], blok:idParts(id)[1], voter:uid})')
+R('match({issue:ISSUE, blok:id, voter:uid})', 'match({issue:idParts(id)[0], blok:idParts(id)[1], voter:uid})')
+# routing
+R('function curRoute(){\n  const p', 'function curRoute(){ return normRoute(rawRoute()); }\nfunction rawRoute(){\n  const p')
+R('  const h = curRoute();\n  const blok = BLOKS.find(b=>b.id===h);', '  const h = curRoute(); setIssueFor(h);\n  const blok = BLOKS.find(b=>b.id===h);')
+R('h==="past-issues" ? pastView() :', 'h==="past-issues" ? pastView() : (/^issue-\\d+$/.test(h) && ARCHIVE[CUR]) ? gridView(false) : (/^issue-\\d+\\/notes$/.test(h) && ARCHIVE[CUR]) ? archNotesView() :')
+R('const active = blok ? null :', 'const active = (CUR!==ISSUE) ? "past-issues" : blok ? null :')
+R('  setTimeout(hydrateEmbeds,0);', '  if (CUR!==ISSUE && !blok) document.title = "Issue "+CUR+": "+meta().title+" — 20 Blok";\n  setTimeout(hydrateEmbeds,0);')
+# grid + all-time
+R('el("span",{class:"label",text:(all?"ISSUE 7 · ":"")+b.name})', 'el("span",{class:"label",text:(all?"ISSUE "+idParts(b.id)[0]+" · ":"")+b.name})')
+R('  const list = ranked();\n  const grid = el("ol",{class:"grid","aria-label": all?"All-time ranking":"This week’s bloks, ranked"}, list.map((b,r)=>tileFor(b,r,all)));',
+  '  const list = all ? allRanked() : ranked();\n  const grid = el("ol",{class:"grid","aria-label": all?"All-time ranking":"Issue "+CUR+" bloks, ranked"}, (all?list.slice(0,ALL_N):list).map((b,r)=>tileFor(b,r,all)));')
+R('el("p",{text:"The most uprated pieces across every issue. Issue 7 is the first one counted."})), grid];',
+  'el("p",{text:"The most uprated bloks from every issue, in one list. Every issue stays open for uprating."})), grid,\n      list.length>ALL_N ? el("div",{class:"more-wrap"}, el("button",{type:"button",class:"sb-btn more-btn",onclick:()=>{ ALL_N+=20; render(false); }},"Show more")) : null];')
+R('el("p",{text:"Issue 7 · October 2026 · Edited by Lenny Lesser"}), el("p",{class:"tag",text:"Retail Mindset"})',
+  'el("p",{text:"Issue "+CUR+" · "+meta().month+" · Edited by Lenny Lesser"}), el("p",{class:"tag",text:meta().title})')
+R('el("a",{href:"/straight-up","aria-label":"Read Retail Mindset, the editor’s letter",style:"display:block"}, el("img",{src:IMG.cover,alt:"Issue 7 cover: Retail Mindset. Shoppers push carts down aisles stocked with headlines, charts and opinions. Are your opinions actually yours?"}))',
+  'el("a",{href:(CUR===ISSUE?"/straight-up":"/issue-"+CUR+"/straight-up"),"aria-label":"Read "+meta().title+", the editor’s letter",style:"display:block"}, el("img",{src:IMG[meta().cover],alt:meta().cover_alt}))')
+R('COVERLINES.map(id=> el("li",{}, el("a",{href:"/"+id}, el("span",{text:byId[id].name}), el("b",{text:COVERTEXT[id]}))))',
+  '(ARCHIVE[CUR]?ARCHIVE[CUR].coverlines:COVERLINES).map(id=> el("li",{}, el("a",{href:"/"+id}, el("span",{text:byId[id].name}), el("b",{text:(ARCHIVE[CUR]?ARCHIVE[CUR].covertext:COVERTEXT)[id]}))))')
+R('    el("a",{class:"notes-link",href:"/issue-notes"}', '    el("a",{class:"notes-link",href:notesHref()}')
+R('el("b",{text:"Issue notes: what changed, the bonus pick and the sign-off →"})', 'el("b",{text:(ARCHIVE[CUR]&&ARCHIVE[CUR].notes.link_text)||"Issue notes: what changed, the bonus pick and the sign-off →"})')
+# article
+t = t.replace('el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"})', 'el("a",{class:"back",href:gridHome(),text:"← BACK TO THE GRID"})')
+R('" · Issue 7 · "+readTime(b)', '" · Issue "+CUR+" · "+readTime(b)')
+R('el("img",{src:IMG.cover,alt:"Issue 7 cover: Retail Mindset."})', 'el("img",{src:IMG[meta().cover],alt:meta().cover_alt})')
+# past issues
+R('{n:6,t:"Do you have what it takes to be early?",d:"Apr 24, 2026",img:"issue6",', '{n:6,t:"Do You Have What It Takes to Be Early?",d:"Apr 24, 2026",img:"i6_cover",path:"/issue-6",')
+R('p.here?{href:"/"}:', 'p.path?{href:p.path}:p.here?{href:"/"}:')
+R('p.d+(p.here?" · on this site":" · on the newsletter")', 'p.d+((p.here||p.path)?" · on this site":" · on the newsletter")')
+R('"Issues 1 through 6 live on the newsletter. Tap a cover to read it. Issue 7 is the first one built as 20 Blok."',
+  '"Every issue, newest first. Tap a cover to read it. Issues 1 through 5 still live on the newsletter while they move over."')
+ARCH_JS = '''function archNotesView(){
+  const a = ARCHIVE[CUR], N = a.notes;
+  const sec=(h,...k)=>el("section",{class:"note"}, el("h3",{text:h}), ...k);
+  return [el("article",{class:"article"},
+    el("a",{class:"back",href:gridHome(),text:"← BACK TO THE GRID"}),
+    el("div",{class:"art-head"}, el("span",{class:"art-label",text:"ISSUE "+CUR+" · THE BACK PAGE"}), el("h1",{text:"Issue Notes"}),
+      el("p",{class:"art-dek",text:"The sign-off, the editor’s notes and the treasure hunt answer."})),
+    el("div",{class:"prose notes"},
+      sec("Sign-off", el("p",{text:N.signoff}), el("p",{class:"sign",text:"— Lenny"})),
+      N.treasure ? el("section",{class:"note",id:"treasure"}, el("h3",{text:"🗺️ Treasure Hunt"}),
+        el("p",{text:N.treasure.text}),
+        N.treasure.gif ? figure({src:N.treasure.gif,cap:"",alt:"The 9mm Shigure Ui meme",gif:true}) : null,
+        el("p",{}, el("a",{href:N.treasure.link.href,target:"_blank",rel:"noopener",text:N.treasure.link.label})),
+        el("p",{}, el("a",{href:N.treasure.back.href,text:N.treasure.back.label}))) : null,
+      N.editor_notes ? sec("📝 Editor notes", el("p",{text:N.editor_notes})) : null,
+      sec("Work with me",
+        el("p",{},"Need video ads for your brand or business? ", el("a",{href:"https://unrulyreels.com",target:"_blank",rel:"noopener",text:"UnrulyReels.com →"})),
+        el("p",{},"Collaborations, interviews, writing for 20 Blok, brands → ", el("a",{href:"/contact",text:"use the contact form →"}))),
+      sec("⚡️ Alpha close", el("p",{class:"pull",text:N.alpha}))))];
+}
+'''
+R('function ytId(u){', ARCH_JS + 'function ytId(u){')
+R('.fig.embed .embed-frame{', '.more-wrap{display:flex;justify-content:center;margin:28px 0 8px}\n.fig.embed .embed-frame{')
+
 # ---------- write ----------
 for b in data:
     for x in b["body"]:
         if x.get("t")=="link" and x.get("href","").startswith("#"): x["href"] = "/" + x["href"][1:]
 dd = json.dumps(data, ensure_ascii=False).replace('</', '<\\/')
-t = t.replace('__DATA__', dd).replace('__IMAGES__', json.dumps(paths))
+t = t.replace('__DATA__', dd).replace('__IMAGES__', json.dumps(paths)).replace('__ARCHIVE__', json.dumps({str(k): v for k, v in ARCH.items()}, ensure_ascii=False).replace('</', '<\\/'))
+t = t.replace('https://unruly-reels-apqmcno.gamma.site/', 'https://unrulyreels.com')
 import html as H
 SITE = "https://20blok.com"
-def page(route, title, desc, img, body_html, og_title=None):
+def page(route, title, desc, img, body_html, og_title=None, canonical=None):
     p = t
     p = p.replace("<title>20 Blok — Culture, creativity, and the internet.</title>", "<title>"+H.escape(title)+"</title>", 1)
     p = re.sub(r'<meta name="description" content="[^"]*">', '<meta name="description" content="'+H.escape(desc)+'">', p, 1)
@@ -436,7 +534,8 @@ def page(route, title, desc, img, body_html, og_title=None):
     p = re.sub(r'<meta property="og:description" content="[^"]*">', '<meta property="og:description" content="'+H.escape(desc)+'">', p, 1)
     p = re.sub(r'<meta property="og:image" content="[^"]*">', '<meta property="og:image" content="'+SITE+img+'">', p, 1)
     url = SITE + ("/" if route=="" else "/"+route)
-    p = re.sub(r'<meta property="og:url" content="[^"]*">', '<meta property="og:url" content="'+url+'">\n<link rel="canonical" href="'+url+'">', p, 1)
+    cu = url if canonical is None else SITE + "/" + canonical
+    p = re.sub(r'<meta property="og:url" content="[^"]*">', '<meta property="og:url" content="'+cu+'">\n<link rel="canonical" href="'+cu+'">', p, 1)
     p = p.replace('<main class="wrap" id="view" aria-live="polite"></main>', '<main class="wrap" id="view" aria-live="polite">'+body_html+'</main>', 1)
     d = os.path.join(out, route) if route else out
     os.makedirs(d, exist_ok=True)
@@ -455,10 +554,41 @@ home_desc = "20 Blok by Lenny Lesser: twenty stories every issue on culture, cre
 ISSUE_TITLE = next((b["title"] for b in data if b["id"]=="straight-up"), "")
 urls.append(page("", "20 Blok — Culture, creativity, and the internet.", home_desc, BRAND, '<h1>20 Blok, Issue %d: %s</h1><ul>' % (ISSUE_NO, H.escape(ISSUE_TITLE))+grid+'</ul>',
                  og_title="20 Blok · Issue %d: %s" % (ISSUE_NO, ISSUE_TITLE)))
+def full_text(b):
+    o = []
+    for x in b["body"]:
+        k = x.get("t")
+        if k in ("p","q","pull","cite","cap"): o.append("<p>"+txt(x)+"</p>")
+        elif k == "h": o.append("<h2>"+txt(x)+"</h2>")
+        elif k == "ul": o.append("<ul>"+"".join("<li>"+H.escape(i)+"</li>" for i in x["items"])+"</ul>")
+        elif k == "link": o.append('<p><a href="'+H.escape(x["href"])+'">'+H.escape(x["label"])+'</a></p>')
+        elif k in ("img","clip","loop") and (x.get("cap") or x.get("alt")):
+            o.append("<figure><figcaption>"+H.escape(x.get("cap") or x.get("alt"))+"</figcaption></figure>")
+    for l in b.get("links", []): o.append('<p><a href="'+H.escape(l["href"])+'">'+H.escape(l["label"])+'</a></p>')
+    return "".join(o)
+def article_ld(b, url, n, date, img):
+    ld = {"@context":"https://schema.org","@type":"Article","headline":b["title"],"author":{"@type":"Person","name":"Lenny Lesser","url":"https://lennylesser.com"},
+          "publisher":{"@type":"Organization","name":"20 Blok","url":SITE},"datePublished":date,"image":SITE+img,"mainEntityOfPage":url,
+          "isPartOf":{"@type":"PublicationIssue","issueNumber":str(n),"isPartOf":{"@type":"Periodical","name":"20 Blok"}},
+          "keywords":", ".join(b.get("tags",[])+b.get("people",[]))}
+    return '<script type="application/ld+json">'+json.dumps(ld, ensure_ascii=False).replace("</","<\\/")+'</script>'
+def blok_page(route, b, n, date, canonical=None):
+    img = paths.get(b.get("img") or "", BRAND) if b.get("img") else BRAND
+    url = SITE+"/"+(canonical or route)
+    return page(route, b["title"]+" — 20 Blok", short(b.get("dek") or first_para(b)) or home_desc, img,
+                '<article><p>'+H.escape(b["name"])+' · Issue '+str(n)+'</p><h1>'+H.escape(b["title"])+'</h1>'+full_text(b)+'</article>'+article_ld(b, url, n, date, img), canonical=canonical)
 for b in data:
-    body = "".join("<p>"+txt(x)+"</p>" if x.get("t") in ("p","q","pull") else ("<h2>"+txt(x)+"</h2>" if x.get("t")=="h" else "") for x in b["body"])
-    img = paths.get(b.get("img") or "cover", BRAND)
-    urls.append(page(b["id"], b["title"]+" — 20 Blok", short(first_para(b)) or home_desc, img, '<article><p>'+H.escape(b["name"])+'</p><h1>'+H.escape(b["title"])+'</h1>'+body+'</article>'))
+    urls.append(blok_page(b["id"], b, ISSUE_NO, "2026-10-28"))
+    blok_page("issue-%d/%s" % (ISSUE_NO, b["id"]), b, ISSUE_NO, "2026-10-28", canonical=b["id"])
+page("issue-%d" % ISSUE_NO, "20 Blok, Issue %d: %s" % (ISSUE_NO, ISSUE_TITLE), home_desc, BRAND, '<h1>20 Blok, Issue %d: %s</h1><ul>' % (ISSUE_NO, H.escape(ISSUE_TITLE))+grid+'</ul>', canonical="")
+for n, a in sorted(ARCH.items()):
+    g = "".join('<li><a href="/'+b["id"]+'">'+H.escape(b["name"])+': '+H.escape(b["title"])+'</a></li>' for b in a["bloks"])
+    cov = paths.get(a["cover"], BRAND)
+    urls.append(page("issue-%d" % n, "Issue %d: %s — 20 Blok" % (n, a["title"]), "20 Blok Issue %d (%s): %s. Twenty stories on culture, creativity and the internet by Lenny Lesser." % (n, a["date"], a["title"]), cov,
+                     '<h1>20 Blok, Issue %d: %s</h1><ul>' % (n, H.escape(a["title"]))+g+'</ul>'))
+    for b in a["bloks"]:
+        urls.append(blok_page(b["id"], b, n, a["pub"]))
+    urls.append(page("issue-%d/notes" % n, "Issue %d Notes — 20 Blok" % n, "The Back Page of 20 Blok Issue %d." % n, cov, "<h1>Issue %d Notes</h1>" % n))
 for r_, ti in [("feedback","Feedback"),("contact","Contact"),("welcome","Welcome"),("privacy","Privacy"),("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue Notes"),("bonus","Issue Notes")]:
     u = page(r_, ti+" — 20 Blok", home_desc, BRAND, "<h1>"+ti+"</h1>")
     if r_ not in ("bonus","welcome"): urls.append(u)
@@ -470,6 +600,9 @@ items = "".join(
   "<pubDate>"+pub+"</pubDate><description>"+H.escape(short(first_para(b), 300))+"</description>"
   + ('<enclosure url="'+SITE+paths[b["img"]]+'" type="image/jpeg" length="0"/>' if b.get("img") in paths and paths[b["img"]].endswith(".jpg") else "")
   + "</item>\n" for b in data)
+for n, a_ in sorted(ARCH.items(), reverse=True):
+    pub_a = EU.format_datetime(DT.datetime.fromisoformat(a_["pub"]+"T09:00:00+00:00"))
+    items += "".join("<item><title>"+H.escape(b["name"]+": "+b["title"])+"</title><link>"+SITE+"/"+b["id"]+"</link><guid>"+SITE+"/"+b["id"]+"</guid><pubDate>"+pub_a+"</pubDate><description>"+H.escape(short(b.get("dek") or first_para(b), 300))+"</description></item>\n" for b in a_["bloks"])
 open(os.path.join(out, "feed.xml"), "w", encoding="utf-8").write('<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>\n<title>20 Blok</title><link>'+SITE+'/</link><description>Culture, creativity, and the internet. Twenty stories every issue by Lenny Lesser.</description><language>en-us</language>\n<atom:link href="'+SITE+'/feed.xml" rel="self" type="application/rss+xml"/>\n'+items+'</channel></rss>\n')
 open(os.path.join(out, "robots.txt"), "w").write("User-agent: *\nAllow: /\nSitemap: https://20blok.com/sitemap.xml\n")
 open(os.path.join(out, "vercel.json"), "w").write(json.dumps({"cleanUrls": True, "headers": [{"source": "/media/(.*)", "headers": [{"key": "Cache-Control", "value": "public, max-age=31536000, immutable"}]}]}, indent=2))

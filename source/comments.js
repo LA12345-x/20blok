@@ -49,14 +49,14 @@ async function cOpen(blokId){
   cCompose();
   await cLoad();
   if (cState.ch){ try{ sb.removeChannel(cState.ch); }catch(e){} }
-  cState.ch = sb.channel("c-" + ISSUE + "-" + blokId)
-    .on("postgres_changes", {event:"*", schema:"public", table:"comments", filter:"blok=eq." + blokId}, () => { if (cState.blok === blokId) cLoad(); })
+  cState.ch = sb.channel("c-" + idParts(blokId).join("-"))
+    .on("postgres_changes", {event:"*", schema:"public", table:"comments", filter:"blok=eq." + idParts(blokId)[1]}, () => { if (cState.blok === blokId) cLoad(); })
     .subscribe();
   if (cState.me) cJoinList();
 }
 async function cLoad(){
   const blokId = cState.blok;
-  const { data, error } = await sb.from("comments").select("id,user_id,name,body,created_at").eq("issue", ISSUE).eq("blok", blokId).order("created_at", {ascending:true}).limit(500);
+  const { data, error } = await sb.from("comments").select("id,user_id,name,body,created_at").eq("issue", idParts(blokId)[0]).eq("blok", idParts(blokId)[1]).order("created_at", {ascending:true}).limit(500);
   if (blokId !== cState.blok) return;
   cState.rows = error ? [] : (data || []);
   cDraw();
@@ -103,7 +103,7 @@ function cCompose(){
       }
       post.disabled = true;
       if (name !== cName(cState.me)){ try{ await sb.auth.updateUser({data:{display_name:name}}); const u = await cUser(); if (u) cState.me = u; }catch(err){} }
-      const { error } = await sb.from("comments").insert({issue:ISSUE, blok:blokId, name:name.slice(0,40), body:text.slice(0,600)});
+      const { error } = await sb.from("comments").insert({issue:idParts(blokId)[0], blok:idParts(blokId)[1], name:name.slice(0,40), body:text.slice(0,600)});
       post.disabled = false;
       if (error){ const m = String(error.message||""); status.textContent = /slow down/.test(m) ? "One comment every 15 seconds. Try again in a moment." : /row-level|policy/i.test(m) ? "You can’t comment right now." : "That didn’t post. Try again in a moment."; return; }
       ta.value = ""; try{ localStorage.removeItem(cDraftKey(blokId)); }catch(err){}

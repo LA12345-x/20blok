@@ -217,6 +217,9 @@ main{padding-bottom:110px}
 .fig.loop video{display:block;width:100%;height:auto;background:#000}
 .fig.loop.narrow .frame{max-width:320px;margin:0 auto}
 .fig.narrow:not(.loop) .frame{max-width:520px;margin:0 auto}
+.prose blockquote{white-space:pre-line}
+.fig.small .frame{max-width:320px;margin:0 auto}
+.fig.small figcaption{text-align:center}
 .fig.narrow:not(.loop) figcaption{max-width:520px;margin-inline:auto;text-align:center}
 .shop{font-family:var(--sans);font-weight:700;font-size:15px}
 .feedback{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 24px;margin-top:40px;padding:24px;border-radius:16px;background:var(--fg);color:var(--ink)}
@@ -475,7 +478,7 @@ function figure(x){
     return el("figure",{class:"fig"+(x.narrow?" narrow":"")}, link, x.cap?el("figcaption",{text:x.cap}):null);
   }
   if (x.video) kids.push(el("a",{class:"badge",href:NEWSLETTER,target:"_blank",rel:"noopener"}, icon("M7 5l12 7-12 7z",true), "VIDEO · WATCH IN THE ISSUE"));
-  return el("figure",{class:"fig"+(x.gif?" gif":"")}, el("div",{class:"frame"},kids), x.cap?el("figcaption",{text:x.cap}):null);
+  return el("figure",{class:"fig"+(x.gif?" gif":"")+(x.narrow?" narrow":"")+(x.small?" small":"")}, el("div",{class:"frame"},kids), x.cap?el("figcaption",{text:x.cap}):null);
 }
 const LBX=(()=>{ let list=[],i=0,root,strip,count,back=null,tm;
   function build(){

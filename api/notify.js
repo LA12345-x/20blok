@@ -18,7 +18,7 @@ module.exports = async (req, res) => {
   if (body && body.table === "messages" && body.type === "INSERT") { await sendMessageMail(c, key, res); return; }
   if (!body || body.table !== "comments" || body.type !== "INSERT" || !c.blok) { res.status(200).json({ ok: true, skipped: true }); return; }
   const blokName = String(c.blok).replace(/-/g, " ").toUpperCase();
-  const link = "https://20blok.com/" + encodeURIComponent(c.blok);
+  const link = "https://20blok.com/" + (c.issue ? "issue-" + Number(c.issue) + "/" : "") + encodeURIComponent(c.blok);
   const html = `<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.5;color:#111">
     <p style="margin:0 0 6px;font-size:12px;letter-spacing:2px;color:#E0483B;font-weight:bold">NEW COMMENT · ${esc(blokName)} · ISSUE ${esc(c.issue)}</p>
     <p style="margin:0 0 12px"><b>${esc(c.name)}</b> wrote:</p>
