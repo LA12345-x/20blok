@@ -188,6 +188,7 @@ main{padding-block:20px 64px}
 @media (max-width:640px){.lbx-stage{padding:0}.lbx-nav{display:none}}
 .pair{display:flex;gap:10px;align-items:flex-start}
 .pair img{display:block;flex:1 1 0;min-width:0;width:100%;height:auto;border-radius:12px}
+.feat-chip{display:inline-block;margin-left:10px;padding:3px 8px 3px 9px;border-radius:5px;background:var(--red-deep);color:#fff;letter-spacing:inherit;line-height:1.2;vertical-align:1px}
 .fig.gif .frame{width:100%;margin:0 auto;background:transparent}
 .fig.gif img{width:100%;height:auto;max-height:none;background:transparent}
 .float-vote{position:fixed;z-index:6;right:max(16px,calc(env(safe-area-inset-right,0px) + 16px));bottom:calc(env(safe-area-inset-bottom,0px) + 16px);display:flex;align-items:center;gap:10px;padding:6px 6px 6px 16px;border-radius:999px;background:rgba(21,21,23,.94);border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
@@ -552,7 +553,7 @@ function articleView(b){
   return [el("article",{class:"article"},
     el("a",{class:"back",href:"#this-week",text:"← BACK TO THE GRID"}),
     el("div",{class:"art-head"},
-      el("span",{class:"art-label",text:label}),
+      el("span",{class:"art-label"}, b.editor ? label : b.name, (!b.editor && b.feature) ? el("span",{class:"feat-chip",text:"FEATURE"}) : null),
       el("h1",{text:b.title}),
       el("div",{class:"byline"}, el("p",{}, "By ", el("b",{text:"Lenny Lesser"}), " · Issue 7 · "+readTime(b)+" min read"), voteBox(b))),
     b.editor ? el("figure",{class:"art-hero"}, el("img",{src:IMG.cover,alt:"Issue 7 cover: Retail Mindset."})) : null,
