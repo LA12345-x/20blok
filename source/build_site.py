@@ -484,7 +484,7 @@ R('function curRoute(){\n  const p', 'function curRoute(){ return normRoute(rawR
 R('  const h = curRoute();\n  const blok = BLOKS.find(b=>b.id===h);', '  const h = curRoute(); setIssueFor(h);\n  const blok = BLOKS.find(b=>b.id===h);')
 R('h==="past-issues" ? pastView() :', 'h==="past-issues" ? pastView() : (/^issue-\\d+$/.test(h) && ARCHIVE[CUR]) ? gridView(false) : (/^issue-\\d+\\/notes$/.test(h) && ARCHIVE[CUR]) ? archNotesView() :')
 R('const active = blok ? null :', 'const active = (CUR!==ISSUE) ? "past-issues" : blok ? null :')
-R('  setTimeout(hydrateEmbeds,0);', '  if (CUR!==ISSUE && !blok) document.title = "Issue "+CUR+": "+meta().title+" | 20 Blok";\n  setTimeout(hydrateEmbeds,0);')
+R('  setTimeout(hydrateEmbeds,0);', '  if (CUR!==ISSUE && !blok) document.title = /\/notes$/.test(h) ? "Issue "+CUR+" Notes: the Back Page | 20 Blok" : "Issue "+CUR+": "+meta().title+" | 20 Blok";\n  setTimeout(hydrateEmbeds,0);')
 # grid + all-time
 R('el("span",{class:"label",text:(all?"ISSUE 7 · ":"")+b.name})', 'el("span",{class:"label",text:(all?"ISSUE "+idParts(b.id)[0]+" · ":"")+b.name})')
 R('  const list = ranked();\n  const grid = el("ol",{class:"grid","aria-label": all?"All-time ranking":"This week’s bloks, ranked"}, list.map((b,r)=>tileFor(b,r,all)));',
@@ -507,7 +507,7 @@ R('.issue-thumb{', '''.past-tease{display:flex;align-items:center;gap:14px;margi
 .pt-thumbs img{width:34px;height:34px;object-fit:cover;border-radius:7px;border:2px solid var(--bg,#0B0B0C);margin-left:-10px}
 .pt-thumbs img:first-child{margin-left:0}
 .issue-thumb{''')
-R('el("b",{text:"Issue notes: what changed, the bonus pick and the sign-off →"})', 'el("b",{text:(ARCHIVE[CUR]&&ARCHIVE[CUR].notes.link_text)||"Issue notes: what changed, the bonus pick and the sign-off →"})')
+R('el("b",{text:"Issue notes: what changed, the bonus pick and the sign-off →"})', 'el("b",{text:"Issue "+CUR+" notes: "+((ARCHIVE[CUR]&&ARCHIVE[CUR].notes.link_text)||"what changed, the bonus pick and the sign-off →")})')
 # article
 t = t.replace('el("a",{class:"back",href:"/",text:"← BACK TO THE GRID"})', 'el("a",{class:"back",href:gridHome(),text:"← BACK TO THE GRID"})')
 R('" · Issue 7 · "+readTime(b)', '" · Issue "+CUR+" · "+readTime(b)')
@@ -524,7 +524,7 @@ ARCH_JS = '''function archNotesView(){
   const sec=(h,...k)=>el("section",{class:"note"}, el("h3",{text:h}), ...k);
   return [el("article",{class:"article"},
     el("a",{class:"back",href:gridHome(),text:"← BACK TO THE GRID"}),
-    el("div",{class:"art-head"}, el("span",{class:"art-label",text:"ISSUE "+CUR+" · THE BACK PAGE"}), el("h1",{text:"Issue Notes"}),
+    el("div",{class:"art-head"}, el("span",{class:"art-label",text:"ISSUE "+CUR+" · THE BACK PAGE"}), el("h1",{text:"Issue "+CUR+" Notes"}),
       el("p",{class:"art-dek",text:"The sign-off, the editor’s notes and the treasure hunt answer."})),
     el("div",{class:"prose notes"},
       sec("Sign-off", el("p",{text:N.signoff}), el("p",{class:"sign",text:"— Lenny"})),
@@ -587,7 +587,7 @@ SEG_JS = """function segThumb(){
 """
 R('let lastRoute = null;', SEG_JS + 'let lastRoute = null;')
 
-R('<a href="/issue-notes">Issue notes</a>', '<a href="/issue-notes">Issue %d notes</a>' % ISSUE_NO)
+R('<a href="/issue-notes">Issue notes</a> · ', '')
 R('function ytId(u){', """function rssToggle(e){ e.stopPropagation(); const btn=e.currentTarget, menu=btn.nextElementSibling, open=menu.hidden;
   document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); menu.hidden=!open; btn.setAttribute("aria-expanded",String(open));
   if (open){ menu.style.transform=""; requestAnimationFrame(()=>{ let r=menu.getBoundingClientRect(); let dx=0; if (r.right>innerWidth-12) dx=innerWidth-12-r.right; if (r.left+dx<12) dx=12-r.left; menu.style.transform="translateX("+dx+"px)"; r=menu.getBoundingClientRect(); if (r.bottom>innerHeight-12) scrollBy({top:r.bottom-innerHeight+24,behavior:"smooth"}); }); } }
@@ -598,6 +598,8 @@ R('.fb-form{display:grid;', """.rss-wrap{display:inline-block;position:relative}
 .rss-menu{left:0;min-width:240px;text-align:left}
 .rss-note{display:block;padding:8px 12px 6px;font-size:13px;line-height:1.4;color:var(--muted)}
 .fb-form{display:grid;""")
+R('el("span",{class:"art-label",text:"ISSUE 7 · THE BACK PAGE"}), el("h1",{text:"Issue Notes"}),', 'el("span",{class:"art-label",text:"ISSUE "+ISSUE+" · THE BACK PAGE"}), el("h1",{text:"Issue "+ISSUE+" Notes"}),')
+R('"issue-notes":"Issue Notes","bonus":"Issue Notes"', '"issue-notes":"Issue "+ISSUE+" Notes","bonus":"Issue "+ISSUE+" Notes"')
 # ---------- write ----------
 for b in data:
     for x in b["body"]:
@@ -695,7 +697,7 @@ for n, a in sorted(ARCH.items()):
     if N.get("editor_notes"): nt += "<h2>Editor notes</h2><p>%s</p>" % H.escape(N["editor_notes"])
     nt += "<h2>Alpha close</h2><p>%s</p>" % H.escape(N["alpha"])
     urls.append(page("issue-%d/notes" % n, "Issue %d Notes: the Back Page | 20 Blok" % n, "The Back Page of 20 Blok Issue %d (%s): the sign-off, the treasure hunt answer, editor notes and the Alpha Close: %s" % (n, a["title"], N["alpha"]), cov, nt))
-for r_, ti in [("feedback","Feedback"),("contact","Contact"),("welcome","Welcome"),("privacy","Privacy"),("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue Notes"),("bonus","Issue Notes")]:
+for r_, ti in [("feedback","Feedback"),("contact","Contact"),("welcome","Welcome"),("privacy","Privacy"),("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue %d Notes" % ISSUE_NO),("bonus","Issue %d Notes" % ISSUE_NO)]:
     u = page(r_, ti+" — 20 Blok", home_desc, BRAND, "<h1>"+ti+"</h1>")
     if r_ not in ("bonus","welcome"): urls.append(u)
 open(os.path.join(out, "sitemap.xml"), "w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + "".join("  <url><loc>"+u+"</loc><lastmod>"+DT0.date.today().isoformat()+"</lastmod></url>\n" for u in urls) + "</urlset>\n")
