@@ -1,0 +1,733 @@
+{
+ "n": 1,
+ "title": "About Last Week",
+ "date": "Oct 29, 2025",
+ "month": "October 2025",
+ "pub": "2025-10-29",
+ "cover": "i1_cover",
+ "cover_alt": "Issue 1 cover: About Last Week. A man in a suit stands on a wet rooftop facing a misty city skyline.",
+ "coverlines": [
+  "must-see",
+  "word-meme",
+  "toolz",
+  "music-flow"
+ ],
+ "covertext": {
+  "must-see": "Robert Greene: A Psychology Masterclass",
+  "word-meme": "AlgoSpeak: Fluent in Censorship",
+  "toolz": "Gamma: When Your Words Design the Slides",
+  "music-flow": "A Song Found in a Freezing Parking Lot"
+ },
+ "notes": {
+  "signoff": "Thanks for reading Issue 1. If you got something out of it, share it with someone who would too.",
+  "link_text": "the sign-off and the Alpha Close →",
+  "editor_notes": [
+   {
+    "text": "Strategy is just art with a calendar."
+   }
+  ],
+  "alpha": "“Create at the speed of curiosity.”"
+ },
+ "bloks": [
+  {
+   "id": "straight-up",
+   "name": "STRAIGHT UP",
+   "emoji": "🎙️",
+   "feature": false,
+   "editor": true,
+   "title": "About Last Week",
+   "dek": "The bridge between chaos and cohesion.",
+   "img": "i1_cover",
+   "tags": [
+    "Mindset",
+    "Creativity"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "p",
+     "text": "If you know me, you know this has been a long time coming."
+    },
+    {
+     "t": "p",
+     "text": "Welcome to the official Lenny Lesser Newsletter — the place where everything I’m building lives under one roof."
+    },
+    {
+     "t": "img",
+     "src": "i1_ahh",
+     "cap": "The Lenny Lesser Newsletter has finally arrived, say “ahhhhhhhhh.”",
+     "alt": "Man with eyes closed, exhaling, GIF",
+     "gif": true
+    },
+    {
+     "t": "p",
+     "text": "Culture, creativity, technology, and mindset — all the threads connect here."
+    },
+    {
+     "t": "pull",
+     "text": "This first issue is the bridge between chaos and cohesion."
+    }
+   ]
+  },
+  {
+   "id": "must-see",
+   "name": "MUST-SEE",
+   "emoji": "👁️",
+   "feature": false,
+   "title": "Robert Greene on Social Psychology in Business and Life",
+   "dek": "A psychology masterclass.",
+   "img": "i1_yt_-1aSoZ1ffTg",
+   "tags": [
+    "Mindset",
+    "Culture"
+   ],
+   "people": [
+    "Robert Greene"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Sometimes it’s best to meet big names like they’re strangers. That happened this week with Robert Greene."
+    },
+    {
+     "t": "p",
+     "text": "If you’re into understanding power, psychology, or the social games that shape human behavior, you might enjoy this video."
+    },
+    {
+     "t": "img",
+     "src": "i1_yt_-1aSoZ1ffTg",
+     "cap": "Robert Greene on Open Residency. Watch on YouTube.",
+     "alt": "Robert Greene: Never be 100% honest",
+     "href": "https://www.youtube.com/watch?v=-1aSoZ1ffTg",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "🎥 As seen on YouTube: Open Residency →",
+     "href": "https://www.youtube.com/channel/UC3P7JC2BIQHpUvdhxFHmnsg"
+    }
+   ]
+  },
+  {
+   "id": "word-meme",
+   "name": "WORD MEME",
+   "emoji": "🗿",
+   "feature": true,
+   "title": "AlgoSpeak: Fluent in Censorship",
+   "dek": "The coded language of digital survival.",
+   "img": "i1_algo",
+   "tags": [
+    "Memes",
+    "Culture",
+    "Internet Culture"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "p",
+     "text": "Algospeak (n.) 💬 A coded way of speaking online — swapping or altering words so algorithms don’t flag, censor, or down-rank what you say. 🧩"
+    },
+    {
+     "t": "img",
+     "src": "i1_algo",
+     "cap": "",
+     "alt": "Two faces in profile, mouths covered by a yellow tape that reads AlgoSpeak",
+     "narrow": true
+    },
+    {
+     "t": "pull",
+     "text": "Is “AlgoSpeak” just cultural language evolution or a sign of a wrong turn?"
+    },
+    {
+     "t": "p",
+     "text": "Instead of saying “suicide,” they say “unalive.” Instead of “sex,” they say “seggs.” 🔄"
+    },
+    {
+     "t": "p",
+     "text": "Because somewhere along the line, we stopped talking to each other — and started talking around the platforms. 🌐"
+    },
+    {
+     "t": "h",
+     "text": "The elephant in the room"
+    },
+    {
+     "t": "p",
+     "text": "Are we being censored — or just curated?"
+    },
+    {
+     "t": "img",
+     "src": "i1_algo_reel",
+     "cap": "A 1-minute reel about AlgoSpeak. Watch on Instagram.",
+     "alt": "AlgoSpeak reel",
+     "href": "https://www.instagram.com/reel/DM_o0_6S46G/",
+     "badge": "WATCH ON INSTAGRAM"
+    },
+    {
+     "t": "pull",
+     "text": "Corporate language is the new denial dialect."
+    },
+    {
+     "t": "img",
+     "src": "i1_hear_us",
+     "cap": "",
+     "alt": "T-shirt that reads: Don’t @ me, they’ll hear us",
+     "narrow": true
+    },
+    {
+     "t": "p",
+     "text": "Don’t @ me, they’ll hear us — this is where we are at."
+    }
+   ]
+  },
+  {
+   "id": "toolz",
+   "name": "TOOLZ",
+   "emoji": "🤖",
+   "feature": false,
+   "title": "Gamma’s Quiet Superpower",
+   "dek": "Slide decks that build themselves.",
+   "img": "i1_gamma_tile",
+   "tags": [
+    "AI",
+    "AI Tools"
+   ],
+   "people": [
+    "Gamma"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i1_gamma",
+     "cap": "",
+     "alt": "Gamma logo",
+     "small": true
+    },
+    {
+     "t": "p",
+     "text": "What Gamma does: Slide decks that build themselves."
+    },
+    {
+     "t": "p",
+     "text": "Why Gamma matters: Storytelling and pitching are merging, and not just for corporate boardrooms anymore."
+    },
+    {
+     "t": "h",
+     "text": "💡 Pro tip"
+    },
+    {
+     "t": "p",
+     "text": "Pair Gamma with ChatGPT."
+    },
+    {
+     "t": "img",
+     "src": "i1_yt_gR6ezlO18dA",
+     "cap": "The 7-minute Gamma tutorial. Watch on YouTube.",
+     "alt": "Gamma.app introduction tutorial",
+     "href": "https://www.youtube.com/watch?v=gR6ezlO18dA",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "Try Gamma: gamma.app →",
+     "href": "https://try.gamma.app/c18rsdce6aog"
+    }
+   ]
+  },
+  {
+   "id": "behind-the-reel",
+   "name": "BEHIND THE REEL",
+   "emoji": "🎞️",
+   "feature": false,
+   "title": "I’m Gonna Make It",
+   "dek": "Bobby Darin-style vocals, an electronic beat, K-Pop visuals.",
+   "img": "i1_makeit",
+   "tags": [
+    "AI",
+    "AI Filmmaking",
+    "Music"
+   ],
+   "people": [
+    "Unruly Reels"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i1_makeit",
+     "cap": "I’m Gonna Make It. Watch on Instagram.",
+     "alt": "AI-generated music video thumbnail featuring Bobby Darin-style vocals and K-Pop visuals",
+     "href": "https://www.instagram.com/reel/DPP-7QUkYEq/",
+     "badge": "WATCH ON INSTAGRAM"
+    },
+    {
+     "t": "p",
+     "text": "Bobby Darin-style vocals. An electronic beat. K-Pop school-girl visuals. You tell me what happens next."
+    },
+    {
+     "t": "p",
+     "text": "This one came out of nowhere — about not giving up, getting squeezed by life’s circumstances, and walking straight into the unknown."
+    },
+    {
+     "t": "pull",
+     "text": "Keep creating; you never know what little mess-up might turn into a gem."
+    },
+    {
+     "t": "p",
+     "text": "Tools: Midjourney / Suno / CapCut"
+    },
+    {
+     "t": "link",
+     "label": "Need the creative load off your plate? ➡️ UnrulyReels.com →",
+     "href": "https://unrulyreels.com"
+    }
+   ]
+  },
+  {
+   "id": "find-your-edge",
+   "name": "FIND YOUR EDGE",
+   "emoji": "🗡️",
+   "feature": false,
+   "title": "Vinh Giang: Five Phrases That Rewire Conversation",
+   "dek": "Small lines that make people feel heard.",
+   "img": "i1_yt_Jc1mP2MSGt4",
+   "tags": [
+    "Mindset"
+   ],
+   "people": [
+    "Vinh Giang"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Vinh Giang is all about helping people become better communicators. Here’s one that stood out this week."
+    },
+    {
+     "t": "img",
+     "src": "i1_yt_Jc1mP2MSGt4",
+     "cap": "Vinh Giang: five phrases. Watch on YouTube.",
+     "alt": "Vinh Giang demonstrating conversation phrases",
+     "href": "https://www.youtube.com/watch?v=Jc1mP2MSGt4",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "ul",
+     "items": [
+      "“Tell me more” — shows curiosity and makes others feel valued.",
+      "“That’s such an interesting way to look at it” — validates without judgment.",
+      "“That must have been such a big moment for you” — acknowledges emotion.",
+      "“What do you love most about it?” — uncovers passion.",
+      "“I see where you’re coming from” — creates psychological safety through empathy."
+     ]
+    }
+   ]
+  },
+  {
+   "id": "dezign-ur-ritual",
+   "name": "DEZIGN UR RITUAL",
+   "emoji": "🫖",
+   "feature": false,
+   "title": "$6.99’ing: Choosing Sanity Over Status",
+   "dek": "Solace in a $6.99 bag of pre-ground coffee.",
+   "img": "seinfeld_poster",
+   "tags": [
+    "Mindset"
+   ],
+   "people": [
+    "Trader Joe’s"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i1_seinfeld",
+     "cap": "",
+     "alt": "Jerry Seinfeld, serious, GIF",
+     "gif": true
+    },
+    {
+     "t": "p",
+     "text": "Finding solace in a $6.99 bag of pre-ground coffee from Trader Joe’s. 🤷‍♂️"
+    },
+    {
+     "t": "p",
+     "text": "Sometimes things don’t have to be perfect. Paying top dollar for the “premiere” version isn’t always the move."
+    },
+    {
+     "t": "link",
+     "label": "Next: ‘Slow Down — or Life Will Do It for You,’ Issue 2 →",
+     "href": "/issue-2/dezign-ur-ritual"
+    }
+   ]
+  },
+  {
+   "id": "chain-reaction",
+   "name": "CHAIN REACTION",
+   "emoji": "🔗",
+   "feature": false,
+   "title": "What Is a Cypherpunk, Anyway?",
+   "dek": "Crypto 101: the privacy punks of the network age.",
+   "img": "i1_hmm",
+   "tags": [
+    "Crypto"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "img",
+     "src": "i1_hmm",
+     "cap": "",
+     "alt": "Anime character with a raised eyebrow: HMM?",
+     "gif": true,
+     "narrow": true
+    },
+    {
+     "t": "h",
+     "text": "Welcome to crypto"
+    },
+    {
+     "t": "p",
+     "text": "So, what is a Cypherpunk? If the 1970s punk scene tore down the stage to build its own, the cypherpunks did the same — only in code."
+    },
+    {
+     "t": "p",
+     "text": "They’re the ones who looked at a growing internet and said, “Cool, but who’s watching?” Then they built the locks, the tunnels, and the currencies that let people move freely through digital space."
+    },
+    {
+     "t": "p",
+     "text": "Think of them as the privacy punks of the network age — DIY technologists who believed freedom required encryption, not permission. Their rebellion wasn’t with guitars, but with math."
+    },
+    {
+     "t": "pull",
+     "text": "Like the original punks, they weren’t waiting for the system to change; they just started building a new one in its shadow."
+    },
+    {
+     "t": "p",
+     "text": "Not exclusive to writing code — the Cypherpunk movement is a mindset about how people think, act, and align with a certain kind of progress."
+    },
+    {
+     "t": "link",
+     "label": "Next: Declining the Stage, Issue 2 →",
+     "href": "/issue-2/chain-reaction"
+    }
+   ]
+  },
+  {
+   "id": "story-beat",
+   "name": "STORY BEAT",
+   "emoji": "📖",
+   "feature": false,
+   "title": "Scanning Barcodes Like Life Depends On It",
+   "dek": "Episode 1: will, poise, and quiet rebellion.",
+   "img": "i1_ep1",
+   "tags": [
+    "Culture",
+    "Creativity"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "p",
+     "text": "Cameras watch him. Co-workers micro-manage him. Managers hunt for new ways he can perpetually “improve.” All this — for the privilege of going into debt."
+    },
+    {
+     "t": "p",
+     "text": "It’s a story about will, poise, and quiet rebellion."
+    },
+    {
+     "t": "p",
+     "text": "Sometimes the only way to get what you want is to rely completely on yourself — to depend on no one."
+    },
+    {
+     "t": "pull",
+     "text": "Either the crowd decides who you are, or you decide who you are. Who prevails?"
+    },
+    {
+     "t": "img",
+     "src": "i1_ep1",
+     "cap": "Episode 1. Watch on Instagram.",
+     "alt": "Episode 1 of the Apron Worker series",
+     "href": "https://www.instagram.com/reel/DPUSSlKAfO9/",
+     "badge": "WATCH ON INSTAGRAM"
+    },
+    {
+     "t": "link",
+     "label": "Next: Episode 2, Issue 2 →",
+     "href": "/issue-2/story-beat"
+    }
+   ]
+  },
+  {
+   "id": "lolz",
+   "name": "LOLZ",
+   "emoji": "🤣",
+   "feature": false,
+   "title": "Andrew Rousso’s Climate Fallacy Spiral",
+   "dek": "Smart and unhinged, in balance.",
+   "img": "i1_yt_3YD5jZBTz6s",
+   "tags": [
+    "Comedy",
+    "Internet Culture"
+   ],
+   "people": [
+    "Andrew Rousso"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Andrew Rousso nails that balance of smart and unhinged. It even takes a left turn at the end, but compared to his usual dives, this one’s practically a palate cleanser."
+    },
+    {
+     "t": "img",
+     "src": "i1_yt_3YD5jZBTz6s",
+     "cap": "Andrew Rousso. Watch on YouTube.",
+     "alt": "Andrew Rousso talking to camera",
+     "href": "https://www.youtube.com/watch?v=3YD5jZBTz6s",
+     "badge": "WATCH ON YOUTUBE"
+    }
+   ]
+  },
+  {
+   "id": "music-flow",
+   "name": "MUSIC FLOW",
+   "emoji": "🎧",
+   "feature": true,
+   "title": "SALES — “Renee”",
+   "dek": "Found in a freezing parking lot. My secret emo side.",
+   "img": "i1_yt_5gyxGxbO_yo",
+   "tags": [
+    "Music",
+    "Indie"
+   ],
+   "people": [
+    "SALES"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Back in my car-selling days at Mercedes (less than a year ago 😂), I found this song."
+    },
+    {
+     "t": "p",
+     "text": "The buyer and I had just agreed on a deal after hours — around 9 p.m. The expectation was to prep the cars ourselves, which meant heading out into the freezing Pacific Northwest night to find it, fill it with gas, and wash it inside and out."
+    },
+    {
+     "t": "p",
+     "text": "I sprint around back — because that’s what you do when you’ve got ten minutes before your guest walks out of finance. I get into the car’s icy interior. The lot is stark and quiet, street lamps refracting off windows, hundreds of cars surrounding me. I turn the key; the dash lights up."
+    },
+    {
+     "t": "p",
+     "text": "And there it is — a soft guitar riff cuts through the cold."
+    },
+    {
+     "t": "p",
+     "text": "The song’s already playing on the radio, and somehow it just… gets me."
+    },
+    {
+     "t": "pull",
+     "text": "A calm, surreal dopamine rush. Like, okay, someone out there understands."
+    },
+    {
+     "t": "p",
+     "text": "The song’s about a moment that “took too long to get at me,” which just fits. It’s that don’t-waste-my-time energy in music form."
+    },
+    {
+     "t": "img",
+     "src": "i1_yt_R55JUpfyPeg",
+     "cap": "“Renee,” the audio. Watch on YouTube.",
+     "alt": "SALES, Renee",
+     "href": "https://www.youtube.com/watch?v=R55JUpfyPeg",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "img",
+     "src": "i1_yt_5gyxGxbO_yo",
+     "cap": "“Renee,” live. Watch on YouTube.",
+     "alt": "SALES performing Renee live",
+     "href": "https://www.youtube.com/watch?v=5gyxGxbO_yo",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "🎧 Also in the Music Flow Collection →",
+     "href": "https://musicflowcollection.com/song/sales-renee/"
+    }
+   ]
+  },
+  {
+   "id": "off-the-path",
+   "name": "OFF THE PATH",
+   "emoji": "🧭",
+   "feature": false,
+   "title": "Heads-Up Before You Watch: DoesTheDogDie.com",
+   "dek": "Check a movie for spoilers you’d rather avoid.",
+   "img": "",
+   "tags": [
+    "Internet Culture",
+    "Film"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "p",
+     "text": "Did you know there’s a site that tells you whether a dog dies in a movie or show? It’s called DoesTheDogDie.com.",
+     "links": [
+      {
+       "text": "DoesTheDogDie.com",
+       "href": "https://www.doesthedogdie.com/"
+      }
+     ]
+    },
+    {
+     "t": "p",
+     "text": "The mobile ads are brutal and make it clunky to use, but the core idea is surprisingly useful: you can check a title for dog-related spoilers and other trigger warnings if certain scenes hit you hard and you’d rather avoid them."
+    },
+    {
+     "t": "p",
+     "text": "Pretty wild, huh?"
+    },
+    {
+     "t": "link",
+     "label": "DoesTheDogDie.com →",
+     "href": "https://www.doesthedogdie.com/"
+    }
+   ]
+  },
+  {
+   "id": "wall-of-sommi",
+   "name": "WALL OF SOMMI",
+   "emoji": "🧱",
+   "feature": false,
+   "title": "A Secret Best Kept",
+   "dek": "Less a crypto channel, more internet theater.",
+   "img": "i1_sommi_shot",
+   "tags": [
+    "Crypto"
+   ],
+   "people": [
+    "Sommi"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Your Friend Sommi is a guy talking to a camera about financial markets and crypto. But really — it’s more like internet theater."
+    },
+    {
+     "t": "p",
+     "text": "Somehow, this one guy with a camera has enough presence that you start referring to his videos as “episodes”… of his… “show.”"
+    },
+    {
+     "t": "img",
+     "src": "i1_sommi_shot",
+     "cap": "",
+     "alt": "Sommi in a red-and-white knit hat at a microphone"
+    },
+    {
+     "t": "p",
+     "text": "I had no idea what he was saying when I first started watching. I’d play it in the background, catching a few words here and there through his Australian accent."
+    },
+    {
+     "t": "p",
+     "text": "There are naturally recurring themes and phrases that take his efforts into cult territory:"
+    },
+    {
+     "t": "p",
+     "text": "Sommi plays his “pumpy G music” as a topic transition interlude, reminds the viewer he’s studying financial markets “18 hours a day,” and delivers “the highest-value content in crypto — it’s not even close.”"
+    },
+    {
+     "t": "pull",
+     "text": "This is my shrine to Sommi. I’ll share highlight clips here."
+    },
+    {
+     "t": "img",
+     "src": "i1_yt_3B7fSel-RJA",
+     "cap": "Sommi. Watch on YouTube.",
+     "alt": "Sommi in a knit hat",
+     "href": "https://www.youtube.com/watch?v=3B7fSel-RJA",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "🎥 On YouTube: @yourfriendSOMMI →",
+     "href": "https://www.youtube.com/@yourfriendsommi"
+    }
+   ]
+  },
+  {
+   "id": "sports-talk",
+   "name": "SPORTS TALK",
+   "emoji": "🏀",
+   "feature": false,
+   "title": "Bronx Bomb by Bonds, and I Can Still Hear the Haters",
+   "dek": "Real ones know.",
+   "img": "i1_yt_cQeJ8YQuqh8",
+   "tags": [
+    "Sports"
+   ],
+   "people": [
+    "Barry Bonds"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "What pulls us toward sports — and life — is that you can’t recreate the moment. Each second challenges you to respond, to feel, to decide how much it matters. It quietly asks: Do you love this enough?"
+    },
+    {
+     "t": "p",
+     "text": "We witness greatness and try to appreciate it, but most of the time we don’t know how. Sometimes, we don’t even realize how great something truly is until it’s gone."
+    },
+    {
+     "t": "p",
+     "text": "Enter Barry Bonds."
+    },
+    {
+     "t": "p",
+     "text": "I can still hear the haters — they’ve become a kind of muse. Every insult just deepens the myth. The more they try to tear him down, the larger he looms."
+    },
+    {
+     "t": "p",
+     "text": "Centuries from now, they’ll still be telling stories about Barry Bonds. And I doubt he’ll be any more understood then than he is now — which is to say, barely at all."
+    },
+    {
+     "t": "pull",
+     "text": "But as they say: Real ones know."
+    },
+    {
+     "t": "p",
+     "text": "Here’s a shot in the upper deck at Yankee Stadium:"
+    },
+    {
+     "t": "img",
+     "src": "i1_yt_cQeJ8YQuqh8",
+     "cap": "Barry Bonds at Yankee Stadium. Watch on YouTube.",
+     "alt": "Barry Bonds watching a home run at Yankee Stadium",
+     "href": "https://www.youtube.com/watch?v=cQeJ8YQuqh8",
+     "badge": "WATCH ON YOUTUBE"
+    }
+   ]
+  },
+  {
+   "id": "now-playing",
+   "name": "NOW PLAYING",
+   "emoji": "🍿",
+   "feature": false,
+   "title": "How Much Is Enough? Wall Street (1987)",
+   "dek": "Gekko and Bud Fox, face to face.",
+   "img": "i1_yt_jBEA65zdgKw",
+   "tags": [
+    "Film"
+   ],
+   "people": [
+    "Michael Douglas",
+    "Charlie Sheen"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i1_yt_jBEA65zdgKw",
+     "cap": "Wall Street (1987): How much is enough? Watch on YouTube.",
+     "alt": "Michael Douglas as Gordon Gekko, face to face with Charlie Sheen",
+     "href": "https://www.youtube.com/watch?v=jBEA65zdgKw",
+     "badge": "WATCH ON YOUTUBE"
+    }
+   ]
+  }
+ ]
+}

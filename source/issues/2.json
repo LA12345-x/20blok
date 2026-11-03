@@ -366,6 +366,11 @@
     },
     {
      "t": "link",
+     "label": "← Previous: $6.99’ing, Issue 1",
+     "href": "/issue-1/dezign-ur-ritual"
+    },
+    {
+     "t": "link",
      "label": "Next: ‘You Already Have It in You,’ Issue 3 →",
      "href": "/issue-3/dezign-ur-ritual"
     }
@@ -406,7 +411,7 @@
      "links": [
       {
        "text": "What Is a Cypherpunk, Anyway?",
-       "href": "https://lennylesser.beehiiv.com/p/about-last-week-issue-1-08fd#onchain-dispatch-what-is-a-cypherpu"
+       "href": "/issue-1/chain-reaction"
       }
      ]
     },
@@ -463,6 +468,11 @@
     },
     {
      "t": "link",
+     "label": "← Previous: What Is a Cypherpunk, Anyway?, Issue 1",
+     "href": "/issue-1/chain-reaction"
+    },
+    {
+     "t": "link",
      "label": "Next: What Is Kaspa? The Playground Edition, Issue 3 →",
      "href": "/issue-3/chain-reaction"
     }
@@ -500,6 +510,11 @@
      "t": "link",
      "label": "🎧 “Fast Car” is also in the Music Flow Collection →",
      "href": "https://musicflowcollection.com/song/tracy-chapman-fast-car/"
+    },
+    {
+     "t": "link",
+     "label": "← Previous: Episode 1, Issue 1",
+     "href": "/issue-1/story-beat"
     },
     {
      "t": "link",

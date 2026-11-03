@@ -517,13 +517,14 @@ R('el("img",{src:IMG.cover,alt:"Issue 7 cover: Retail Mindset."})', 'el("img",{s
 R('{n:6,t:"Do you have what it takes to be early?",d:"Apr 24, 2026",img:"issue6",', '{n:6,t:"Do You Have What It Takes to Be Early?",d:"Apr 24, 2026",img:"i6_cover",path:"/issue-6",')
 R('{n:3,t:"Find Your Edge",d:"Jan 3, 2026",img:"issue3",', '{n:3,t:"Find Your Edge",d:"Jan 3, 2026",img:"i3_cover",path:"/issue-3",')
 R('{n:4,t:"Cold Water",d:"Feb 4, 2026",img:"issue4",', '{n:4,t:"Cold Water",d:"Feb 4, 2026",img:"i4_cover_mirror",path:"/issue-4",')
+R('{n:1,t:"About Last Week",d:"Oct 29, 2025",img:"issue1",', '{n:1,t:"About Last Week",d:"Oct 29, 2025",img:"i1_cover",path:"/issue-1",')
 R('{n:2,t:"How May I Help You?",d:"Nov 28, 2025",img:"issue2",', '{n:2,t:"How May I Help You?",d:"Nov 28, 2025",img:"i2_cover",path:"/issue-2",')
 R('{n:5,t:"Chaos is a Ladder",d:"Mar 13, 2026",img:"issue5",', '{n:5,t:"Chaos Is a Ladder",d:"Mar 13, 2026",img:"i5_cover",path:"/issue-5",')
 R('p.here?{href:"/"}:', 'p.path?{href:p.path}:p.here?{href:"/"}:')
 R('{n:7,t:"Retail Mindset",d:"Oct 28, 2026",here:true,', '{n:7,t:"Retail Mindset",d:"Oct 28, 2026",here:true,path:"/issue-7",')
 R('p.d+(p.here?" · on this site":" · on the newsletter")', 'p.d+((p.here||p.path)?" · on this site":" · on the newsletter")')
 R('"Issues 1 through 6 live on the newsletter. Tap a cover to read it. Issue 7 is the first one built as 20 Blok."',
-  '"Every issue, newest first. Tap a cover to read it. Issue 1 still lives on the newsletter while it moves over."')
+  '"Every issue, newest first. Tap a cover to read it."')
 ARCH_JS = '''function archNotesView(){
   const a = ARCHIVE[CUR], N = a.notes;
   const sec=(h,...k)=>el("section",{class:"note"}, el("h3",{text:h}), ...k);
