@@ -9,7 +9,7 @@ await p.setContent(`<style>
 @font-face{font-family:PF;font-weight:700;src:url(${fu('playfair-display/files/playfair-display-latin-700-normal.woff2')})}
 @font-face{font-family:IN;font-weight:700;src:url(${fu('inter/files/inter-latin-700-normal.woff2')})}
 *{margin:0;box-sizing:border-box}body{width:1200px;height:630px;background:#0b0b0b;display:flex;overflow:hidden}
-.l{width:600px;flex:none;padding:0 56px;display:flex;flex-direction:column;justify-content:center;gap:26px;border-right:4px solid #e0473c}
+.l{width:600px;flex:none;padding:0 56px;display:flex;flex-direction:column;justify-content:center;gap:26px;border-right:2px solid #e0473c}
 .w{font:900 104px/0.9 PF;color:#fff;letter-spacing:-1px;white-space:nowrap}.w b{color:#e0473c;font-weight:900}
 .k{font:700 24px IN;letter-spacing:4px;color:#e0473c;text-transform:uppercase}
 .t{font:700 ${i.title.length>26?42:52}px/1.12 PF;color:#fff;text-wrap:balance}
