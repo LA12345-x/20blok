@@ -602,7 +602,7 @@ R('el("span",{class:"art-label",text:"ISSUE 7 · THE BACK PAGE"}), el("h1",{text
 R('"issue-notes":"Issue Notes","bonus":"Issue Notes"', '"issue-notes":"Issue "+ISSUE+" Notes","bonus":"Issue "+ISSUE+" Notes"')
 _m = re.search(r'<a href="/privacy">Privacy</a> · (<a href="/contact">Contact</a>) · (<span class="share rss-wrap">.*?</span></span>)', t, re.S)
 assert _m
-t = t[:_m.start()] + _m.group(1) + ' · ' + _m.group(2) + ' · <a href="/privacy">Privacy</a>' + t[_m.end():]
+t = t[:_m.start()] + _m.group(2) + ' · ' + _m.group(1) + ' · <a href="/privacy">Privacy</a>' + t[_m.end():]
 # ---------- write ----------
 for b in data:
     for x in b["body"]:
