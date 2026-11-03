@@ -1492,7 +1492,7 @@ function plLoad(slug, i){
 }
 function plPlay(slug, n){
   const i = ALBUMS[slug].tracks.findIndex(t=>t.n===n);
-  if (PL.a && PL.a.slug===slug && PL.i===i && PL.au){ plToggle(); return; }
+  if (PL.a && PL.a.slug===slug && PL.i===i && PL.au && !PL.bar.hidden){ plToggle(); return; }
   plLoad(slug, i);
 }
 function plToggle(){ if (!PL.au || !PL.a) return; if (PL.au.paused) PL.au.play().catch(()=>{}); else PL.au.pause(); }
