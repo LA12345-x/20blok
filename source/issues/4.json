@@ -1,0 +1,987 @@
+{
+ "n": 4,
+ "title": "Cold Water",
+ "date": "Feb 4, 2026",
+ "month": "February 2026",
+ "pub": "2026-02-04",
+ "cover": "i4_cover_mirror",
+ "cover_alt": "Issue 4 cover: Cold Water. A man’s reflection in a wet bathroom mirror, hands pressed to his face after a splash of cold water.",
+ "remote_images": {
+  "wow": "https://media3.giphy.com/media/cmf8NWvEc0tpks6RL8/giphy.gif"
+ },
+ "coverlines": [
+  "behind-the-reel",
+  "word-meme",
+  "music-flow",
+  "industry-freeks"
+ ],
+ "covertext": {
+  "behind-the-reel": "Free Kuminga: You Can’t Spin the Crowd",
+  "word-meme": "But You Keep Scrolling",
+  "music-flow": "Soap&Skin’s “Me and the Devil” Isn’t What You Think",
+  "industry-freeks": "Mark Wilson: Decades of Work, Then the Flip"
+ },
+ "notes": {
+  "signoff": "Thanks for reading Issue 4. If you got something out of it, share it with someone who would too.",
+  "link_text": "the sign-off, editor notes and the treasure hunt answer →",
+  "treasure": {
+   "text": "This issue’s WORD MEME tee design was inspired by the classic “everything you like I liked 5 years ago.”",
+   "gif": "i4_treasure",
+   "alt": "The original meme: a T-shirt reading “Everything you like I liked five years ago.”",
+   "link": {
+    "label": "Source image on Instagram →",
+    "href": "https://www.instagram.com/p/DTnUoIKDO-6/"
+   },
+   "back": {
+    "label": "← Back to WORD MEME",
+    "href": "/issue-4/word-meme"
+   }
+  },
+  "editor_notes": [
+   {
+    "text": "New: 🗺️ Treasure Hunt icon. Fun facts are hidden throughout the issue; answers live on the Back Page."
+   },
+   {
+    "text": "Updated: tighter bloks and adjusted text sizes for easier reading."
+   }
+  ],
+  "alpha": "“If you can’t say something nice, don’t say nothing at all.”"
+ },
+ "bloks": [
+  {
+   "id": "straight-up",
+   "name": "STRAIGHT UP",
+   "emoji": "🎙️",
+   "feature": false,
+   "editor": true,
+   "title": "Cold Water",
+   "dek": "Your moment in the mirror. Clear, not cynical.",
+   "img": "i4_cover_mirror",
+   "tags": [
+    "Mindset"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "p",
+     "text": "Cold water is your moment in the mirror, letting accountability do its quiet, self-solving work."
+    },
+    {
+     "t": "p",
+     "text": "It’s when you realize no “new year goals” worksheet is going to drag you anywhere."
+    },
+    {
+     "t": "img",
+     "src": "i4_wow",
+     "cap": "Cold water seems harsh until it’s not.",
+     "alt": "“Wow” reaction GIF from The Jim Jefferies Show",
+     "gif": true
+    },
+    {
+     "t": "p",
+     "text": "We’ve never had more access to information, yet we can’t agree on the facts."
+    },
+    {
+     "t": "p",
+     "text": "That makes trust crucial, because people and systems can look one way while something else is happening underneath."
+    },
+    {
+     "t": "pull",
+     "text": "Cold water doesn’t make you cynical. It makes you clear. Then it’s on you to act."
+    }
+   ]
+  },
+  {
+   "id": "must-see",
+   "name": "MUST-SEE",
+   "emoji": "👁️",
+   "feature": false,
+   "title": "World: Meet Oren",
+   "dek": "What worked in 2025, what doesn’t anymore, and what wins in 2026.",
+   "img": "i4_yt_kFfN_t3bH_8",
+   "tags": [
+    "Media",
+    "Creativity"
+   ],
+   "people": [
+    "Oren John"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "A quick reset on brand content: what worked in 2025, what doesn’t anymore, and what wins in 2026."
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_kFfN_t3bH_8",
+     "cap": "Oren on brand storytelling. Watch on YouTube.",
+     "alt": "Oren on brand storytelling",
+     "href": "https://www.youtube.com/watch?v=kFfN_t3bH_8",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "🎥 On YouTube: OrenMeetsWorld →",
+     "href": "https://www.youtube.com/@orenmeetsworld"
+    }
+   ]
+  },
+  {
+   "id": "industry-freeks",
+   "name": "INDUSTRY FREEKS",
+   "emoji": "🧪",
+   "feature": false,
+   "title": "Before His Art, There Was Mark Wilson",
+   "dek": "Decades of creating with little response. Until one day, it changed.",
+   "img": "i4_yt_Vk2c101ikh4",
+   "tags": [
+    "Creativity",
+    "Mindset"
+   ],
+   "people": [
+    "Mark Wilson",
+    "Raoul Pal"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Raoul Pal interviews North Indiana artist Mark Wilson. A story a lot of artists can relate to: decades of creating with little response."
+    },
+    {
+     "t": "p",
+     "text": "Until one day, it changed."
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_Vk2c101ikh4",
+     "cap": "Raoul Pal with Mark Wilson: Die With the Most Likes. Watch on YouTube.",
+     "alt": "Raoul Pal and Mark Wilson",
+     "href": "https://www.youtube.com/watch?v=Vk2c101ikh4",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "🎥 On YouTube: @RaoulPalTJM →",
+     "href": "https://www.youtube.com/@RaoulPalTJM"
+    }
+   ]
+  },
+  {
+   "id": "word-meme",
+   "name": "WORD MEME",
+   "emoji": "🗿",
+   "feature": false,
+   "title": "But You Keep Scrolling",
+   "dek": "Dopamine beats the blueprint.",
+   "img": "i4_selfie",
+   "tags": [
+    "Memes",
+    "Internet Culture",
+    "Mindset"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "p",
+     "text": "You found what you’re looking for. You got the thing you’ve always wanted. The best advice is right in front of you."
+    },
+    {
+     "t": "pull",
+     "text": "“But you keep scrolling.”"
+    },
+    {
+     "t": "p",
+     "text": "This phrase reached its loudest moment on the @mylifeordebt Instagram account.",
+     "links": [
+      {
+       "text": "@mylifeordebt",
+       "href": "https://www.instagram.com/p/DT85pfAAbvP/"
+      }
+     ]
+    },
+    {
+     "t": "p",
+     "text": "The meme’s been around, but they turned it into a marketing mainstay: post after post lays out a usable blueprint (money, credit, business), then comes the same closing line: “but you keep scrolling.”"
+    },
+    {
+     "t": "img",
+     "src": "i4_tee",
+     "cap": "",
+     "alt": "A young woman in a park wearing a black T-shirt that reads “but you keep scrolling…”",
+     "narrow": true
+    },
+    {
+     "t": "link",
+     "label": "🗺️ Treasure Hunt: what classic meme is this tee design based on? Answer on the Back Page →",
+     "href": "/issue-4/notes"
+    },
+    {
+     "t": "p",
+     "text": "It became the ultimate sales takeaway: the objection gets handled before it can arrive."
+    },
+    {
+     "t": "p",
+     "text": "Because the problem isn’t always access, or even information."
+    },
+    {
+     "t": "p",
+     "text": "It’s the dopamine loop of doom-scrolling—and the fear that if you stop, you’ll have to act."
+    },
+    {
+     "t": "p",
+     "text": "We say we want the answer, but when it finally shows up, we scroll anyway—hoping the next thumb-flick holds something better."
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_butzJUK2xDY",
+     "cap": "The “but you keep scrolling”-inspired reel. Watch on YouTube.",
+     "alt": "The but you keep scrolling reel",
+     "href": "https://www.youtube.com/watch?v=butzJUK2xDY",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "img",
+     "src": "i4_selfie",
+     "cap": "Word meme merch loading.",
+     "alt": "A woman takes an elevator selfie in a white tee reading “but you keep scrolling.”",
+     "narrow": true
+    },
+    {
+     "t": "pull",
+     "text": "Memes are marketing."
+    }
+   ]
+  },
+  {
+   "id": "toolz",
+   "name": "TOOLZ",
+   "emoji": "🤖",
+   "feature": false,
+   "title": "Suno: The Cat’s Out of the Bag",
+   "dek": "Music just became copy/paste.",
+   "img": "i4_suno",
+   "tags": [
+    "AI",
+    "AI Tools",
+    "Music"
+   ],
+   "people": [
+    "Suno"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i4_suno",
+     "cap": "",
+     "alt": "Suno logo",
+     "narrow": true
+    },
+    {
+     "t": "p",
+     "text": "What it does: Suno lets you generate music—instrumental or with vocal—using text prompts."
+    },
+    {
+     "t": "p",
+     "text": "People are using it for:"
+    },
+    {
+     "t": "ul",
+     "items": [
+      "Ad and brand jingles",
+      "Music beds for reels, shorts and scenes",
+      "Quick instrumentation for creators who don’t have a studio (or time)"
+     ]
+    },
+    {
+     "t": "p",
+     "text": "The bigger shift: Music just became copy/paste. If you can describe a vibe, you can make a track."
+    },
+    {
+     "t": "h",
+     "text": "💡 Pro tip"
+    },
+    {
+     "t": "p",
+     "text": "Before you prompt, decide:"
+    },
+    {
+     "t": "ul",
+     "items": [
+      "Genre + vibe",
+      "Lyrics or instrumental",
+      "Use case (what’s it for?)"
+     ]
+    },
+    {
+     "t": "p",
+     "text": "Then ask ChatGPT: “Write me 3 Suno prompts for [genre] with [vibe], for [use case]. Keep them clear and specific.”"
+    },
+    {
+     "t": "link",
+     "label": "Try Suno: suno.com →",
+     "href": "https://suno.com/"
+    }
+   ]
+  },
+  {
+   "id": "behind-the-reel",
+   "name": "BEHIND THE REEL",
+   "emoji": "🎞️",
+   "feature": true,
+   "title": "“Free Kuminga”",
+   "dek": "An AI-generated protest music reel confronting hypocrisy in social justice and the corporatization of pro sports.",
+   "img": "i4_fk_concert",
+   "tags": [
+    "AI",
+    "AI Filmmaking",
+    "Sports"
+   ],
+   "people": [
+    "Jonathan Kuminga",
+    "Steve Kerr",
+    "Unruly Reels"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Right under everyone’s noses in San Francisco, a contradiction has been playing out in real time."
+    },
+    {
+     "t": "p",
+     "text": "Free Kuminga began as a creative response to something that felt deeply off: a young basketball player with visible talent, growth, and crowd support being repeatedly sidelined through abstract language, shifting explanations, and institutional silence, while the media largely echoed those same explanations back to the public."
+    },
+    {
+     "t": "pair",
+     "items": [
+      {
+       "src": "i4_fk1",
+       "alt": "Black T-shirt on a hanger: FREE KUMINGA."
+      },
+      {
+       "src": "i4_fk_tote",
+       "alt": "Canvas tote stitched with FREE KUMINGA."
+      }
+     ],
+     "cap": ""
+    },
+    {
+     "t": "p",
+     "text": "The reel is exaggerated on purpose. It reflects a feeling many fans share but rarely see articulated: that something unfair has been normalized, and that power is being insulated from scrutiny."
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_vuSlPmfybOg",
+     "cap": "Free Kuminga, the reel. Watch on YouTube.",
+     "alt": "Free Kuminga protest reel",
+     "href": "https://www.youtube.com/watch?v=vuSlPmfybOg",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "p",
+     "text": "Jonathan Kuminga entered the NBA as the 7th overall pick in 2021 — raw, athletic, and undeniably impactful. From the beginning, the expectation was a long development timeline, and that made sense."
+    },
+    {
+     "t": "p",
+     "text": "What stopped making sense was how little changed by year five."
+    },
+    {
+     "t": "p",
+     "text": "When Kuminga plays, the impact is obvious: energy shifts and the crowd responds. Yet his role stays unstable, his leash short, and his integration incomplete."
+    },
+    {
+     "t": "p",
+     "text": "Explanations follow: “fit,” “lineups,” “matchups.” Language familiar to anyone who’s watched institutions avoid accountability while sounding reasonable."
+    },
+    {
+     "t": "p",
+     "text": "This is where the conversation moves beyond basketball."
+    },
+    {
+     "t": "p",
+     "text": "Steve Kerr—the head coach and the person who controls Kuminga’s role—is widely regarded as a moral voice beyond the sport. He’s spoken at the Democratic National Convention and consistently addresses justice and responsibility."
+    },
+    {
+     "t": "p",
+     "text": "That public identity is relevant, because values mean the most when they’re tested without cameras pointed at a podium."
+    },
+    {
+     "t": "pull",
+     "text": "What Free Kuminga exposes is the gap between advocacy and execution."
+    },
+    {
+     "t": "p",
+     "text": "This isn’t about labeling intent. It’s about outcomes and double standards: who gets patience and who absorbs consequences. When legit criticism shows up, it gets redirected downward—reframed as “immaturity,” “attitude,” or “personal failure.”"
+    },
+    {
+     "t": "p",
+     "text": "And the crowd feels it: standing ovations, even after Kuminga’s camp requested a trade. If anything, the support got louder. The sense that something doesn’t add up."
+    },
+    {
+     "t": "p",
+     "text": "The reel doesn’t resolve these tensions, but it does give a name to them."
+    },
+    {
+     "t": "p",
+     "text": "It asks a simple question: What does real social justice look like when it’s inconvenient, unscripted, and unfolding in front of everyone? When the crowd keeps saying it doesn’t add up, that’s data. You can’t spin that away."
+    },
+    {
+     "t": "p",
+     "text": "Takeaway: When institutions protect power, storytelling becomes a form of protest. AI tools now move fast enough to bypass gatekeepers."
+    },
+    {
+     "t": "p",
+     "text": "Tools: MidJourney / CapCut / Suno"
+    },
+    {
+     "t": "pair",
+     "items": [
+      {
+       "src": "i4_fk_concert",
+       "alt": "A protester in a Free Kuminga jacket raises a fist through blue smoke."
+      },
+      {
+       "src": "i4_fk_model",
+       "alt": "A model in an army jacket with a Free Kuminga patch."
+      }
+     ],
+     "cap": ""
+    },
+    {
+     "t": "p",
+     "text": "Update, Issue 5: the Warriors traded him to Atlanta, and he dropped 27 points in his first game.",
+     "links": [
+      {
+       "text": "Update, Issue 5",
+       "href": "/issue-5/notes"
+      }
+     ]
+    },
+    {
+     "t": "link",
+     "label": "Need video ads for your brand? ➡️ UnrulyReels.com →",
+     "href": "https://unrulyreels.com"
+    }
+   ]
+  },
+  {
+   "id": "find-your-edge",
+   "name": "FIND YOUR EDGE",
+   "emoji": "🗡️",
+   "feature": false,
+   "title": "No One’s Coming",
+   "dek": "Mel Robbins on accountability.",
+   "img": "i4_yt_SqN5SvASjMA",
+   "tags": [
+    "Mindset"
+   ],
+   "people": [
+    "Mel Robbins"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Mel Robbins’ “no one’s coming” inspires accountability."
+    },
+    {
+     "t": "img",
+     "src": "i4_mel",
+     "cap": "Pictured: Mel Robbins",
+     "alt": "Mel Robbins speaking to camera"
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_SqN5SvASjMA",
+     "cap": "Mel Robbins: no one’s coming. Watch on YouTube.",
+     "alt": "Mel Robbins: no one is coming to save you",
+     "href": "https://www.youtube.com/watch?v=SqN5SvASjMA",
+     "badge": "WATCH ON YOUTUBE"
+    }
+   ]
+  },
+  {
+   "id": "underground",
+   "name": "UNDERGROUND",
+   "emoji": "🚇",
+   "feature": false,
+   "title": "The Drama B Song + Video We Needed",
+   "dek": "The ’90s in 2026.",
+   "img": "i4_yt_sybp6ze1UEw",
+   "tags": [
+    "Music",
+    "Hip-Hop"
+   ],
+   "people": [
+    "Drama B"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i4_yt_sybp6ze1UEw",
+     "cap": "Drama B. Watch on YouTube.",
+     "alt": "Drama B music video",
+     "href": "https://www.youtube.com/watch?v=sybp6ze1UEw",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "p",
+     "text": "We’re all searching for it, but we don’t always know where to find it—or when it’s coming. We want that raw feeling of freedom again. The Drama B song and visual production are the reminder."
+    },
+    {
+     "t": "link",
+     "label": "🌐 Site: Drama B →",
+     "href": "https://www.dramabmusic.com/"
+    }
+   ]
+  },
+  {
+   "id": "dezign-ur-ritual",
+   "name": "DEZIGN UR RITUAL",
+   "emoji": "🫖",
+   "feature": false,
+   "title": "A Posture Shift Is Here",
+   "dek": "The one stretch I keep coming back to.",
+   "img": "seinfeld_poster",
+   "tags": [
+    "Mindset"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "img",
+     "src": "i4_seinfeld",
+     "cap": "",
+     "alt": "Jerry Seinfeld, serious, GIF"
+    },
+    {
+     "t": "p",
+     "text": "This is the one stretch I keep coming back to. Just a few minutes a day has helped undo slouched shoulders and that slow “tech-neck” curl."
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_1Cu57aygW4w",
+     "cap": "The stretch. Watch on YouTube.",
+     "alt": "Posture stretch video",
+     "href": "https://www.youtube.com/watch?v=1Cu57aygW4w",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "p",
+     "text": "Bonus: follow it with Bridge pose. It’s a simple backbend that opens the chest and resets the whole front side."
+    },
+    {
+     "t": "img",
+     "src": "i4_bridge",
+     "cap": "Bridge pose",
+     "alt": "A person in a bridge pose backbend",
+     "small": true
+    },
+    {
+     "t": "cap",
+     "text": "🔔 Not health advice."
+    }
+   ]
+  },
+  {
+   "id": "chain-reaction",
+   "name": "CHAIN REACTION",
+   "emoji": "🔗",
+   "feature": false,
+   "title": "What Is Kaspa? — Classroom Edition",
+   "dek": "Same foundation as Bitcoin, minus the speed bottleneck.",
+   "img": "i4_kaspa_visual",
+   "tags": [
+    "Crypto",
+    "Bitcoin"
+   ],
+   "people": [
+    "Kaspa",
+    "Yonatan Sompolinsky"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i4_kaspa_logo",
+     "cap": "",
+     "alt": "Kaspa logo",
+     "small": true
+    },
+    {
+     "t": "p",
+     "text": "Last issue we did Kaspa: Playground Edition. This week we step one foot into the classroom.",
+     "links": [
+      {
+       "text": "Playground Edition",
+       "href": "https://lennylesser.beehiiv.com/p/issue-3-find-your-edge#crypto-dispatch"
+      }
+     ]
+    },
+    {
+     "t": "h",
+     "text": "Kaspa, in Plain Terms"
+    },
+    {
+     "t": "p",
+     "text": "Bitcoin showed the world what was possible. Kaspa asks a simple follow-up: what if you kept the same foundation, but removed the speed bottleneck?"
+    },
+    {
+     "t": "p",
+     "text": "Kaspa sticks with proof-of-work, keeping the foundation intact: decentralization and security. The difference is speed. It’s faster because the network can process more at once."
+    },
+    {
+     "t": "img",
+     "src": "i4_kaspa_visual",
+     "cap": "Kaspa, explained.",
+     "alt": "Chat-style explainer: Kaspa is a super-fast playground for digital money; it processes transactions in parallel."
+    },
+    {
+     "t": "p",
+     "text": "The mind behind it, Yonatan Sompolinsky, isn’t new to this game. His earlier work on GHOST is cited in Ethereum’s whitepaper.",
+     "links": [
+      {
+       "text": "whitepaper",
+       "href": "https://ethereum.org/whitepaper/"
+      }
+     ]
+    },
+    {
+     "t": "p",
+     "text": "The strange part isn’t the tech. It’s how few people are paying attention."
+    },
+    {
+     "t": "pull",
+     "text": "For now."
+    },
+    {
+     "t": "link",
+     "label": "kaspa.org →",
+     "href": "https://kaspa.org/"
+    }
+   ]
+  },
+  {
+   "id": "lolz",
+   "name": "LOLZ",
+   "emoji": "🤣",
+   "feature": false,
+   "title": "Is It Even a City?",
+   "dek": "Delivers the dry humor you need.",
+   "img": "i4_yt_8vhD59ac7nw",
+   "tags": [
+    "Comedy"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "p",
+     "text": "“Is it even a city?” delivers the dry humor you need."
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_8vhD59ac7nw",
+     "cap": "Is it even a city? Watch on YouTube.",
+     "alt": "Is it even a city? comedy video",
+     "href": "https://www.youtube.com/watch?v=8vhD59ac7nw",
+     "badge": "WATCH ON YOUTUBE"
+    }
+   ]
+  },
+  {
+   "id": "music-flow",
+   "name": "MUSIC FLOW",
+   "emoji": "🎧",
+   "feature": true,
+   "title": "Soap&Skin — “Me and the Devil”",
+   "dek": "The case for a different read of the Robert Johnson cover.",
+   "img": "i4_yt_Pk5s0Kt6uI4",
+   "tags": [
+    "Music"
+   ],
+   "people": [
+    "Soap&Skin",
+    "Anja Plaschg",
+    "Robert Johnson"
+   ],
+   "body": [
+    {
+     "t": "h",
+     "text": "The Case for a Different Read"
+    },
+    {
+     "t": "pair",
+     "items": [
+      {
+       "src": "i4_anja",
+       "alt": "Anja Plaschg of Soap&Skin"
+      },
+      {
+       "src": "i4_rjohnson",
+       "alt": "Robert Johnson with his guitar"
+      }
+     ],
+     "cap": "Anja Plaschg of Soap&Skin, and Robert Johnson."
+    },
+    {
+     "t": "p",
+     "text": "There’s a good chance you’ve heard this song without realizing it. On Instagram and TikTok it shows up as an emotional shortcut: dread, doom, that “something’s wrong in the air” feeling. And yes, it’s haunting. But the online framing tends to flatten it into one default read: selling your soul, surrendering to darkness.",
+     "links": [
+      {
+       "text": "this song",
+       "href": "https://www.musicexport.at/artist/soapandskin"
+      }
+     ]
+    },
+    {
+     "t": "p",
+     "text": "Background note: the original “Me and the Devil Blues” was recorded in 1937 and released in 1938. Soap&Skin’s version came out in 2013 on the Sugarbread EP.",
+     "links": [
+      {
+       "text": "“Me and the Devil Blues”",
+       "href": "https://en.wikipedia.org/wiki/Robert_Johnson"
+      }
+     ]
+    },
+    {
+     "t": "p",
+     "text": "What Soap&Skin does to it is surgical. She drains the song of swing and momentum and leaves slow footsteps, empty space, and a voice that feels like it’s cutting through an abandoned building. That’s why it works so well as “viral bed music.” It builds atmosphere in seconds."
+    },
+    {
+     "t": "p",
+     "text": "But I hear something else in it."
+    },
+    {
+     "t": "p",
+     "text": "Most people latch onto the opening like a confession (“Hello Satan… it’s time to go”) and stop there. What if it isn’t surrender, but a decision to face the thing head-on?",
+     "links": [
+      {
+       "text": "Hello Satan… it’s time to go",
+       "href": "https://genius.com/Soap-skin-me-and-the-devil-lyrics"
+      }
+     ]
+    },
+    {
+     "t": "p",
+     "text": "“Me and the devil walkin’ side by side” can read like resignation. It can also read like someone who’s done running. Not “the devil owns me.” More like: fine. Walk with me. I’m looking straight at you."
+    },
+    {
+     "t": "p",
+     "text": "Then the lyric that feels easiest to miss: “that old evil spirit.” Old. Not new. Not destiny. Not identity. Something lodged deep. Maybe inherited, maybe learned, maybe absorbed. But still something you can name, and maybe something you’re trying to get rid of."
+    },
+    {
+     "t": "p",
+     "text": "And the ending? People hear the burial lines and assume defeat. I hear a harsher kind of clarity: letting the body take the hit so the “old evil spirit” can finally be sent away. Put on a bus, out of town, done. Exile the thing that’s been riding with you."
+    },
+    {
+     "t": "p",
+     "text": "This reading fits Soap&Skin as a creator too. When she talks about pain, death, nature, fearlessness, it doesn’t land like a costume. It lands like a lived orientation. The cover ends up feeling less like “devil worship” and more like staring into the dark without blinking.",
+     "links": [
+      {
+       "text": "When she talks about",
+       "href": "https://www.co-vienna.com/en/interview/soapskin"
+      }
+     ]
+    },
+    {
+     "t": "pull",
+     "text": "Not surrender, but a stare-down."
+    },
+    {
+     "t": "p",
+     "text": "That’s the version of this song I can’t unhear: not surrender, but a stare-down."
+    },
+    {
+     "t": "p",
+     "text": "Press play. Judge for yourself."
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_Pk5s0Kt6uI4",
+     "cap": "Soap&Skin: Me and the Devil. Watch on YouTube.",
+     "alt": "Soap&Skin performing Me and the Devil",
+     "href": "https://www.youtube.com/watch?v=Pk5s0Kt6uI4",
+     "badge": "WATCH"
+    }
+   ]
+  },
+  {
+   "id": "story-beat",
+   "name": "STORY BEAT",
+   "emoji": "📖",
+   "feature": false,
+   "title": "Someone Else’s Dream",
+   "dek": "Episode 4: live from the retail compound.",
+   "img": "i4_ep4",
+   "tags": [
+    "Culture",
+    "Creativity"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "p",
+     "text": "Episode 4 continues the Apron Worker’s teardown of modern work: how regular people’s time gets extracted, scheduled, and sold back to them—live from the retail compound."
+    },
+    {
+     "t": "img",
+     "src": "i4_ep4",
+     "cap": "Episode 4. Watch on Instagram.",
+     "alt": "Episode 4 of the Apron Worker series",
+     "href": "https://www.instagram.com/reel/DSLKj-5ks9Z/",
+     "badge": "WATCH ON INSTAGRAM"
+    }
+   ]
+  },
+  {
+   "id": "off-the-path",
+   "name": "OFF THE PATH",
+   "emoji": "🧭",
+   "feature": false,
+   "title": "The Internet Archive: A Hidden Gem",
+   "dek": "A massive public archive of free texts, movies, software, music and more.",
+   "img": "",
+   "tags": [
+    "Culture",
+    "Film"
+   ],
+   "people": [
+    "Internet Archive"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Go to archive.org and feast. It’s a massive public archive of free texts, movies, software, music, websites, and more.",
+     "links": [
+      {
+       "text": "archive.org",
+       "href": "https://archive.org/"
+      }
+     ]
+    },
+    {
+     "t": "p",
+     "text": "One of my favorite rabbit holes: the 1940s film section.",
+     "links": [
+      {
+       "text": "the 1940s film section",
+       "href": "https://archive.org/details/classic_tv_1940s"
+      }
+     ]
+    },
+    {
+     "t": "link",
+     "label": "Internet Archive: Digital Library of Free & Borrowable Texts, Movies, Music & Wayback Machine →",
+     "href": "https://archive.org/"
+    }
+   ]
+  },
+  {
+   "id": "wall-of-sommi",
+   "name": "WALL OF SOMMI",
+   "emoji": "🧱",
+   "feature": false,
+   "title": "Mid-Curving: Why Cryptos Aren’t Stocks",
+   "dek": "Why revenue doesn’t automatically translate to price.",
+   "img": "i4_yt_Y-ZeSxzZ_YE",
+   "tags": [
+    "Crypto"
+   ],
+   "people": [
+    "Sommi"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "This week’s Wall of Sommi breaks down “mid-curving,” why crypto isn’t stock, and why revenue doesn’t automatically translate to price."
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_Y-ZeSxzZ_YE",
+     "cap": "Sommi on mid-curving. Watch on YouTube.",
+     "alt": "Sommi in a yellow cap, talking to camera",
+     "href": "https://www.youtube.com/watch?v=Y-ZeSxzZ_YE",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "🎥 On YouTube: @yourfriendSOMMI →",
+     "href": "https://www.youtube.com/@yourfriendsommi"
+    }
+   ]
+  },
+  {
+   "id": "sports-talk",
+   "name": "SPORTS TALK",
+   "emoji": "🏀",
+   "feature": false,
+   "title": "When You Boo the Booers",
+   "dek": "Giannis took heat all night, then sent a message right back.",
+   "img": "i4_yt_Y94uumr9Ew4",
+   "tags": [
+    "Sports"
+   ],
+   "people": [
+    "Giannis Antetokounmpo"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Giannis Antetokounmpo took heat from the crowd most of the night—then sent a message right back."
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_Y94uumr9Ew4",
+     "cap": "Giannis boos the booers. Watch on YouTube.",
+     "alt": "Giannis Antetokounmpo gestures to the crowd",
+     "href": "https://www.youtube.com/watch?v=Y94uumr9Ew4",
+     "badge": "WATCH ON YOUTUBE"
+    }
+   ]
+  },
+  {
+   "id": "now-playing",
+   "name": "NOW PLAYING",
+   "emoji": "🍿",
+   "feature": false,
+   "title": "Jack Nicholson’s “Rat Face”",
+   "dek": "Instant cinema gold from The Departed.",
+   "img": "i4_yt_p6J91ICMC4M",
+   "tags": [
+    "Film"
+   ],
+   "people": [
+    "Jack Nicholson",
+    "Leonardo DiCaprio",
+    "The Departed"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "When Jack Nicholson leans across the table from Leonardo DiCaprio and starts talking about having a “rat” in Martin Scorsese’s The Departed, it’s instant cinema gold."
+    },
+    {
+     "t": "cap",
+     "text": "🔔 Viewer discretion: strong language."
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_EfjbbuKUqak",
+     "cap": "The Departed: the rat scene. Watch on YouTube.",
+     "alt": "Jack Nicholson in The Departed",
+     "href": "https://www.youtube.com/watch?v=EfjbbuKUqak",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "p",
+     "text": "There’s a great 6-minute behind-the-scenes on Nicholson’s approach, his methods, and the energy he brought to set."
+    },
+    {
+     "t": "img",
+     "src": "i4_yt_p6J91ICMC4M",
+     "cap": "Jack Nicholson’s approach, behind the scenes. Watch on YouTube.",
+     "alt": "Jack Nicholson behind the scenes",
+     "href": "https://www.youtube.com/watch?v=p6J91ICMC4M",
+     "badge": "WATCH ON YOUTUBE"
+    }
+   ]
+  }
+ ]
+}
