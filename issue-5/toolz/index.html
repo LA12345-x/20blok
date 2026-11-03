@@ -78,6 +78,8 @@ main{padding-block:20px 64px}
 .masthead .tag{font-family:var(--display);font-weight:800;font-size:18px;letter-spacing:0;text-transform:none;color:var(--fg-soft)}
 .cover{margin:0;border-radius:18px;overflow:hidden;box-shadow:0 10px 0 #000,0 30px 60px rgba(0,0,0,.6);max-width:100%}
 .cover img{display:block;width:100%;height:auto}
+.cover a{background:#000}
+@media (min-width:700px){.cover.tall a{height:min(60vh,560px)}.cover.tall img{height:100%;object-fit:contain}}
 .coverlines{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 @media (max-width:900px){.coverlines{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .coverlines a{display:flex;flex-direction:column;gap:6px;height:100%;box-sizing:border-box;padding:14px 16px;border-top:3px solid var(--red);background:var(--panel);border-radius:0 0 12px 12px;text-decoration:none;color:var(--fg)}
@@ -784,7 +786,7 @@ function gridView(all){
     el("section",{class:"howto","aria-label":"How 20 Blok works"}, el("b",{text:"New stories every week. You pick the winners."}),
       el("ol",{}, el("li",{}, el("span",{text:"1"}),"Read the bloks"), el("li",{}, el("span",{text:"2"}),"Uprate your favorites"), el("li",{}, el("span",{text:"3"}),"The top blok takes the #1 spot"))),
     el("div",{class:"masthead"}, el("p",{text:"Issue "+CUR+" · "+meta().month+" · Edited by Lenny Lesser"}), el("p",{class:"tag",text:meta().title})),
-    el("figure",{class:"cover"}, el("a",{href:"/issue-"+CUR+"/straight-up","aria-label":"Read "+meta().title+", the editor’s letter",style:"display:block"}, el("img",{src:IMG[meta().cover],alt:meta().cover_alt}))),
+    el("figure",{class:"cover"}, el("a",{href:"/issue-"+CUR+"/straight-up","aria-label":"Read "+meta().title+", the editor’s letter",style:"display:block"}, el("img",{src:IMG[meta().cover],alt:meta().cover_alt,onload:e=>{ const i=e.target; if (i.naturalWidth/i.naturalHeight<1.5) i.closest(".cover").classList.add("tall"); }}))),
     el("ul",{class:"coverlines","aria-label":"Cover stories"}, (ARCHIVE[CUR]?ARCHIVE[CUR].coverlines:COVERLINES.map(x=>"issue-"+ISSUE+"/"+x)).map(id=> el("li",{}, el("a",{href:"/"+id}, el("span",{text:byId[id].name}), el("b",{text:ARCHIVE[CUR]?ARCHIVE[CUR].covertext[id]:COVERTEXT[idParts(id)[1]]}))))),
     CUR===ISSUE ? el("a",{class:"past-tease",href:"/past-issues"}, el("span",{class:"pt-thumbs","aria-hidden":"true"}, PAST.filter(p=>!p.here).slice(0,3).map(p=>el("img",{src:IMG[p.img],alt:"",loading:"lazy"}))), el("span",{class:"pt-copy"}, el("b",{text:"Looking for past issues?"}), " Browse every issue →")) : null,
     el("div",{class:"section-head"}, el("h2",{text:"The Grid"}),

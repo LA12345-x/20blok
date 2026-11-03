@@ -495,7 +495,7 @@ R('el("p",{text:"The most uprated pieces across every issue. Issue 7 is the firs
 R('el("p",{text:"Issue 7 · October 2026 · Edited by Lenny Lesser"}), el("p",{class:"tag",text:"Retail Mindset"})',
   'el("p",{text:"Issue "+CUR+" · "+meta().month+" · Edited by Lenny Lesser"}), el("p",{class:"tag",text:meta().title})')
 R('el("a",{href:"/straight-up","aria-label":"Read Retail Mindset, the editor’s letter",style:"display:block"}, el("img",{src:IMG.cover,alt:"Issue 7 cover: Retail Mindset. Shoppers push carts down aisles stocked with headlines, charts and opinions. Are your opinions actually yours?"}))',
-  'el("a",{href:"/issue-"+CUR+"/straight-up","aria-label":"Read "+meta().title+", the editor’s letter",style:"display:block"}, el("img",{src:IMG[meta().cover],alt:meta().cover_alt}))')
+  'el("a",{href:"/issue-"+CUR+"/straight-up","aria-label":"Read "+meta().title+", the editor’s letter",style:"display:block"}, el("img",{src:IMG[meta().cover],alt:meta().cover_alt,onload:e=>{ const i=e.target; if (i.naturalWidth/i.naturalHeight<1.5) i.closest(".cover").classList.add("tall"); }}))')
 R('COVERLINES.map(id=> el("li",{}, el("a",{href:"/"+id}, el("span",{text:byId[id].name}), el("b",{text:COVERTEXT[id]}))))',
   '(ARCHIVE[CUR]?ARCHIVE[CUR].coverlines:COVERLINES.map(x=>"issue-"+ISSUE+"/"+x)).map(id=> el("li",{}, el("a",{href:"/"+id}, el("span",{text:byId[id].name}), el("b",{text:ARCHIVE[CUR]?ARCHIVE[CUR].covertext[id]:COVERTEXT[idParts(id)[1]]}))))')
 R('    el("a",{class:"notes-link",href:"/issue-notes"}', '    el("a",{class:"notes-link",href:notesHref()}')
