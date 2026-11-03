@@ -401,18 +401,20 @@ main{padding-bottom:110px}
 .pseg a[aria-current="page"]{color:var(--ink)}
 .pthumb{position:absolute;z-index:0;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:999px;background:var(--fg);box-shadow:0 2px 8px rgba(0,0,0,.35);transition:transform .32s cubic-bezier(.3,1.25,.5,1)}
 .pseg.b .pthumb{transform:translateX(100%)}
-.bands{display:flex;flex-direction:column;gap:22px}
+.bands{display:flex;flex-direction:column;gap:28px}
+.band+.band{padding-top:28px;border-top:1px solid var(--line)}
 .band{display:grid;grid-template-columns:240px minmax(0,1fr);gap:14px;align-items:stretch}
 .band-hero{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;min-height:210px;padding:16px;border-radius:14px;overflow:hidden;background:var(--panel-2) center/cover no-repeat;border:1px solid var(--line);text-decoration:none;color:#fff;box-shadow:0 5px 0 #000}
 .band-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 20%,rgba(0,0,0,.88))}
 .band-hero>*{position:relative}
 .bh-emoji{font-size:26px;line-height:1}
-.bh-name{font-weight:800;font-size:15px;letter-spacing:2px;text-transform:uppercase}
+.bh-name{align-self:flex-start;padding:5px 10px;border-radius:4px;background:var(--red);color:#fff;font-weight:800;font-size:15px;letter-spacing:2px;text-transform:uppercase;box-shadow:0 3px 0 var(--red-deep)}
 .bh-count{font-size:13px;color:#d9d9de}
 .bh-all{margin-top:6px;font-weight:700;font-size:11px;letter-spacing:1.5px;color:var(--red)}
 .strip{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 10px;min-width:0;scrollbar-width:thin}
 .scard{flex:0 0 190px;scroll-snap-align:start;display:flex;flex-direction:column;border-radius:12px;background:var(--panel);border:1px solid var(--line);overflow:hidden;text-decoration:none;color:var(--fg)}
-.sc-img{display:flex;align-items:center;justify-content:center;aspect-ratio:16/10;background:#000 center/cover no-repeat;font-size:34px}
+.sc-img{display:flex;align-items:center;justify-content:center;aspect-ratio:16/10;background:#000 center/cover no-repeat;font-size:34px;filter:brightness(.82) saturate(.85);transition:filter .2s ease}
+@media (hover:hover){.scard:hover .sc-img{filter:none}}
 .sc-noimg{background:var(--panel-2)}
 .sc-body{display:flex;flex-direction:column;gap:6px;padding:10px 12px 12px}
 .sc-iss{font-weight:700;font-size:10px;letter-spacing:1.5px;color:var(--red)}
@@ -428,6 +430,8 @@ main{padding-bottom:110px}
 .sec-copy{position:relative;display:flex;flex-direction:column;gap:8px;max-width:640px;color:#fff}
 .sec-copy h1{margin:0;font-family:var(--display);font-weight:900;font-size:clamp(34px,6vw,64px);line-height:1;letter-spacing:-.5px}
 .sec-copy p:not(.eyebrow){margin:0;color:#d9d9de}
+.sec-name{display:inline-block;padding:.06em .22em .1em;border-radius:6px;background:var(--red);box-shadow:0 5px 0 var(--red-deep)}
+.sec-copy .eyebrow{color:#fff}
 @media (max-width:700px){.band{grid-template-columns:1fr;gap:10px}.band-hero{min-height:130px}.scard{flex-basis:158px}.sec-hero{padding:18px}}
 .issue-thumb{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;margin-bottom:6px}
 .issues{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px}
@@ -1327,8 +1331,8 @@ function sectionView(slug){
   const pics = g.pieces.filter(p=>p.img&&IMG[p.img]).slice(0,6);
   return [el("a",{class:"back",href:"/blok",text:"← ALL BLOKS"}),
     el("section",{class:"sec-hero"}, pics.length ? el("div",{class:"sec-mosaic","aria-hidden":"true",style:"grid-template-columns:repeat("+pics.length+",1fr)"}, pics.map(p=>el("span",{style:"background-image:url('"+IMG[p.img]+"')"}))) : null,
-      el("div",{class:"sec-copy"}, el("p",{class:"eyebrow",text:"Blok · "+g.pieces.length+(g.pieces.length===1?" piece":" pieces")}),
-        el("h1",{}, el("span",{class:"sec-emoji",text:g.emoji}), " "+g.name),
+      el("div",{class:"sec-copy"}, el("p",{class:"eyebrow",text:g.pieces.length+(g.pieces.length===1?" piece":" pieces")+" · "+(()=>{ const ns=g.pieces.map(p=>p.iss); const lo=Math.min(...ns), hi=Math.max(...ns); return lo===hi ? "Issue "+lo : "Issues "+lo+"–"+hi; })()}),
+        el("h1",{}, el("span",{class:"sec-emoji",text:g.emoji}), " ", el("span",{class:"sec-name",text:g.name})),
         el("p",{text:"Every "+g.name+" from every issue, newest first. Uprate the ones you want more of."}))),
     grid];
 }
