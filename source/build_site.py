@@ -524,7 +524,7 @@ R('p.here?{href:"/"}:', 'p.path?{href:p.path}:p.here?{href:"/"}:')
 R('{n:7,t:"Retail Mindset",d:"Oct 28, 2026",here:true,', '{n:7,t:"Retail Mindset",d:"Oct 28, 2026",here:true,path:"/issue-7",')
 R('p.d+(p.here?" · on this site":" · on the newsletter")', 'p.d+((p.here||p.path)?" · on this site":" · on the newsletter")')
 R('"Issues 1 through 6 live on the newsletter. Tap a cover to read it. Issue 7 is the first one built as 20 Blok."',
-  '"Every issue, newest first. Tap a cover to read it."')
+  '"Two ways to browse. By Issue: every issue, newest first. By Blok: every piece of the same blok, side by side."')
 ARCH_JS = '''function archNotesView(){
   const a = ARCHIVE[CUR], N = a.notes;
   const sec=(h,...k)=>el("section",{class:"note"}, el("h3",{text:h}), ...k);
@@ -644,7 +644,7 @@ function stripCard(p){
 }
 function blokIndexView(){
   const groups = blokGroups();
-  return [pastHero("Every piece, sorted by blok. Swipe a shelf, or tap a blok to see all of it."), pastSwitch("blok"),
+  return [pastHero("Two ways to browse. By Issue: every issue, newest first. By Blok: every piece of the same blok, side by side."), pastSwitch("blok"),
     el("div",{class:"bands"}, groups.map(g=> el("section",{class:"band","aria-label":g.name},
       el("a",{class:"band-hero",href:"/blok/"+g.slug, style: g.hero ? "background-image:url('"+IMG[g.hero.img]+"')" : null},
         el("span",{class:"bh-emoji",text:g.emoji}), el("span",{class:"bh-name",text:g.name}),

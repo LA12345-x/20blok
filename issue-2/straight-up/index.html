@@ -1252,7 +1252,7 @@ function notesView(){
 }
 function pastView(){
   return [el("section",{class:"hero"}, el("p",{class:"eyebrow",text:"The back catalog"}), el("h1",{text:"Past Issues"}),
-            el("p",{text:"Every issue, newest first. Tap a cover to read it."})),
+            el("p",{text:"Two ways to browse. By Issue: every issue, newest first. By Blok: every piece of the same blok, side by side."})),
     pastSwitch("issue"), el("ul",{class:"issues"}, PAST.map(p=> el("li",{}, el("a", p.path?{href:p.path}:p.here?{href:"/"}:{href:p.href||NEWSLETTER,target:"_blank",rel:"noopener"},
       p.img ? el("img",{class:"issue-thumb",src:IMG[p.img],alt:"Issue "+p.n+" cover",loading:"lazy"}) : null,
       el("span",{class:"no",text:"#"+p.n}), el("span",{class:"t",text:p.t}), el("span",{class:"d",text:p.d+((p.here||p.path)?" · on this site":" · on the newsletter")})))))];
@@ -1319,7 +1319,7 @@ function stripCard(p){
 }
 function blokIndexView(){
   const groups = blokGroups();
-  return [pastHero("Every piece, sorted by blok. Swipe a shelf, or tap a blok to see all of it."), pastSwitch("blok"),
+  return [pastHero("Two ways to browse. By Issue: every issue, newest first. By Blok: every piece of the same blok, side by side."), pastSwitch("blok"),
     el("div",{class:"bands"}, groups.map(g=> el("section",{class:"band","aria-label":g.name},
       el("a",{class:"band-hero",href:"/blok/"+g.slug, style: g.hero ? "background-image:url('"+IMG[g.hero.img]+"')" : null},
         el("span",{class:"bh-emoji",text:g.emoji}), el("span",{class:"bh-name",text:g.name}),
