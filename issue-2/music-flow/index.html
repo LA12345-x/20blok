@@ -1320,7 +1320,7 @@ function psegDrag(s, mode){
   const end=()=>{ if(start===null) return; s.classList.remove("dragging");
     if(moved){ const x=new DOMMatrixReadOnly(getComputedStyle(th).transform).m41; const toBlok = x>w/2; th.style.transform="";
       s.querySelectorAll("a").forEach(a=>a.classList.remove("near")); s.classList.toggle("b",toBlok);
-      if (toBlok !== (mode==="blok")) setTimeout(()=>go(toBlok?"blok":"past-issues"),180);
+      if (toBlok !== (mode==="blok")){ PSEG_LAST = toBlok?"blok":"issue"; setTimeout(()=>go(toBlok?"blok":"past-issues"),220); }
       const stop=ev=>{ ev.preventDefault(); ev.stopPropagation(); s.removeEventListener("click",stop,true); }; s.addEventListener("click",stop,true); setTimeout(()=>s.removeEventListener("click",stop,true),0); }
     start=null; };
   s.addEventListener("pointerup",end); s.addEventListener("pointercancel",end);
