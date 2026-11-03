@@ -178,10 +178,6 @@ R('  window.addEventListener("hashchange",()=>{ if(root&&!root.hidden) hide(); }
 R(' Or leave a comment on any blok.', '')
 R('    el("a",{class:"notes-link",href:"/issue-notes"}', '    subscribeBox(),\n    el("a",{class:"notes-link",href:"/issue-notes"}')
 SUB_JS = '''function subscribeBox(){
-  if (lsOK("blok20-subscribed") && !subscribeBox.open){ const sec = el("section",{class:"subscribe-band sb-known",id:"subscribe-band"},
-    el("p",{}, el("b",{text:"You\u2019re on the list."}), " New issues land in your inbox. ",
-      el("button",{type:"button",class:"c-link",text:"Subscribe a different email",onclick:()=>{ subscribeBox.open=true; const n=subscribeBox(); sec.replaceWith(n); const i=n.querySelector("input"); if(i) i.focus(); }})));
-    return sec; }
   const input = el("input",{type:"email",name:"email",required:"required",autocomplete:"email",inputmode:"email",placeholder:"you@email.com","aria-label":"Your email"});
   const btn = el("button",{type:"submit",class:"sb-btn"},"Subscribe");
   const msg = el("p",{class:"sb-msg","aria-live":"polite"});
@@ -195,9 +191,24 @@ SUB_JS = '''function subscribeBox(){
       msg.replaceChildren(document.createTextNode(j.error==="email" ? "That email doesn’t look right. Try again." : "That didn’t go through"+(j.error?" ("+j.error+(j.status?" "+j.status:"")+")":"")+". "), j.error==="email" ? "" : el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"}));
     }catch(err){ msg.replaceChildren("That didn’t go through. ", el("a",{href:NEWSLETTER,target:"_blank",rel:"noopener",text:"Subscribe on the newsletter page →"})); }
     btn.disabled=false; }}, input, btn);
-  return el("section",{class:"subscribe-band",id:"subscribe-band","aria-labelledby":"sb-head"},
+  const sec = el("section",{class:"subscribe-band",id:"subscribe-band","aria-labelledby":"sb-head"},
     el("div",{}, el("h2",{id:"sb-head",text:"Get the next issue"}), el("p",{text:"New stories every issue, straight to your inbox. Free."})),
     form, msg);
+  if (!subscribeBox.open) checkSubscribed().then(em=>{ if (!em || !sec.isConnected) return;
+    const known = el("section",{class:"subscribe-band sb-known",id:"subscribe-band"},
+      el("p",{}, el("b",{text:"You\u2019re on the list"}), " as "+em+". New issues land in your inbox. ",
+        el("button",{type:"button",class:"c-link",text:"Subscribe a different email",onclick:()=>{ subscribeBox.open=true; const n=subscribeBox(); known.replaceWith(n); const i=n.querySelector("input"); if(i) i.focus(); }})));
+    sec.replaceWith(known); });
+  return sec;
+}
+let subCheck = null;
+function checkSubscribed(){
+  if (subCheck) return subCheck;
+  subCheck = (async()=>{ try{ await sbReady; if (!sb) return null;
+    const { data:{ session } } = await sb.auth.getSession(); const u = session && session.user; if (!u || u.is_anonymous) return null;
+    const r = await fetch("/api/subscribe",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+session.access_token},body:JSON.stringify({check:true})});
+    const j = await r.json().catch(()=>({})); return (j.known && j.active) ? (j.email||u.email) : null; }catch(e){ return null; } })();
+  return subCheck;
 }
 function goSubscribe(e){
   const band = document.getElementById("subscribe-band");

@@ -21,6 +21,20 @@ module.exports = async (req, res) => {
   if (req.method !== "POST") { res.status(200).json({ ok: true, alive: true, hasKey: !!process.env.BEEHIIV_API_KEY, hasPub: !!process.env.BEEHIIV_PUBLICATION_ID, keyHasSpaces: /\s/.test(process.env.BEEHIIV_API_KEY || ""), pubHasSpaces: /\s/.test(process.env.BEEHIIV_PUBLICATION_ID || ""), pubLooksRight: /^pub_/.test(String(process.env.BEEHIIV_PUBLICATION_ID || "").trim()), node: process.version }); return; }
   let body = req.body;
   if (typeof body === "string") { try { body = JSON.parse(body); } catch (e) { body = {}; } }
+  if (body && body.check) {
+    // Is this signed-in (verified) reader still subscribed? Only answers for a verified email.
+    const em = await verifiedCommenterEmail(req);
+    if (!em) { res.status(200).json({ ok: true, known: false }); return; }
+    const key = String(process.env.BEEHIIV_API_KEY || "").replace(/\s+/g, ""), pub = String(process.env.BEEHIIV_PUBLICATION_ID || "").replace(/\s+/g, "");
+    try {
+      const r = await fetch("https://api.beehiiv.com/v2/publications/" + encodeURIComponent(pub) + "/subscriptions/by_email/" + encodeURIComponent(em), { headers: { "Authorization": "Bearer " + key } });
+      if (r.status === 404) { res.status(200).json({ ok: true, known: true, active: false }); return; }
+      const j = await r.json().catch(() => ({}));
+      const st = j && j.data && j.data.status;
+      res.status(200).json({ ok: true, known: true, active: st === "active", email: em });
+    } catch (e) { res.status(200).json({ ok: true, known: false }); }
+    return;
+  }
   const fromComments = body && body.from === "comments";
   let email;
   if (fromComments) {
