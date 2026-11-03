@@ -673,13 +673,15 @@ BYBLOK_CSS = '''.pseg{position:relative;display:inline-grid;grid-template-column
 .band+.band{padding-top:28px;border-top:1px solid var(--line)}
 .band{display:grid;grid-template-columns:240px minmax(0,1fr);gap:14px;align-items:stretch}
 .band-hero{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;min-height:210px;padding:16px;border-radius:14px;overflow:hidden;background:var(--panel-2) center/cover no-repeat;border:1px solid var(--line);text-decoration:none;color:#fff;box-shadow:0 5px 0 #000}
-.band-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 20%,rgba(0,0,0,.88))}
+.band-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,11,12,.55),rgba(11,11,12,.94))}
+.band .band-hero{border:2px solid var(--fg);box-shadow:0 5px 0 var(--red-deep)}
 .band-hero>*{position:relative}
 .bh-emoji{font-size:26px;line-height:1}
 .bh-name{align-self:flex-start;padding:5px 10px;border-radius:4px;background:var(--red);color:#fff;font-weight:800;font-size:15px;letter-spacing:2px;text-transform:uppercase;box-shadow:0 3px 0 var(--red-deep)}
 .bh-count{font-size:13px;color:#d9d9de}
 .bh-all{margin-top:6px;font-weight:700;font-size:11px;letter-spacing:1.5px;color:var(--red)}
-.strip{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 10px;min-width:0;scrollbar-width:thin}
+.strip{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 10px 18px;min-width:0;scrollbar-width:thin;border-left:1px solid var(--line)}
+@media (max-width:700px){.strip{border-left:0;padding-left:2px}}
 .scard{flex:0 0 190px;scroll-snap-align:start;display:flex;flex-direction:column;border-radius:12px;background:var(--panel);border:1px solid var(--line);overflow:hidden;text-decoration:none;color:var(--fg)}
 .sc-img{display:flex;align-items:center;justify-content:center;aspect-ratio:16/10;background:#000 center/cover no-repeat;font-size:34px;filter:brightness(.82) saturate(.85);transition:filter .2s ease}
 @media (hover:hover){.scard:hover .sc-img{filter:none}}
