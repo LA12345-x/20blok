@@ -587,6 +587,7 @@ SEG_JS = """function segThumb(){
 """
 R('let lastRoute = null;', SEG_JS + 'let lastRoute = null;')
 
+R('<a href="/issue-notes">Issue notes</a>', '<a href="/issue-notes">Issue %d notes</a>' % ISSUE_NO)
 # ---------- write ----------
 for b in data:
     for x in b["body"]:
