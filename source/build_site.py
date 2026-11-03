@@ -620,7 +620,24 @@ function pastSwitch(mode){
     el("a",{href:"/past-issues","aria-current":mode==="issue"?"page":null,text:"BY ISSUE"}),
     el("a",{href:"/blok","aria-current":mode==="blok"?"page":null,text:"BY BLOK"}));
   if (from!==mode) requestAnimationFrame(()=>requestAnimationFrame(()=>s.classList.toggle("b",mode==="blok")));
+  psegDrag(s, mode);
   return s;
+}
+function psegDrag(s, mode){
+  const th = s.querySelector(".pthumb"); let start=null, moved=false, base=0, w=0;
+  s.addEventListener("pointerdown",e=>{ if(e.button!==0) return; const r=th.getBoundingClientRect(); if(e.clientX<r.left||e.clientX>r.right) return;
+    start=e.clientX; moved=false; w=th.offsetWidth; base=s.classList.contains("b")?w:0; s.setPointerCapture(e.pointerId); });
+  s.addEventListener("pointermove",e=>{ if(start===null) return; const dx=e.clientX-start; if(Math.abs(dx)>4){ moved=true; s.classList.add("dragging"); }
+    if(!moved) return; const x=Math.max(0,Math.min(w,base+dx)); th.style.transform="translateX("+x+"px)";
+    s.querySelectorAll("a").forEach((a,i)=>a.classList.toggle("near",(i===1)===(x>w/2))); });
+  const end=()=>{ if(start===null) return; s.classList.remove("dragging");
+    if(moved){ const x=new DOMMatrixReadOnly(getComputedStyle(th).transform).m41; const toBlok = x>w/2; th.style.transform="";
+      s.querySelectorAll("a").forEach(a=>a.classList.remove("near")); s.classList.toggle("b",toBlok);
+      if (toBlok !== (mode==="blok")) setTimeout(()=>go(toBlok?"blok":"past-issues"),180);
+      const stop=ev=>{ ev.preventDefault(); ev.stopPropagation(); s.removeEventListener("click",stop,true); }; s.addEventListener("click",stop,true); setTimeout(()=>s.removeEventListener("click",stop,true),0); }
+    start=null; };
+  s.addEventListener("pointerup",end); s.addEventListener("pointercancel",end);
+  s.addEventListener("dragstart",e=>e.preventDefault());
 }
 function allPieces(){
   const all = CURRENT.map((b,i)=>({...b,iss:ISSUE,i,slug:idParts(b.id)[1]}));
@@ -669,6 +686,12 @@ BYBLOK_CSS = '''.pseg{position:relative;display:inline-grid;grid-template-column
 .pseg a[aria-current="page"]{color:var(--ink)}
 .pthumb{position:absolute;z-index:0;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:999px;background:var(--fg);box-shadow:0 2px 8px rgba(0,0,0,.35);transition:transform .32s cubic-bezier(.3,1.25,.5,1)}
 .pseg.b .pthumb{transform:translateX(100%)}
+.pseg{touch-action:pan-y;-webkit-user-select:none;user-select:none}
+.pseg a{-webkit-user-drag:none}
+.pthumb{cursor:grab}
+.pseg.dragging .pthumb{transition:none;cursor:grabbing}
+.pseg.dragging a[aria-current="page"]{color:var(--muted)}
+.pseg.dragging a.near{color:var(--ink)}
 .bands{display:flex;flex-direction:column;gap:28px}
 .band+.band{padding-top:28px;border-top:1px solid var(--line)}
 .band{display:grid;grid-template-columns:240px minmax(0,1fr);gap:14px;align-items:stretch}
