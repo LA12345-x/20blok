@@ -178,8 +178,10 @@ R('  window.addEventListener("hashchange",()=>{ if(root&&!root.hidden) hide(); }
 R(' Or leave a comment on any blok.', '')
 R('    el("a",{class:"notes-link",href:"/issue-notes"}', '    subscribeBox(),\n    el("a",{class:"notes-link",href:"/issue-notes"}')
 SUB_JS = '''function subscribeBox(){
-  if (lsOK("blok20-subscribed")) return el("section",{class:"subscribe-band sb-known",id:"subscribe-band"},
-    el("p",{}, el("b",{text:"You\u2019re on the list."}), " New issues land in your inbox. Know someone who\u2019d like 20 Blok? Send them this page."));
+  if (lsOK("blok20-subscribed") && !subscribeBox.open){ const sec = el("section",{class:"subscribe-band sb-known",id:"subscribe-band"},
+    el("p",{}, el("b",{text:"You\u2019re on the list."}), " New issues land in your inbox. ",
+      el("button",{type:"button",class:"c-link",text:"Subscribe a different email",onclick:()=>{ subscribeBox.open=true; const n=subscribeBox(); sec.replaceWith(n); const i=n.querySelector("input"); if(i) i.focus(); }})));
+    return sec; }
   const input = el("input",{type:"email",name:"email",required:"required",autocomplete:"email",inputmode:"email",placeholder:"you@email.com","aria-label":"Your email"});
   const btn = el("button",{type:"submit",class:"sb-btn"},"Subscribe");
   const msg = el("p",{class:"sb-msg","aria-live":"polite"});
@@ -197,7 +199,6 @@ SUB_JS = '''function subscribeBox(){
     el("div",{}, el("h2",{id:"sb-head",text:"Get the next issue"}), el("p",{text:"New stories every issue, straight to your inbox. Free."})),
     form, msg);
 }
-(function(){ try{ const q=new URLSearchParams(location.search); if (q.get("utm_medium")==="newsletter" || /beehiiv|lennylesser/i.test(q.get("utm_source")||"")) localStorage.setItem("blok20-subscribed","1"); }catch(e){} })();
 function goSubscribe(e){
   const band = document.getElementById("subscribe-band");
   if (!band) return;
