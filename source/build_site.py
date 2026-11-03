@@ -611,6 +611,101 @@ R('"issue-notes":"Issue Notes","bonus":"Issue Notes"', '"issue-notes":"Issue "+I
 _m = re.search(r'<a href="/privacy">Privacy</a> · (<a href="/contact">Contact</a>) · (<span class="share rss-wrap">.*?</span></span>)', t, re.S)
 assert _m
 t = t[:_m.start()] + _m.group(1) + ' · <a href="/privacy">Privacy</a> · ' + _m.group(2) + t[_m.end():]
+# ---------- Browse by Blok: Past Issues switch (BY ISSUE | BY BLOK), /blok index, /blok/<name> section pages ----------
+BYBLOK_JS = r'''let PSEG_LAST = null;
+function pastSwitch(mode){
+  const from = PSEG_LAST && PSEG_LAST!==mode ? PSEG_LAST : mode; PSEG_LAST = mode;
+  const s = el("nav",{class:"pseg"+(from==="blok"?" b":""),"aria-label":"Browse past issues"},
+    el("span",{class:"pthumb","aria-hidden":"true"}),
+    el("a",{href:"/past-issues","aria-current":mode==="issue"?"page":null,text:"BY ISSUE"}),
+    el("a",{href:"/blok","aria-current":mode==="blok"?"page":null,text:"BY BLOK"}));
+  if (from!==mode) requestAnimationFrame(()=>requestAnimationFrame(()=>s.classList.toggle("b",mode==="blok")));
+  return s;
+}
+function allPieces(){
+  const all = CURRENT.map((b,i)=>({...b,iss:ISSUE,i,slug:idParts(b.id)[1]}));
+  Object.values(ARCHIVE).forEach(a=>a.bloks.forEach((b,i)=>all.push({...b,iss:a.n,i,slug:idParts(b.id)[1]})));
+  return all;
+}
+function blokGroups(){
+  const all = allPieces(), order = [], g = {};
+  all.filter(p=>p.slug!=="straight-up").sort((a,b)=>(b.iss-a.iss)||(a.i-b.i)).forEach(p=>{ if(!g[p.slug]){ g[p.slug]=[]; order.push(p.slug); } g[p.slug].push(p); });
+  return order.map(s=>{ const ps=g[s]; const withImg=ps.filter(p=>p.img&&IMG[p.img]);
+    const hero = withImg.slice().sort((a,b)=>((tallies[b.id]||0)-(tallies[a.id]||0))||(b.iss-a.iss))[0] || null;
+    return {slug:s, name:ps[0].name, emoji:ps[0].emoji||"", pieces:ps, hero}; });
+}
+function pastHero(text){ return el("section",{class:"hero"}, el("p",{class:"eyebrow",text:"The back catalog"}), el("h1",{text:"Past Issues"}), el("p",{text})); }
+function stripCard(p){
+  const img = p.img && IMG[p.img];
+  return el("a",{class:"scard",href:"/"+p.id},
+    el("span",{class:"sc-img"+(img?"":" sc-noimg"), style: img ? "background-image:url('"+img+"')" : null}, img ? null : el("span",{text:p.emoji||"✦"})),
+    el("span",{class:"sc-body"}, el("span",{class:"sc-iss",text:"ISSUE "+p.iss+(p.feature?" · FEATURE":"")}), el("b",{text:p.title}),
+      el("span",{class:"sc-votes",text:"▲ "+(tallies[p.id]||0)})));
+}
+function blokIndexView(){
+  const groups = blokGroups();
+  return [pastHero("Every piece, sorted by blok. Swipe a shelf, or tap a blok to see all of it."), pastSwitch("blok"),
+    el("div",{class:"bands"}, groups.map(g=> el("section",{class:"band","aria-label":g.name},
+      el("a",{class:"band-hero",href:"/blok/"+g.slug, style: g.hero ? "background-image:url('"+IMG[g.hero.img]+"')" : null},
+        el("span",{class:"bh-emoji",text:g.emoji}), el("span",{class:"bh-name",text:g.name}),
+        el("span",{class:"bh-count",text:g.pieces.length+(g.pieces.length===1?" piece":" pieces")}), el("span",{class:"bh-all",text:"SEE ALL →"})),
+      el("div",{class:"strip"}, g.pieces.map(stripCard)))))];
+}
+function sectionView(slug){
+  const g = blokGroups().find(x=>x.slug===slug);
+  if (!g) return [el("section",{class:"hero"}, el("p",{class:"eyebrow",text:"Browse by blok"}), el("h1",{text:"Not found"}), el("p",{}, "No blok by that name. ", el("a",{href:"/blok",text:"See every blok →"})))];
+  const grid = el("ol",{class:"grid sec-grid","aria-label":g.name+", every issue"}, g.pieces.map(p=>{ const t=tileFor(p,1,true); const r=t.querySelector(".rank"); if(r) r.remove(); const l=t.querySelector(".label"); if(l) l.textContent="ISSUE "+p.iss; return t; }));
+  const pics = g.pieces.filter(p=>p.img&&IMG[p.img]).slice(0,6);
+  return [el("a",{class:"back",href:"/blok",text:"← ALL BLOKS"}),
+    el("section",{class:"sec-hero"}, pics.length ? el("div",{class:"sec-mosaic","aria-hidden":"true",style:"grid-template-columns:repeat("+pics.length+",1fr)"}, pics.map(p=>el("span",{style:"background-image:url('"+IMG[p.img]+"')"}))) : null,
+      el("div",{class:"sec-copy"}, el("p",{class:"eyebrow",text:"Blok · "+g.pieces.length+(g.pieces.length===1?" piece":" pieces")}),
+        el("h1",{}, el("span",{class:"sec-emoji",text:g.emoji}), " "+g.name),
+        el("p",{text:"Every "+g.name+" from every issue, newest first. Uprate the ones you want more of."}))),
+    grid];
+}
+'''
+BYBLOK_CSS = '''.pseg{position:relative;display:inline-grid;grid-template-columns:1fr 1fr;padding:3px;margin:0 0 22px;border-radius:999px;border:1px solid var(--line);background:var(--panel);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.pseg a{position:relative;z-index:1;display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 18px;border-radius:999px;text-decoration:none;font-weight:700;font-size:12px;letter-spacing:1.5px;color:var(--muted);transition:color .28s ease}
+.pseg a[aria-current="page"]{color:var(--ink)}
+.pthumb{position:absolute;z-index:0;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:999px;background:var(--fg);box-shadow:0 2px 8px rgba(0,0,0,.35);transition:transform .32s cubic-bezier(.3,1.25,.5,1)}
+.pseg.b .pthumb{transform:translateX(100%)}
+.bands{display:flex;flex-direction:column;gap:22px}
+.band{display:grid;grid-template-columns:240px minmax(0,1fr);gap:14px;align-items:stretch}
+.band-hero{position:relative;display:flex;flex-direction:column;justify-content:flex-end;gap:4px;min-height:210px;padding:16px;border-radius:14px;overflow:hidden;background:var(--panel-2) center/cover no-repeat;border:1px solid var(--line);text-decoration:none;color:#fff;box-shadow:0 5px 0 #000}
+.band-hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 20%,rgba(0,0,0,.88))}
+.band-hero>*{position:relative}
+.bh-emoji{font-size:26px;line-height:1}
+.bh-name{font-weight:800;font-size:15px;letter-spacing:2px;text-transform:uppercase}
+.bh-count{font-size:13px;color:#d9d9de}
+.bh-all{margin-top:6px;font-weight:700;font-size:11px;letter-spacing:1.5px;color:var(--red)}
+.strip{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 10px;min-width:0;scrollbar-width:thin}
+.scard{flex:0 0 190px;scroll-snap-align:start;display:flex;flex-direction:column;border-radius:12px;background:var(--panel);border:1px solid var(--line);overflow:hidden;text-decoration:none;color:var(--fg)}
+.sc-img{display:flex;align-items:center;justify-content:center;aspect-ratio:16/10;background:#000 center/cover no-repeat;font-size:34px}
+.sc-noimg{background:var(--panel-2)}
+.sc-body{display:flex;flex-direction:column;gap:6px;padding:10px 12px 12px}
+.sc-iss{font-weight:700;font-size:10px;letter-spacing:1.5px;color:var(--red)}
+.scard b{font-family:var(--display);font-weight:700;font-size:16px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.sc-votes{margin-top:auto;font-size:12px;color:var(--muted)}
+@media (hover:hover){.scard:hover,.band-hero:hover{border-color:var(--fg)}}
+.sec-hero{position:relative;display:flex;align-items:flex-end;min-height:clamp(200px,30vw,340px);margin:14px 0 26px;padding:24px;border-radius:16px;overflow:hidden;background:var(--panel-2) center/cover no-repeat;border:1px solid var(--line)}
+.sec-mosaic{position:absolute;inset:0;display:grid;gap:2px}
+.sec-mosaic span{background:#000 center/cover no-repeat;filter:saturate(.85)}
+.sec-hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(11,11,12,.25),rgba(11,11,12,.92) 85%)}
+.sec-copy{z-index:2}
+@media (max-width:700px){.sec-mosaic{grid-template-columns:repeat(3,1fr)!important}.sec-mosaic span:nth-child(n+4){display:none}}
+.sec-copy{position:relative;display:flex;flex-direction:column;gap:8px;max-width:640px;color:#fff}
+.sec-copy h1{margin:0;font-family:var(--display);font-weight:900;font-size:clamp(34px,6vw,64px);line-height:1;letter-spacing:-.5px}
+.sec-copy p:not(.eyebrow){margin:0;color:#d9d9de}
+@media (max-width:700px){.band{grid-template-columns:1fr;gap:10px}.band-hero{min-height:130px}.scard{flex-basis:158px}.sec-hero{padding:18px}}
+'''
+R('let lastRoute = null;', BYBLOK_JS + 'let lastRoute = null;')
+R('.issue-thumb{', BYBLOK_CSS + '.issue-thumb{')
+R('h==="past-issues" ? pastView() : (/^issue-', 'h==="past-issues" ? pastView() : h==="blok" ? blokIndexView() : /^blok\\/[a-z0-9-]+$/.test(h) ? sectionView(h.slice(5)) : (/^issue-')
+R('const active = (CUR!==ISSUE) ? "past-issues" :', 'const active = (CUR!==ISSUE || /^blok(\\/|$)/.test(h)) ? "past-issues" :')
+R('  setTimeout(hydrateEmbeds,0);', '  if (h==="blok") document.title = "Browse by Blok: every piece from every issue | 20 Blok"; else if (/^blok\\//.test(h)){ const g=blokGroups().find(x=>x.slug===h.slice(5)); document.title = g ? g.name+": every piece from every issue | 20 Blok" : "Not found | 20 Blok"; }\n  setTimeout(hydrateEmbeds,0);')
+_m = re.search(r'function pastView\(\)\{\n  return \[el\("section",\{class:"hero"\}.*?\),\n    el\("ul",\{class:"issues"\}', t, re.S)
+assert _m, "pastView"
+t = t[:_m.end()-len('el("ul",{class:"issues"}')] + 'pastSwitch("issue"), el("ul",{class:"issues"}' + t[_m.end():]
 # ---------- write ----------
 for b in data:
     for x in b["body"]:
@@ -708,6 +803,23 @@ for n, a in sorted(ARCH.items()):
     if N.get("editor_notes"): nt += "<h2>Editor notes</h2>" + "".join("<p>%s</p>" % H.escape(x["text"] if isinstance(x, dict) else x) for x in (N["editor_notes"] if isinstance(N["editor_notes"], list) else [N["editor_notes"]]))
     nt += "<h2>Alpha close</h2><p>%s</p>" % H.escape(N["alpha"])
     urls.append(page("issue-%d/notes" % n, "Issue %d Notes: the Back Page | 20 Blok" % n, "The Back Page of 20 Blok Issue %d (%s): the sign-off, %seditor notes and the Alpha Close: %s" % (n, a["title"], "the treasure hunt answer, " if N.get("treasure") else "", N["alpha"]), cov, nt))
+# Browse by Blok pages (prerendered for search)
+_pieces = [(ISSUE_NO, i, b) for i, b in enumerate(data)] + [(n, i, b) for n, a in ARCH.items() for i, b in enumerate(a["bloks"])]
+_pieces.sort(key=lambda x: (-x[0], x[1]))
+_groups, _order = {}, []
+for n, i, b in _pieces:
+    sl = b["id"].split("/", 1)[1]
+    if sl == "straight-up": continue
+    if sl not in _groups: _groups[sl] = []; _order.append(sl)
+    _groups[sl].append((n, b))
+_idx = "".join('<li><a href="/blok/%s">%s %s</a> (%d)</li>' % (sl, _groups[sl][0][1].get("emoji",""), H.escape(_groups[sl][0][1]["name"]), len(_groups[sl])) for sl in _order)
+urls.append(page("blok", "Browse by Blok: every piece from every issue | 20 Blok", "Every 20 Blok piece from every issue, sorted by blok: Must-See, Word Meme, Music Flow, Chain Reaction and more. By Lenny Lesser.", BRAND, "<h1>Browse by Blok</h1><ul>"+_idx+"</ul>"))
+for sl in _order:
+    ps = _groups[sl]; nm = ps[0][1]["name"]
+    hero = next((b for n, b in ps if b.get("img") in paths), None)
+    lst = "".join('<li><a href="/%s">Issue %d: %s</a></li>' % (b["id"], n, H.escape(b["title"])) for n, b in ps)
+    urls.append(page("blok/"+sl, "%s: every piece from every issue | 20 Blok" % nm, short("Every %s from 20 Blok, newest first: %s." % (nm, "; ".join(b["title"] for n, b in ps[:4]))), paths.get(hero["img"], BRAND) if hero else BRAND,
+                     "<h1>%s</h1><p>Every %s from every issue, newest first.</p><ul>%s</ul>" % (H.escape(nm), H.escape(nm), lst)))
 for r_, ti in [("feedback","Feedback"),("contact","Contact"),("welcome","Welcome"),("privacy","Privacy"),("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue %d Notes" % ISSUE_NO),("bonus","Issue %d Notes" % ISSUE_NO)]:
     u = page(r_, ti+" — 20 Blok", home_desc, BRAND, "<h1>"+ti+"</h1>")
     if r_ not in ("bonus","welcome"): urls.append(u)
