@@ -517,8 +517,8 @@
     {
      "t": "img",
      "src": "i4_yt_sybp6ze1UEw",
-     "cap": "Drama B. Watch on YouTube.",
-     "alt": "Drama B music video",
+     "cap": "Drama B: Where I’m From. Watch on YouTube.",
+     "alt": "Drama B: Where I’m From",
      "href": "https://www.youtube.com/watch?v=sybp6ze1UEw",
      "badge": "WATCH ON YOUTUBE"
     },
@@ -530,6 +530,11 @@
      "t": "link",
      "label": "🌐 Site: Drama B →",
      "href": "https://www.dramabmusic.com/"
+    },
+    {
+     "t": "link",
+     "label": "🎧 Also in the Music Flow Collection →",
+     "href": "https://musicflowcollection.com/song/drama-b-where-i-m-from/"
     }
    ]
   },
