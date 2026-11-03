@@ -558,7 +558,7 @@
    "feature": false,
    "title": "Heads-Up Before You Watch: DoesTheDogDie.com",
    "dek": "Check a movie for spoilers you’d rather avoid.",
-   "img": "",
+   "img": "i1_web_radar",
    "tags": [
     "Internet Culture",
     "Film"
@@ -574,6 +574,14 @@
        "href": "https://www.doesthedogdie.com/"
       }
      ]
+    },
+    {
+     "t": "img",
+     "src": "i1_web_radar",
+     "cap": "DoesTheDogDie.com. Visit the site.",
+     "alt": "A wireframe globe under a red radar sweep",
+     "href": "https://www.doesthedogdie.com/",
+     "badge": "VISIT THE SITE"
     },
     {
      "t": "p",
