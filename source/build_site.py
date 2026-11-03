@@ -340,7 +340,7 @@ R('const TITLES = {"all-time":"All-Time"', 'const TITLES = {"welcome":"Welcome",
 # ---------- feedback box + contact page ----------
 R('function ytId(u){', open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "inbox.js")).read() + 'function ytId(u){')
 R('el("a",{class:"fb-btn",href:SURVEY,target:"_blank",rel:"noopener"},"Take the quick survey →")),', 'el("a",{class:"fb-btn",href:"/feedback"},"Share your feedback →")),')
-R('<a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a>', '<a href="/contact">Contact</a> · <a href="/feed.xml" target="_blank" rel="noopener" title="Follow 20 Blok in a feed reader (Feedly, Inoreader, NetNewsWire)">RSS</a>')
+R('<a href="https://docs.google.com/forms/d/e/1FAIpQLSedWziqsIQfv9bfBojwvFmpzItweprLQQ5XhsjvmwnBg62P3w/viewform" target="_blank" rel="noopener">Feedback</a>', '<a href="/contact">Contact</a> · <span class="share rss-wrap"><button type="button" class="rss-btn" aria-haspopup="true" aria-expanded="false" onclick="rssToggle(event)">RSS</button><span class="sh-menu rss-menu" role="menu" hidden><span class="rss-note">Follow 20 Blok in a feed reader. New stories show up there automatically.</span><a class="sh-item" role="menuitem" href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2F20blok.com%2Ffeed.xml" target="_blank" rel="noopener">Follow in Feedly</a><a class="sh-item" role="menuitem" href="https://www.inoreader.com/?add_feed=https%3A%2F%2F20blok.com%2Ffeed.xml" target="_blank" rel="noopener">Follow in Inoreader</a><button type="button" class="sh-item" role="menuitem" onclick="rssCopy(this)">Copy feed link</button></span></span>')
 R('h==="welcome" ? welcomeView() : gridView(false);', 'h==="welcome" ? welcomeView() : h==="contact" ? contactView() : h==="feedback" ? feedbackView() : gridView(false);')
 R('const TITLES = {"welcome":"Welcome",', 'const TITLES = {"feedback":"Feedback","contact":"Contact","welcome":"Welcome",')
 R('sec("Work with me",', 'sec("Work with me",\n        el("p",{},"Collaborations, interviews, writing for 20 Blok, brands → ", el("a",{href:"/contact",text:"use the contact form →"})),')
@@ -588,6 +588,16 @@ SEG_JS = """function segThumb(){
 R('let lastRoute = null;', SEG_JS + 'let lastRoute = null;')
 
 R('<a href="/issue-notes">Issue notes</a>', '<a href="/issue-notes">Issue %d notes</a>' % ISSUE_NO)
+R('function ytId(u){', """function rssToggle(e){ e.stopPropagation(); const btn=e.currentTarget, menu=btn.nextElementSibling, open=menu.hidden;
+  document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); menu.hidden=!open; btn.setAttribute("aria-expanded",String(open));
+  if (open){ menu.style.transform=""; requestAnimationFrame(()=>{ let r=menu.getBoundingClientRect(); let dx=0; if (r.right>innerWidth-12) dx=innerWidth-12-r.right; if (r.left+dx<12) dx=12-r.left; menu.style.transform="translateX("+dx+"px)"; r=menu.getBoundingClientRect(); if (r.bottom>innerHeight-12) scrollBy({top:r.bottom-innerHeight+24,behavior:"smooth"}); }); } }
+async function rssCopy(b){ const u="https://20blok.com/feed.xml"; try{ await navigator.clipboard.writeText(u); b.textContent="Link copied"; }catch(e){ b.textContent=u; } setTimeout(()=>b.textContent="Copy feed link",2500); }
+function ytId(u){""")
+R('.fb-form{display:grid;', """.rss-wrap{display:inline-block;position:relative}
+.rss-btn{border:0;background:none;padding:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer}
+.rss-menu{left:0;min-width:240px;text-align:left}
+.rss-note{display:block;padding:8px 12px 6px;font-size:13px;line-height:1.4;color:var(--muted)}
+.fb-form{display:grid;""")
 # ---------- write ----------
 for b in data:
     for x in b["body"]:

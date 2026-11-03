@@ -204,6 +204,10 @@ main{padding-block:20px 64px}
 .lbx-nav.p{left:10px}.lbx-nav.n{right:10px}
 .lbx-hint{padding:10px 16px 16px;text-align:center;font-family:var(--sans);font-size:13px;color:#aaa}
 @media (max-width:640px){.lbx-stage{padding:0}.lbx-nav{display:none}}
+.rss-wrap{display:inline-block;position:relative}
+.rss-btn{border:0;background:none;padding:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer}
+.rss-menu{left:0;min-width:240px;text-align:left}
+.rss-note{display:block;padding:8px 12px 6px;font-size:13px;line-height:1.4;color:var(--muted)}
 .fb-form{display:grid;gap:14px;margin:8px 0 20px}
 .fb-q{margin:0;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:var(--sans)}
 .fb-chips{display:flex;flex-wrap:wrap;gap:8px}
@@ -416,7 +420,7 @@ footer .inner{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px
 <main class="wrap" id="view" aria-live="polite"><article><p>STYLE SCENE · Issue 7</p><h1>Jean Phil, the Best-Dressed Fighter in Paris</h1><p>Picture a Parisian street. A man in a baggy houndstooth suit and a knotted tie, with a vogued ’70s bob, a curled handlebar mustache, and a neck a little too long. He doesn’t say a word. Then the music hits, hip-hop and gangster rap, and he squares up and starts shadowboxing at nobody.</p><p>In a world of memes, sometimes wild stuff emerges. That’s Jean Philanthrope, Jean Phil to his followers. He isn’t real, he’s AI-made.</p><p>In September he caught the internet by storm. Within days the account passed 230,000 followers, and single videos cleared 35 million views.</p><p>Commenters called him the “final boss,” gamer slang for the last and toughest enemy in a video game. Others said the bob made him a dead ringer for Lord Farquaad, the pint-sized villain from Shrek.</p><p>Why it worked is a style question. He dresses like a librarian and moves like he’s from the street. Put the two in one frame and the juxtaposition is the part that attracts attention. It’s offbeat, and it’s hard to look away.</p><p><a href="https://www.instagram.com/jeanphilanthrope.co/">📸 On Instagram: @jeanphilanthrope.co →</a></p><figure><figcaption>Jean Phil, counting cash. Watch on YouTube.</figcaption></figure><h2>Beyond the Style</h2><p>The part left out is Jean Phil may have been a ruthless scheme to extract money from meme coin investors. if you want a critical analysis beyond the style shock and the root of what some call a scam with its crypto ties, watch here:</p><figure><figcaption>The breakdown: phone farms, fake influencers and a pump and dump? Watch on YouTube.</figcaption></figure></article><script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Jean Phil, the Best-Dressed Fighter in Paris", "author": {"@type": "Person", "name": "Lenny Lesser", "url": "https://lennylesser.com"}, "publisher": {"@type": "Organization", "name": "20 Blok", "url": "https://20blok.com"}, "datePublished": "2026-10-28", "image": "https://20blok.com/media/jp_portrait.jpg", "mainEntityOfPage": "https://20blok.com/issue-7/style-scene", "isPartOf": {"@type": "PublicationIssue", "issueNumber": "7", "isPartOf": {"@type": "Periodical", "name": "20 Blok"}}, "keywords": "Style, Internet Culture, AI, Jean Philanthrope"}</script></main>
 
 <footer class="foot"><div class="wrap"><div class="inner">
-  <span>20 Blok · Culture, creativity, and the internet. · <a href="/issue-notes">Issue 7 notes</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a> · <a href="/feed.xml" target="_blank" rel="noopener" title="Follow 20 Blok in a feed reader (Feedly, Inoreader, NetNewsWire)">RSS</a></span>
+  <span>20 Blok · Culture, creativity, and the internet. · <a href="/issue-notes">Issue 7 notes</a> · <a href="/privacy">Privacy</a> · <a href="/contact">Contact</a> · <span class="share rss-wrap"><button type="button" class="rss-btn" aria-haspopup="true" aria-expanded="false" onclick="rssToggle(event)">RSS</button><span class="sh-menu rss-menu" role="menu" hidden><span class="rss-note">Follow 20 Blok in a feed reader. New stories show up there automatically.</span><a class="sh-item" role="menuitem" href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2F20blok.com%2Ffeed.xml" target="_blank" rel="noopener">Follow in Feedly</a><a class="sh-item" role="menuitem" href="https://www.inoreader.com/?add_feed=https%3A%2F%2F20blok.com%2Ffeed.xml" target="_blank" rel="noopener">Follow in Inoreader</a><button type="button" class="sh-item" role="menuitem" onclick="rssCopy(this)">Copy feed link</button></span></span></span>
   <span>© 2026 Lenny Lesser</span>
 </div></div></footer>
 
@@ -1037,6 +1041,10 @@ function archNotesView(){
         el("p",{},"Collaborations, interviews, writing for 20 Blok, brands → ", el("a",{href:"/contact",text:"use the contact form →"}))),
       sec("⚡️ Alpha close", el("p",{class:"pull",text:N.alpha}))))];
 }
+function rssToggle(e){ e.stopPropagation(); const btn=e.currentTarget, menu=btn.nextElementSibling, open=menu.hidden;
+  document.querySelectorAll(".sh-menu").forEach(m=>m.hidden=true); menu.hidden=!open; btn.setAttribute("aria-expanded",String(open));
+  if (open){ menu.style.transform=""; requestAnimationFrame(()=>{ let r=menu.getBoundingClientRect(); let dx=0; if (r.right>innerWidth-12) dx=innerWidth-12-r.right; if (r.left+dx<12) dx=12-r.left; menu.style.transform="translateX("+dx+"px)"; r=menu.getBoundingClientRect(); if (r.bottom>innerHeight-12) scrollBy({top:r.bottom-innerHeight+24,behavior:"smooth"}); }); } }
+async function rssCopy(b){ const u="https://20blok.com/feed.xml"; try{ await navigator.clipboard.writeText(u); b.textContent="Link copied"; }catch(e){ b.textContent=u; } setTimeout(()=>b.textContent="Copy feed link",2500); }
 function ytId(u){ const m = u.match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/); return m ? m[1] : null; }
 let embedScripts = {};
 function loadScript(src, done){ if (embedScripts[src]) { done && done(); return; } embedScripts[src]=1; const s=document.createElement("script"); s.src=src; s.async=true; s.onload=()=>done&&done(); document.body.append(s); }
