@@ -616,7 +616,7 @@
      "links": [
       {
        "text": "Playground Edition",
-       "href": "https://lennylesser.beehiiv.com/p/issue-3-find-your-edge#crypto-dispatch"
+       "href": "/issue-3/chain-reaction"
       }
      ]
     },
@@ -837,6 +837,11 @@
      "alt": "Episode 4 of the Apron Worker series",
      "href": "https://www.instagram.com/reel/DSLKj-5ks9Z/",
      "badge": "WATCH ON INSTAGRAM"
+    },
+    {
+     "t": "link",
+     "label": "← Previous: Episode 3, Issue 3",
+     "href": "/issue-3/story-beat"
     }
    ]
   },
