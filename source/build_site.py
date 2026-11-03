@@ -959,7 +959,7 @@ def page(route, title, desc, img, body_html, og_title=None, canonical=None):
     p = re.sub(r'<meta property="og:image" content="[^"]*">', '<meta property="og:image" content="'+SITE+img+'">', p, 1)
     url = SITE + ("/" if route=="" else "/"+route)
     cu = url if canonical is None else SITE + "/" + canonical
-    p = re.sub(r'<meta property="og:url" content="[^"]*">', '<meta property="og:url" content="'+cu+'">\n<link rel="canonical" href="'+cu+'">', p, 1)
+    p = re.sub(r'<meta property="og:url" content="[^"]*">', '<meta property="og:url" content="'+url+'">\n<link rel="canonical" href="'+cu+'">', p, 1)
     p = p.replace('<main class="wrap" id="view" aria-live="polite"></main>', '<main class="wrap" id="view" aria-live="polite">'+body_html+'</main>', 1)
     d = os.path.join(out, route) if route else out
     os.makedirs(d, exist_ok=True)
@@ -1012,7 +1012,7 @@ for b in data:
     try: os.rmdir(os.path.join(out, b["slug"]))
     except OSError: pass
 REDIRECTS = [{"source": "/"+b["slug"], "destination": "/"+b["id"], "permanent": True} for b in data]
-page("issue-%d" % ISSUE_NO, "20 Blok, Issue %d: %s" % (ISSUE_NO, ISSUE_TITLE), home_desc, BRAND, '<h1>20 Blok, Issue %d: %s</h1><ul>' % (ISSUE_NO, H.escape(ISSUE_TITLE))+grid+'</ul>', canonical="")
+page("issue-%d" % ISSUE_NO, "Issue %d: %s | 20 Blok" % (ISSUE_NO, ISSUE_TITLE), "20 Blok Issue %d: %s. %d stories on culture, creativity and the internet by Lenny Lesser, ranked by readers." % (ISSUE_NO, ISSUE_TITLE.rstrip("."), len(data)), paths.get("cover", BRAND), '<h1>20 Blok, Issue %d: %s</h1><ul>' % (ISSUE_NO, H.escape(ISSUE_TITLE))+grid+'</ul>', canonical="")
 for n, a in sorted(ARCH.items()):
     g = "".join('<li><a href="/'+b["id"]+'">'+H.escape(b["name"])+': '+H.escape(b["title"])+'</a></li>' for b in a["bloks"])
     cov = paths.get(a["cover"], BRAND)
