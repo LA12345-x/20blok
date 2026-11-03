@@ -847,7 +847,7 @@
    "feature": false,
    "title": "The Internet Archive: A Hidden Gem",
    "dek": "A massive public archive of free texts, movies, software, music and more.",
-   "img": "",
+   "img": "i4_archive_tile",
    "tags": [
     "Culture",
     "Film"
@@ -865,6 +865,13 @@
        "href": "https://archive.org/"
       }
      ]
+    },
+    {
+     "t": "img",
+     "src": "i4_archive_wide",
+     "cap": "",
+     "alt": "Internet Archive logo",
+     "narrow": true
     },
     {
      "t": "p",
