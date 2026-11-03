@@ -976,8 +976,7 @@ urls = []
 grid = "".join('<li><a href="/'+b["id"]+'">'+H.escape(b["name"])+': '+H.escape(b["title"])+'</a></li>' for b in data)
 home_desc = "20 Blok by Lenny Lesser: twenty stories every issue on culture, creativity and the internet. You pick the winners."
 ISSUE_TITLE = next((b["title"] for b in data if b["slug"]=="straight-up"), "")
-urls.append(page("", "20 Blok — Culture, creativity, and the internet.", home_desc, BRAND, '<h1>20 Blok, Issue %d: %s</h1><ul>' % (ISSUE_NO, H.escape(ISSUE_TITLE))+grid+'</ul>',
-                 og_title="20 Blok · Issue %d: %s" % (ISSUE_NO, ISSUE_TITLE)))
+urls.append(page("", "20 Blok — Culture, creativity, and the internet.", home_desc, BRAND, '<h1>20 Blok, Issue %d: %s</h1><ul>' % (ISSUE_NO, H.escape(ISSUE_TITLE))+grid+'</ul>'))
 def full_text(b):
     o = []
     for x in b["body"]:
