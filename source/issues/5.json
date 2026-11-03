@@ -893,15 +893,15 @@
      "text": "True Size is a tool that lets you compare the actual size of countries on a map. You can drag countries around the globe and see how they actually compare to each other. Classic example: Africa is vastly larger than most maps make it appear."
     },
     {
+     "t": "link",
+     "label": "Try it: The True Size of Countries (truesize.net) →",
+     "href": "https://truesize.net/"
+    },
+    {
      "t": "img",
      "src": "i5_truesize",
      "cap": "The US, China, India, Greenland, Germany, France and Texas, all dragged onto Africa at their true size. Map: TrueSize.net",
      "alt": "Map of Africa with the US, China, India, Greenland, Germany, France and Texas laid over it at true scale; they all fit inside."
-    },
-    {
-     "t": "link",
-     "label": "Try it: The True Size of Countries (truesize.net) →",
-     "href": "https://truesize.net/"
     }
    ]
   },
