@@ -1,0 +1,845 @@
+{
+ "n": 2,
+ "title": "How May I Help You?",
+ "date": "Nov 28, 2025",
+ "month": "November 2025",
+ "pub": "2025-11-28",
+ "cover": "i2_cover",
+ "cover_alt": "Issue 2 cover: How May I Help You? A man in a retail apron leans on a white counter in a dark, futuristic store.",
+ "coverlines": [
+  "must-see",
+  "word-meme",
+  "behind-the-reel",
+  "chain-reaction"
+ ],
+ "covertext": {
+  "must-see": "Helen Andrews on Feminization",
+  "word-meme": "“I Love That for You”: Support or Exit?",
+  "behind-the-reel": "The Pharma Ad Satire",
+  "chain-reaction": "Sompolinsky Declines the Stage"
+ },
+ "notes": {
+  "signoff": "Thanks for reading Issue 2. If you got something out of it, share it with someone who would too.",
+  "link_text": "the sign-off and the Alpha Close →",
+  "editor_notes": [
+   {
+    "text": "Your attention is a currency — spend it like it matters."
+   }
+  ],
+  "alpha": "“If doubt creeps in, decline the conversation. You’ve got better places to be.”"
+ },
+ "bloks": [
+  {
+   "id": "straight-up",
+   "name": "STRAIGHT UP",
+   "emoji": "🎙️",
+   "feature": false,
+   "editor": true,
+   "title": "How May I Help You?",
+   "dek": "A quiet dignity: showing up for this, regardless.",
+   "img": "i2_cover",
+   "tags": [
+    "Mindset"
+   ],
+   "people": [
+    "Myles Munroe"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "How may I help you? is a quiet dignity — a way of saying I’m showing up for this, regardless."
+    },
+    {
+     "t": "q",
+     "text": "“You are not here to survive. You are here to build.\nYou are not here to ask. You are here to decide.”"
+    },
+    {
+     "t": "cite",
+     "text": "— Dr. Myles Munroe"
+    },
+    {
+     "t": "p",
+     "text": "That quote reframes this past year as training, not trials. Chasing “Finished” became: put it where it goes."
+    },
+    {
+     "t": "img",
+     "src": "i2_think",
+     "cap": "Assume the wish is fulfilled, like Goddard said.",
+     "alt": "Thinking GIF",
+     "gif": true
+    },
+    {
+     "t": "p",
+     "text": "How may I help you? is a play on the retail season I’m in — and a promise to myself:"
+    },
+    {
+     "t": "pull",
+     "text": "Wherever I am, I’m going to show up and fix this every second of every day."
+    }
+   ]
+  },
+  {
+   "id": "must-see",
+   "name": "MUST-SEE",
+   "emoji": "👁️",
+   "feature": false,
+   "title": "Helen Andrews: When Feminization Goes Too Far",
+   "dek": "What most won’t say out loud.",
+   "img": "i2_yt_p3UyK_fdqGg",
+   "tags": [
+    "Culture",
+    "News"
+   ],
+   "people": [
+    "Helen Andrews",
+    "Meghan Daum"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i2_yt_p3UyK_fdqGg",
+     "cap": "Helen Andrews on The Unspeakeasy. Watch on YouTube.",
+     "alt": "Helen Andrews: Women ruin everything",
+     "href": "https://www.youtube.com/watch?v=p3UyK_fdqGg",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "p",
+     "text": "Helen Andrews argues that today’s “wokeness” comes from feminine social norms moving into historically male-run institutions."
+    },
+    {
+     "t": "link",
+     "label": "🎥 Seen on YouTube: The Unspeakeasy with Meghan Daum →",
+     "href": "https://www.youtube.com/@TheUnspeakeasyPodcast"
+    }
+   ]
+  },
+  {
+   "id": "word-meme",
+   "name": "WORD MEME",
+   "emoji": "🗿",
+   "feature": false,
+   "title": "‘I Love That for You’",
+   "dek": "Encouragement… or exit?",
+   "img": "i2_ilove1",
+   "tags": [
+    "Memes",
+    "Culture"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "p",
+     "text": "On paper, it reads like support. In practice, it’s often distance."
+    },
+    {
+     "t": "img",
+     "src": "i2_ilove1",
+     "cap": "",
+     "alt": "Comic-style café scene: a woman in sunglasses tells a man in a hoodie, I love that for you.",
+     "narrow": true
+    },
+    {
+     "t": "p",
+     "text": "“I love that for you” 💬 turned into being socially supportive while emotionally checked out."
+    },
+    {
+     "t": "p",
+     "text": "It can mean “good for you, but I’d never touch that,” 😅 or “I don’t get it, but I won’t argue.” 🤷‍♂️"
+    },
+    {
+     "t": "pull",
+     "text": "“Support” has never sounded more non-committal."
+    },
+    {
+     "t": "h",
+     "text": "The elephant in the room"
+    },
+    {
+     "t": "p",
+     "text": "Are we…"
+    },
+    {
+     "t": "p",
+     "text": "a) cheering for each other"
+    },
+    {
+     "t": "p",
+     "text": "b) politely opting out, or"
+    },
+    {
+     "t": "p",
+     "text": "c) cutting down someone’s moment just to lift our own"
+    },
+    {
+     "t": "p",
+     "text": "Dive deeper: the origin story of the phrase, here on Instagram.",
+     "links": [
+      {
+       "text": "here on Instagram",
+       "href": "https://www.instagram.com/p/DNUs4YJOl7h/"
+      }
+     ]
+    },
+    {
+     "t": "img",
+     "src": "i2_ilove_reel",
+     "cap": "‘I love that for you’: the 1-minute reel. Watch on Instagram.",
+     "alt": "‘I love that for you’ reel",
+     "href": "https://www.instagram.com/reel/DNTXWyvJH9V/",
+     "badge": "WATCH ON INSTAGRAM"
+    },
+    {
+     "t": "pull",
+     "text": "Authenticity is the new performance art."
+    },
+    {
+     "t": "img",
+     "src": "i2_ilove2",
+     "cap": "",
+     "alt": "Comic-style café scene: a speech bubble reads, love that for you.",
+     "narrow": true
+    },
+    {
+     "t": "p",
+     "text": "Because sometimes “support” is just the softest possible no. 🚫✨"
+    }
+   ]
+  },
+  {
+   "id": "toolz",
+   "name": "TOOLZ",
+   "emoji": "🤖",
+   "feature": false,
+   "title": "Notes on Steroids: Notion",
+   "dek": "Scattered notes and ideas, turned into one workspace.",
+   "img": "i2_yt_8qNbO9fzPKA",
+   "tags": [
+    "AI",
+    "AI Tools"
+   ],
+   "people": [
+    "Notion"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i2_notion",
+     "cap": "",
+     "alt": "Notion logo",
+     "small": true
+    },
+    {
+     "t": "p",
+     "text": "What Notion does: Turns scattered notes and ideas into one cohesive workspace."
+    },
+    {
+     "t": "p",
+     "text": "Why Notion matters: It gives your ideas structure by letting them grow instead of getting lost."
+    },
+    {
+     "t": "h",
+     "text": "💡 Pro tip"
+    },
+    {
+     "t": "p",
+     "text": "Notion lets you publish polished one-off web pages instantly."
+    },
+    {
+     "t": "img",
+     "src": "i2_yt_8qNbO9fzPKA",
+     "cap": "Notion Tips, Part 1: Exploring Notion’s basics. Watch on YouTube.",
+     "alt": "Notion Tips: Notes on Steroids, Part 1",
+     "href": "https://www.youtube.com/watch?v=8qNbO9fzPKA",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "Try Notion: notion.so →",
+     "href": "https://www.notion.so/"
+    }
+   ]
+  },
+  {
+   "id": "behind-the-reel",
+   "name": "BEHIND THE REEL",
+   "emoji": "🎞️",
+   "feature": false,
+   "title": "GOFUKYERZELFERA™: The Pharma Satire Ad",
+   "dek": "Satire that hits harder than the real thing.",
+   "img": "i2_pharma",
+   "tags": [
+    "AI",
+    "AI Filmmaking"
+   ],
+   "people": [
+    "Unruly Reels"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i2_pharma",
+     "cap": "GOFUKYERZELFERA™. Watch on Instagram.",
+     "alt": "Pharma satire ad: a smiling woman in headphones",
+     "href": "https://www.instagram.com/reel/DO3sBumkd16/",
+     "badge": "WATCH ON INSTAGRAM"
+    },
+    {
+     "t": "h",
+     "text": "When “talk to your doctor” gets flipped on its head."
+    },
+    {
+     "t": "p",
+     "text": "A voiceover a little too sincere, a product name that never should’ve made it — the pharma ad that was begging to get made."
+    },
+    {
+     "t": "pull",
+     "text": "When something feels off, a well-aimed joke may be the only real pushback."
+    },
+    {
+     "t": "p",
+     "text": "Tools: Midjourney / Suno / Final Cut Pro"
+    },
+    {
+     "t": "link",
+     "label": "Need a video or advert for your brand? ➡️ UnrulyReels.com →",
+     "href": "https://unrulyreels.com"
+    }
+   ]
+  },
+  {
+   "id": "find-your-edge",
+   "name": "FIND YOUR EDGE",
+   "emoji": "🗡️",
+   "feature": false,
+   "title": "Ed Mylett: The Power of “One More”",
+   "dek": "You might be closer than you realize.",
+   "img": "i2_yt_PuRflAGsA9w",
+   "tags": [
+    "Mindset"
+   ],
+   "people": [
+    "Ed Mylett"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Ed Mylett talks about one more rep, one more call, one more conversation — not as ‘grindset’ wallpaper, but to say, you might be closer than you realize."
+    },
+    {
+     "t": "img",
+     "src": "i2_yt_PuRflAGsA9w",
+     "cap": "Ed Mylett: one more. Watch on YouTube.",
+     "alt": "Ed Mylett: one thought",
+     "href": "https://www.youtube.com/watch?v=PuRflAGsA9w",
+     "badge": "WATCH ON YOUTUBE"
+    }
+   ]
+  },
+  {
+   "id": "dezign-ur-ritual",
+   "name": "DEZIGN UR RITUAL",
+   "emoji": "🫖",
+   "feature": false,
+   "title": "Slow Down — or Life Will Do It for You",
+   "dek": "Take it as a sign.",
+   "img": "seinfeld_poster",
+   "tags": [
+    "Mindset"
+   ],
+   "people": [],
+   "body": [
+    {
+     "t": "img",
+     "src": "i2_seinfeld",
+     "cap": "",
+     "alt": "Jerry Seinfeld, serious, GIF",
+     "gif": true
+    },
+    {
+     "t": "p",
+     "text": "Modern life runs on urgency: notifications, deadlines, and that vague panic you’re late to everything."
+    },
+    {
+     "t": "p",
+     "text": "This idea of slowing down is a prelude to what came next — for now, take it as a sign to slow down in whatever way matters most to you."
+    },
+    {
+     "t": "link",
+     "label": "Next: ‘You Already Have It in You,’ Issue 3 →",
+     "href": "/issue-3/dezign-ur-ritual"
+    }
+   ]
+  },
+  {
+   "id": "chain-reaction",
+   "name": "CHAIN REACTION",
+   "emoji": "🔗",
+   "feature": true,
+   "title": "Declining the Stage",
+   "dek": "Yonatan Sompolinsky turns down the biggest stage in crypto.",
+   "img": "i2_kaspa",
+   "tags": [
+    "Crypto",
+    "News"
+   ],
+   "people": [
+    "Yonatan Sompolinsky",
+    "Kaspa",
+    "Binance"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i2_kaspa",
+     "cap": "Dr. Yonatan Sompolinsky, shown inside a world-famous meme.",
+     "alt": "Distracted-boyfriend meme GIF with Yonatan Sompolinsky",
+     "gif": true
+    },
+    {
+     "t": "h",
+     "text": "An inflection point in crypto"
+    },
+    {
+     "t": "p",
+     "text": "Coming off last issue’s What Is a Cypherpunk, Anyway?, this week delivered the real thing — a principled bombshell that shook the crypto underworld.",
+     "links": [
+      {
+       "text": "What Is a Cypherpunk, Anyway?",
+       "href": "https://lennylesser.beehiiv.com/p/about-last-week-issue-1-08fd#onchain-dispatch-what-is-a-cypherpu"
+      }
+     ]
+    },
+    {
+     "t": "p",
+     "text": "On Nov 6, Dr. Yonatan Sompolinsky — one of the original researchers behind the groundbreaking Kaspa network — turned down Binance’s award naming him the #1 Independent Researcher of 2025. It would’ve put him on the same Dubai stage as Michael Saylor and “CZ” (Binance’s founder).",
+     "links": [
+      {
+       "text": "Kaspa",
+       "href": "https://kaspa.org/"
+      }
+     ]
+    },
+    {
+     "t": "pull",
+     "text": "He declined it. Not out of ego — out of principle."
+    },
+    {
+     "t": "p",
+     "text": "In an open letter, he thanked voters and said what most whisper:"
+    },
+    {
+     "t": "q",
+     "text": "“Crypto has shifted from a cypherpunk project to a house-friendly casino.”"
+    },
+    {
+     "t": "p",
+     "text": "His warning was sharp: when exchanges list paid-for meme coins while ignoring real decentralized innovation, they don’t just reflect the market — they steer it."
+    },
+    {
+     "t": "p",
+     "text": "And when genuine breakthroughs get sidelined for “a green frog three weeks post-launch,” that isn’t market logic. It’s moral drift."
+    },
+    {
+     "t": "p",
+     "text": "It wasn’t an attack. It was a wake-up call."
+    },
+    {
+     "t": "p",
+     "text": "Decentralization isn’t price action — it’s integrity, independence, and resistance to capture."
+    },
+    {
+     "t": "p",
+     "text": "Sompolinsky’s refusal wasn’t defiance; it was discipline."
+    },
+    {
+     "t": "pull",
+     "text": "Declining the stage may be the loudest thing he’s said to date."
+    },
+    {
+     "t": "link",
+     "label": "🔗 Read his full statement on X →",
+     "href": "https://x.com/hashdag/status/1986497449557446774"
+    },
+    {
+     "t": "link",
+     "label": "Next: What Is Kaspa? The Playground Edition, Issue 3 →",
+     "href": "/issue-3/chain-reaction"
+    }
+   ]
+  },
+  {
+   "id": "story-beat",
+   "name": "STORY BEAT",
+   "emoji": "📖",
+   "feature": false,
+   "title": "Tracy Chapman’s “Fast Car”: A Metaphor That Finds Its Spark",
+   "dek": "Episode 2: plotting an escape.",
+   "img": "i2_ep2",
+   "tags": [
+    "Culture",
+    "Creativity"
+   ],
+   "people": [
+    "Tracy Chapman"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Things hit a downbeat in this episode as our apron-worker anti-hero starts questioning his reality — plotting an escape, testing his will, and reaching for Tracy Chapman’s classic to find the courage to move."
+    },
+    {
+     "t": "img",
+     "src": "i2_ep2",
+     "cap": "Episode 2. Watch on Instagram.",
+     "alt": "Episode 2 of the Apron Worker series",
+     "href": "https://www.instagram.com/p/DPep9JVgX90/",
+     "badge": "WATCH ON INSTAGRAM"
+    },
+    {
+     "t": "link",
+     "label": "🎧 “Fast Car” is also in the Music Flow Collection →",
+     "href": "https://musicflowcollection.com/song/tracy-chapman-fast-car/"
+    },
+    {
+     "t": "link",
+     "label": "Next: Episode 3, Issue 3 →",
+     "href": "/issue-3/story-beat"
+    }
+   ]
+  },
+  {
+   "id": "lolz",
+   "name": "LOLZ",
+   "emoji": "🤣",
+   "feature": false,
+   "title": "Michael Jordan: The SNL Gambling Sketch",
+   "dek": "Over-competitiveness, played for laughs.",
+   "img": "i2_yt_sz6go7xC3Zs",
+   "tags": [
+    "Comedy",
+    "Sports"
+   ],
+   "people": [
+    "Michael Jordan",
+    "SNL"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "A Michael Jordan portrayal on SNL that finds comedy in pure over-competitiveness — and accidentally reads like a documentary on how winners think. The laughs keep building as it goes."
+    },
+    {
+     "t": "img",
+     "src": "i2_yt_sz6go7xC3Zs",
+     "cap": "The SNL sketch. Watch on YouTube.",
+     "alt": "SNL Michael Jordan gambling sketch",
+     "href": "https://www.youtube.com/watch?v=sz6go7xC3Zs",
+     "badge": "WATCH ON YOUTUBE"
+    }
+   ]
+  },
+  {
+   "id": "music-flow",
+   "name": "MUSIC FLOW",
+   "emoji": "🎧",
+   "feature": true,
+   "title": "Lykke Li — “I’m Good, I’m Gone”",
+   "dek": "How one take turned into a war cry.",
+   "img": "i2_yt_jGP3VSNlwzg",
+   "tags": [
+    "Music",
+    "Live"
+   ],
+   "people": [
+    "Lykke Li"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Picture this: it’s 2010. You stumble on to Lykke Li — soft, velvet-textured voice. Her debut single “Little Bit” lands first — shy, poppy, and magnetic."
+    },
+    {
+     "t": "p",
+     "text": "A stellar introduction… but not the moment she became unforgettable."
+    },
+    {
+     "t": "p",
+     "text": "Her next single, “I’m Good, I’m Gone,” is released — it still plays in shopping malls today, giving you an idea of how it started and how it’s going."
+    },
+    {
+     "t": "h",
+     "text": "Then this happened"
+    },
+    {
+     "t": "ul",
+     "items": [
+      "A stripped-down, black-box room.",
+      "A backup singer inches away.",
+      "A megaphone pressed to her lips.",
+      "A one-take performance dripping with half-rehearsal / half-revolution energy."
+     ]
+    },
+    {
+     "t": "p",
+     "text": "And at the center of it, the lyrics that turned the whole room into a manifesto:"
+    },
+    {
+     "t": "q",
+     "text": "“I’m working, I sweat but it’s all good\nI’m breaking my back but it’s all good\n\nCause I know I’ll get it back\nYeah, I know your hands will clap\n\nYet, I’m looking, yet, I’m working\nTo make butter for my piece of bun”"
+    },
+    {
+     "t": "p",
+     "text": "Translation: I’m out here, grinding for my own slice — and I’m cool with it."
+    },
+    {
+     "t": "p",
+     "text": "There’s a mix of grit and honesty in it that still pulls me back, even now."
+    },
+    {
+     "t": "pull",
+     "text": "The live cut isn’t just a version — it’s the definitive version."
+    },
+    {
+     "t": "img",
+     "src": "i2_yt_jGP3VSNlwzg",
+     "cap": "🎙️ The acoustic version: “I’m Good, I’m Gone.” Watch on YouTube.",
+     "alt": "Lykke Li performing I’m Good, I’m Gone",
+     "href": "https://www.youtube.com/watch?v=jGP3VSNlwzg",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "🎧 Also in the Music Flow Collection →",
+     "href": "https://musicflowcollection.com/song/lykke-li-i-m-good-i-m-gone/"
+    }
+   ]
+  },
+  {
+   "id": "off-the-path",
+   "name": "OFF THE PATH",
+   "emoji": "🧭",
+   "feature": false,
+   "title": "Set Up Spawn",
+   "dek": "Quirky tech tips with a touch of deadpan comedy.",
+   "img": "i2_spawn",
+   "tags": [
+    "Tech",
+    "Comedy"
+   ],
+   "people": [
+    "Set Up Spawn"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Matty McTech’s YouTube channel drops quick, funny tech videos — little tricks and hidden sites you probably didn’t know existed. Useful, entertaining, or both."
+    },
+    {
+     "t": "img",
+     "src": "i2_spawn",
+     "cap": "Set Up Spawn. Watch on YouTube.",
+     "alt": "Set Up Spawn host in a pink headband in front of a monitor",
+     "href": "https://www.youtube.com/@SetupSpawn/shorts",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "🎥 On YouTube: Set Up Spawn →",
+     "href": "https://www.youtube.com/@SetupSpawn/shorts"
+    }
+   ]
+  },
+  {
+   "id": "wall-of-sommi",
+   "name": "WALL OF SOMMI",
+   "emoji": "🧱",
+   "feature": false,
+   "title": "“Satoshi Is Rolling Around in His Grave”",
+   "dek": "The storyteller-orator of the crypto underworld.",
+   "img": "i2_sommi_shot",
+   "tags": [
+    "Crypto",
+    "Bitcoin"
+   ],
+   "people": [
+    "Sommi",
+    "Yonatan Sompolinsky"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "If Yonatan Sompolinsky (featured in this issue’s Chain Reaction) is the quiet researcher, @yourfriendSOMMI is the storyteller-orator of the crypto underworld — the guy who turns market cycles into folklore.",
+     "links": [
+      {
+       "text": "Chain Reaction",
+       "href": "/issue-2/chain-reaction"
+      }
+     ]
+    },
+    {
+     "t": "img",
+     "src": "i2_sommi_shot",
+     "cap": "Sommi, in full chef-prophet mode — roasting markets, and feeding the community.",
+     "alt": "Sommi in a chef’s hat at a microphone"
+    },
+    {
+     "t": "p",
+     "text": "He’s the hole-in-the-wall psychic shop with the neon sign: you walk in expecting a joke, and end up in a four-hour maze beneath the city — booby-trapped with lessons, characters, and warnings disguised as comedy."
+    },
+    {
+     "t": "p",
+     "text": "This week’s Wall of Sommi includes a language key to some of his original references — and a short clip of him challenging the Bitcoin “Maxis.”",
+     "links": [
+      {
+       "text": "language key",
+       "href": "https://drive.google.com/file/d/1Fydk6L828XsNHkZnJLK5kufy8O1UXiR1/view"
+      }
+     ]
+    },
+    {
+     "t": "img",
+     "src": "i2_yt_xxx592d2HUI",
+     "cap": "Sommi vs. the Bitcoin Maxis. Watch on YouTube.",
+     "alt": "Sommi in a chef’s hat",
+     "href": "https://www.youtube.com/watch?v=xxx592d2HUI",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "🎥 On YouTube: @yourfriendSOMMI →",
+     "href": "https://www.youtube.com/@yourfriendsommi"
+    }
+   ]
+  },
+  {
+   "id": "sports-talk",
+   "name": "SPORTS TALK",
+   "emoji": "🏀",
+   "feature": false,
+   "title": "Kobe Bryant: The Grit Commercial That Never Left Me",
+   "dek": "It’s not about production value.",
+   "img": "i2_yt_mC_nyQSSvz0",
+   "tags": [
+    "Sports"
+   ],
+   "people": [
+    "Kobe Bryant"
+   ],
+   "body": [
+    {
+     "t": "p",
+     "text": "Ever since I first saw this spot in 2006, it never left me. I remember thinking: I can’t believe they made a commercial with this kind of guerrilla-style filmmaking."
+    },
+    {
+     "t": "pull",
+     "text": "It’s not always about production value — it’s about the message, the intent, and the conviction behind it."
+    },
+    {
+     "t": "img",
+     "src": "i2_yt_mC_nyQSSvz0",
+     "cap": "Kobe Bryant’s grit commercial. Watch on YouTube.",
+     "alt": "Kobe Bryant in black and white",
+     "href": "https://www.youtube.com/watch?v=mC_nyQSSvz0",
+     "badge": "WATCH ON YOUTUBE"
+    }
+   ]
+  },
+  {
+   "id": "now-playing",
+   "name": "NOW PLAYING",
+   "emoji": "🍿",
+   "feature": true,
+   "title": "On the Waterfront: The Glove Drop",
+   "dek": "The unscripted moment we still haven’t recovered from.",
+   "img": "i2_waterfront",
+   "tags": [
+    "Film"
+   ],
+   "people": [
+    "Marlon Brando",
+    "Eva Marie Saint"
+   ],
+   "body": [
+    {
+     "t": "img",
+     "src": "i2_waterfront",
+     "cap": "Terry Malloy and Edie Doyle in the park.",
+     "alt": "Marlon Brando and Eva Marie Saint in a cold city park, black and white"
+    },
+    {
+     "t": "p",
+     "text": "When it comes to On the Waterfront (1954), trying to pick a single scene almost feels disrespectful — the whole film is a masterclass in performance and human truth."
+    },
+    {
+     "t": "p",
+     "text": "But the glove-drop scene? That’s the one people still point to as the moment modern, naturalistic acting arrived."
+    },
+    {
+     "t": "p",
+     "text": "Terry Malloy (Marlon Brando) and Edie Doyle (Eva Marie Saint) walk through a cold city park — two people who shouldn’t be together, but somehow already are. They barely know each other. She’s grieving her brother. He carries guilt he can’t say out loud. On paper, they have no business sharing a frame, let alone chemistry."
+    },
+    {
+     "t": "p",
+     "text": "And then it happens."
+    },
+    {
+     "t": "img",
+     "src": "i2_yt_dHtJUWO7yeA",
+     "cap": "The glove drop. Watch on YouTube.",
+     "alt": "On the Waterfront glove scene",
+     "href": "https://www.youtube.com/watch?v=dHtJUWO7yeA",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "p",
+     "text": "Edie fidgets with her gloves and accidentally drops one. Everyone expected the director to yell “Cut.”"
+    },
+    {
+     "t": "p",
+     "text": "Brando didn’t even pause."
+    },
+    {
+     "t": "p",
+     "text": "He picks it up, toys with it, slips it onto his own hand — all while keeping the conversation moving. No script direction. No planning. Just pure instinct. Suddenly the air shifts: intimacy without permission, tension without dialogue, a closeness neither character is ready to name."
+    },
+    {
+     "t": "h",
+     "text": "That one unscripted gesture solved the whole scene"
+    },
+    {
+     "t": "ul",
+     "items": [
+      "She isn’t ready to hold his hand.",
+      "He won’t force anything.",
+      "So he “holds” her through the glove instead."
+     ]
+    },
+    {
+     "t": "p",
+     "text": "It keeps her beside him without breaking her boundaries."
+    },
+    {
+     "t": "p",
+     "text": "Edie watches, pretending not to watch — playing off him with equal instinct. When she finally retrieves the glove, she does it in one smooth motion, no commentary. It’s all behavior, no explanation."
+    },
+    {
+     "t": "p",
+     "text": "This is why the moment feels alive. Why actors still study it. Why it transcends the frame."
+    },
+    {
+     "t": "pull",
+     "text": "10% chaos, 90% structure."
+    },
+    {
+     "t": "p",
+     "text": "Brando brought a small percentage of improvisation — 10% chaos, 90% structure — that forced the other actor to truly listen. Eva Marie Saint rose to meet him, and the camera just… caught something real."
+    },
+    {
+     "t": "p",
+     "text": "Peak instinct. Peak humanity. Peak Brando."
+    }
+   ]
+  }
+ ]
+}
