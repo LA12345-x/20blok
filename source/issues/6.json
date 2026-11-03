@@ -546,6 +546,11 @@
      "text": "The Dystopique album channels everyday discontent into instrumental and lyrical rebellion."
     },
     {
+     "t": "album",
+     "album": "dystopique",
+     "mini": true
+    },
+    {
      "t": "p",
      "text": "The album’s tenor clamors like sound waves that ricochet off a city’s concrete corporate buildings—the ones with the reflective windows you can’t see through. It reeks of CCTVs, self-preservation, and a fractured society."
     },
@@ -563,13 +568,22 @@
     },
     {
      "t": "p",
-     "text": "It opens with “Cyphergrid Collapse,” where you might as well be in a high-speed chase from authorities on a party bus. The next two tracks, “Protocol Breach” and “Terminal Velocity,” extend that frantic energy in their own ways.",
-     "links": [
-      {
-       "text": "Cyphergrid Collapse",
-       "href": "https://suno.com/song/8564d8ca-4d5a-405c-8b9f-ba83de7cffbb"
-      }
-     ]
+     "text": "It opens with “Cyphergrid Collapse,” where you might as well be in a high-speed chase from authorities on a party bus. The next two tracks, “Protocol Breach” and “Terminal Velocity,” extend that frantic energy in their own ways."
+    },
+    {
+     "t": "track",
+     "album": "dystopique",
+     "n": 1
+    },
+    {
+     "t": "track",
+     "album": "dystopique",
+     "n": 2
+    },
+    {
+     "t": "track",
+     "album": "dystopique",
+     "n": 3
     },
     {
      "t": "img",
@@ -579,13 +593,12 @@
     },
     {
      "t": "p",
-     "text": "“Blackout” delivers the first (short) lyrical display, signaling readiness for a grid collapse. The only question: was it triggered by the elites, or the population themselves? Either way, the message is clear—if the power goes out, the sub-citizen plebs are prepared.",
-     "links": [
-      {
-       "text": "Blackout",
-       "href": "https://suno.com/song/f058c36d-5d17-445d-ad65-60610ba89c39"
-      }
-     ]
+     "text": "“Blackout” delivers the first (short) lyrical display, signaling readiness for a grid collapse. The only question: was it triggered by the elites, or the population themselves? Either way, the message is clear—if the power goes out, the sub-citizen plebs are prepared."
+    },
+    {
+     "t": "track",
+     "album": "dystopique",
+     "n": 4
     },
     {
      "t": "img",
@@ -597,41 +610,43 @@
     },
     {
      "t": "p",
-     "text": "“Neon Wasteland” is an ode to a future-facing rap love ballad. The hook:",
-     "links": [
-      {
-       "text": "Neon Wasteland",
-       "href": "https://suno.com/song/d1eafa2c-f3d7-4919-b7c7-0dd310446666"
-      }
-     ]
+     "text": "“Neon Wasteland” is an ode to a future-facing rap love ballad. The hook:"
     },
     {
      "t": "q",
      "text": "“Neon wasteland, neon wasteland\nWe’re the only real thing in a fake land\nNeon wasteland, neon wasteland\nEncrypted love, they can’t understand”"
     },
     {
+     "t": "track",
+     "album": "dystopique",
+     "n": 6
+    },
+    {
      "t": "p",
-     "text": "It’s followed by “Encrypted Memories,” an early-century-style electronic ballad about hiding your true self in an encrypted digital space. She sings:",
-     "links": [
-      {
-       "text": "Encrypted Memories",
-       "href": "https://suno.com/song/b9afd794-2513-4b99-90e7-dc8d175250b0"
-      }
-     ]
+     "text": "It’s followed by “Encrypted Memories,” an early-century-style electronic ballad about hiding your true self in an encrypted digital space. She sings:"
     },
     {
      "t": "q",
      "text": "“The underground is where we trade\nThe only thoughts that haven’t frayed\nPure experience, unrefined\nThe last rebellion of the mind”"
     },
     {
+     "t": "track",
+     "album": "dystopique",
+     "n": 7
+    },
+    {
      "t": "p",
-     "text": "From there, acting like an intermission, the album shifts into the cinematic slowdown of the spoken-word “Ghost Protocol.” At track nine comes the abrasive, industrial-rap “He’s—comp—mised,” shadowing a man hunted for “breathing unmonitored air” in a city that’s a “circuit board prison.” Listen closely to see what happens.",
-     "links": [
-      {
-       "text": "He’s—comp—mised",
-       "href": "https://suno.com/song/4edf58b5-3b08-4b6b-a7b9-74af66ff6f3b"
-      }
-     ]
+     "text": "From there, acting like an intermission, the album shifts into the cinematic slowdown of the spoken-word “Ghost Protocol.” At track nine comes the abrasive, industrial-rap “He’s—comp—mised,” shadowing a man hunted for “breathing unmonitored air” in a city that’s a “circuit board prison.” Listen closely to see what happens."
+    },
+    {
+     "t": "track",
+     "album": "dystopique",
+     "n": 8
+    },
+    {
+     "t": "track",
+     "album": "dystopique",
+     "n": 9
     },
     {
      "t": "img",
@@ -641,27 +656,25 @@
     },
     {
      "t": "p",
-     "text": "The penultimate track, “Zero Day,” is a rare feel-good moment: a secret speakeasy on the 13th floor of an unmarked, abandoned corporate tower with thin, slit windows. It gives the people a moment to reflect on what life was before it grew so messy and untenable. Sung like a chilled-out Johnny Cash over downtempo drums, it’s a chance to remember.",
-     "links": [
-      {
-       "text": "Zero Day",
-       "href": "https://suno.com/song/5b637229-0916-49e7-9340-6cd377767a63"
-      }
-     ]
+     "text": "The penultimate track, “Zero Day,” is a rare feel-good moment: a secret speakeasy on the 13th floor of an unmarked, abandoned corporate tower with thin, slit windows. It gives the people a moment to reflect on what life was before it grew so messy and untenable. Sung like a chilled-out Johnny Cash over downtempo drums, it’s a chance to remember."
+    },
+    {
+     "t": "track",
+     "album": "dystopique",
+     "n": 13
     },
     {
      "t": "p",
-     "text": "The album closes with “ShadowNet (So You Wanted This Future),” forcing us to look in the mirror. It suggests we got exactly what we asked for:",
-     "links": [
-      {
-       "text": "ShadowNet (So You Wanted This Future)",
-       "href": "https://suno.com/song/c52c903c-ebaf-4758-8e35-2cf5fa07bc40"
-      }
-     ]
+     "text": "The album closes with “ShadowNet (So You Wanted This Future),” forcing us to look in the mirror. It suggests we got exactly what we asked for:"
     },
     {
      "t": "q",
      "text": "“You wanted convenience\nTotal access, seamless experience\nNow the algorithms know\nEvery move before you do”"
+    },
+    {
+     "t": "track",
+     "album": "dystopique",
+     "n": 14
     },
     {
      "t": "h",
@@ -680,9 +693,8 @@
      "text": "Enjoy."
     },
     {
-     "t": "link",
-     "label": "🎧 Full album: Scipher Punx – Dystopique on Suno →",
-     "href": "https://suno.com/playlist/edeff75f-1cfb-406b-bf2a-4de529d1d6a5"
+     "t": "album",
+     "album": "dystopique"
     }
    ]
   },
@@ -1013,20 +1025,36 @@
    "emoji": "🧭",
    "feature": false,
    "title": "“Sea Bunny” Eats Poison to Protect Itself",
-   "dek": "",
-   "img": "",
+   "dek": "It looks like a rabbit. Every part of it has a job.",
+   "img": "i6_yt_3xQQcMWJoWc",
    "tags": [
     "Culture"
    ],
    "people": [],
    "body": [
     {
+     "t": "p",
+     "text": "Natural History Museum scientist Suzanne Williams explains the biology behind the sea bunny, a nudibranch (a marine slug). Despite the rabbit-like look, every part of it does something:"
+    },
+    {
      "t": "img",
-     "src": "",
-     "cap": "“Sea Bunny” eats poison to protect itself. Watch on YouTube.",
-     "alt": "Sea bunny sea slug",
-     "href": "https://www.youtube.com/shorts/4IA2bUlw1V4",
+     "src": "i6_yt_3xQQcMWJoWc",
+     "cap": "What is a sea bunny? From the Natural History Museum. Watch on YouTube.",
+     "alt": "Close-up of an orange sea bunny sea slug: What is a sea bunny?",
+     "href": "https://www.youtube.com/watch?v=3xQQcMWJoWc",
      "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "ul",
+     "items": [
+      "Rhinophores: the “ears” are sensory tentacles that pick up chemical cues in the water to find food, mates or predators.",
+      "Gills: the fluffy bits on the tail let it breathe underwater.",
+      "Caryophyllidia: the “fur” is made of small bumps that help it read its surroundings."
+     ]
+    },
+    {
+     "t": "p",
+     "text": "And the cute part comes with a catch: sea bunnies are likely poisonous, carrying toxins they absorb from the sponges they eat."
     }
    ]
   },

@@ -1,0 +1,109 @@
+{
+ "slug": "dystopique",
+ "title": "Dystopique",
+ "artist": "Scipher Punx",
+ "year": 2026,
+ "cover": "cover.jpg",
+ "article": "/issue-6/underground",
+ "desc": "The year is 2113. An insurance policy against a reality that feels increasingly near: drum & bass, hip-hop, house, trap and glitch, driven by wobbly bass and subterranean rumbles.",
+ "tracks": [
+  {
+   "n": 1,
+   "title": "Cyphergrid Collapse",
+   "file": "01-cyphergrid-collapse.mp3",
+   "art": "01.jpg",
+   "dur": 93
+  },
+  {
+   "n": 2,
+   "title": "Protocol Breach",
+   "file": "02-protocol-breach.mp3",
+   "art": "02.jpg",
+   "dur": 87
+  },
+  {
+   "n": 3,
+   "title": "Terminal Velocity",
+   "file": "03-terminal-velocity.mp3",
+   "art": "03.jpg",
+   "dur": 165
+  },
+  {
+   "n": 4,
+   "title": "Blackout",
+   "file": "04-blackout.mp3",
+   "art": "04.jpg",
+   "dur": 84
+  },
+  {
+   "n": 5,
+   "title": "Blackout, Blackout, Blackout, Blackout",
+   "file": "05-blackout-blackout-blackout-blackout.mp3",
+   "art": "05.jpg",
+   "dur": 415
+  },
+  {
+   "n": 6,
+   "title": "Neon Wasteland",
+   "file": "06-neon-wasteland.mp3",
+   "art": "06.jpg",
+   "dur": 175
+  },
+  {
+   "n": 7,
+   "title": "Encrypted Memories",
+   "file": "07-encrypted-memories.mp3",
+   "art": "07.jpg",
+   "dur": 347
+  },
+  {
+   "n": 8,
+   "title": "Ghost Protocol",
+   "file": "08-ghost-protocol.mp3",
+   "art": "08.jpg",
+   "dur": 107
+  },
+  {
+   "n": 9,
+   "title": "He’s—comp—mised",
+   "file": "09-hescompmised.mp3",
+   "art": "09.jpg",
+   "dur": 176
+  },
+  {
+   "n": 10,
+   "title": "Interlude",
+   "file": "10-interlude.mp3",
+   "art": "10.jpg",
+   "dur": 84
+  },
+  {
+   "n": 11,
+   "title": "Get Down",
+   "file": "11-get-down.mp3",
+   "art": "11.jpg",
+   "dur": 127
+  },
+  {
+   "n": 12,
+   "title": "Trippin’ Lately",
+   "file": "12-trippin-lately.mp3",
+   "art": "12.jpg",
+   "dur": 155
+  },
+  {
+   "n": 13,
+   "title": "Zero Day",
+   "file": "13-zero-day.mp3",
+   "art": "13.jpg",
+   "dur": 248
+  },
+  {
+   "n": 14,
+   "title": "ShadowNet (So You Wanted This Future)",
+   "file": "14-shadownet-so-you-wanted-this-future.mp3",
+   "art": "14.jpg",
+   "dur": 255
+  }
+ ]
+}

@@ -730,11 +730,191 @@ BYBLOK_CSS = '''.pseg{position:relative;display:inline-grid;grid-template-column
 R('let lastRoute = null;', BYBLOK_JS + 'let lastRoute = null;')
 R('.issue-thumb{', BYBLOK_CSS + '.issue-thumb{')
 R('h==="past-issues" ? pastView() : (/^issue-', 'h==="past-issues" ? pastView() : h==="blok" ? blokIndexView() : /^blok\\/[a-z0-9-]+$/.test(h) ? sectionView(h.slice(5)) : (/^issue-')
-R('const active = (CUR!==ISSUE) ? "past-issues" :', 'const active = (CUR!==ISSUE || /^blok(\\/|$)/.test(h)) ? "past-issues" :')
+R('const active = (CUR!==ISSUE) ? "past-issues" :', 'const active = /^music\\//.test(h) ? null : (CUR!==ISSUE || /^blok(\\/|$)/.test(h)) ? "past-issues" :')
 R('  setTimeout(hydrateEmbeds,0);', '  if (h==="blok") document.title = "Browse by Blok: every piece from every issue | 20 Blok"; else if (/^blok\\//.test(h)){ const g=blokGroups().find(x=>x.slug===h.slice(5)); document.title = g ? g.name+": every piece from every issue | 20 Blok" : "Not found | 20 Blok"; }\n  setTimeout(hydrateEmbeds,0);')
 _m = re.search(r'function pastView\(\)\{\n  return \[el\("section",\{class:"hero"\}.*?\),\n    el\("ul",\{class:"issues"\}', t, re.S)
 assert _m, "pastView"
 t = t[:_m.end()-len('el("ul",{class:"issues"}')] + 'pastSwitch("issue"), el("ul",{class:"issues"}' + t[_m.end():]
+# ---------- Original-music player: track rows, album blocks, /music/<album> pages, a player bar that keeps playing across pages ----------
+ALBUMS = {}
+for f in sorted(glob.glob(os.path.join(HERE, "albums", "*", "album.json"))):
+    al = json.load(open(f, encoding="utf-8")); src = os.path.dirname(f)
+    dst = os.path.join(out, "media", "albums", al["slug"]); os.makedirs(dst, exist_ok=True)
+    for mf in os.listdir(src):
+        if mf != "album.json": shutil.copyfile(os.path.join(src, mf), os.path.join(dst, mf))
+    ALBUMS[al["slug"]] = al
+PLAYER_JS = r'''const PL = {a:null, i:-1, au:null, bar:null};
+function alUrl(a, f){ return "/media/albums/"+a.slug+"/"+f; }
+function fmtT(s){ s=Math.max(0,Math.floor(s||0)); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); }
+function alMins(a){ return Math.round(a.tracks.reduce((n,t)=>n+t.dur,0)/60); }
+const IC_PLAY="M7 5l12 7-12 7z", IC_PAUSE="M7 5h3v14H7zM14 5h3v14h-3z", IC_PREV="M6 6v12M19 6v12L9 12z", IC_NEXT="M18 6v12M5 6v12l10-6z";
+function plEnsure(){
+  if (PL.au) return;
+  const au = new Audio(); au.preload = "metadata"; PL.au = au;
+  const art = el("img",{class:"pl-art",alt:""}), ti = el("b",{class:"pl-title"}), sub = el("span",{class:"pl-sub"});
+  const playB = el("button",{type:"button",class:"pl-btn pl-play","aria-label":"Play",onclick:()=>plToggle()});
+  const range = el("input",{type:"range",class:"pl-range",min:"0",max:"1000",value:"0",step:"1","aria-label":"Seek"});
+  const cur = el("span",{class:"pl-t",text:"0:00"}), dur = el("span",{class:"pl-t",text:"0:00"});
+  let seeking = false;
+  range.addEventListener("input",()=>{ seeking=true; if (au.duration) cur.textContent=fmtT(range.value/1000*au.duration); });
+  range.addEventListener("change",()=>{ if (au.duration) au.currentTime = range.value/1000*au.duration; seeking=false; });
+  const bar = el("aside",{class:"player",id:"player","aria-label":"Music player",hidden:"hidden"},
+    el("div",{class:"pl-inner"},
+      el("a",{class:"pl-meta",href:"/music/dystopique"}, art, el("span",{class:"pl-txt"}, ti, sub)),
+      el("div",{class:"pl-ctrls"},
+        el("button",{type:"button",class:"pl-btn","aria-label":"Previous track",onclick:()=>plStep(-1)}, icon(IC_PREV,true)),
+        playB,
+        el("button",{type:"button",class:"pl-btn","aria-label":"Next track",onclick:()=>plStep(1)}, icon(IC_NEXT,true))),
+      el("div",{class:"pl-prog"}, cur, range, dur),
+      el("button",{type:"button",class:"pl-btn pl-x","aria-label":"Close player",onclick:()=>{ au.pause(); bar.hidden=true; document.body.classList.remove("has-player"); plSync(); }}, icon("M6 6l12 12M18 6L6 18"))));
+  document.body.append(bar); PL.bar = bar; PL.ui = {art, ti, sub, playB, range, cur, dur, meta: bar.querySelector(".pl-meta")};
+  au.addEventListener("timeupdate",()=>{ if (!seeking && au.duration){ range.value = Math.round(au.currentTime/au.duration*1000); cur.textContent = fmtT(au.currentTime); } });
+  au.addEventListener("loadedmetadata",()=>{ dur.textContent = fmtT(au.duration); });
+  au.addEventListener("ended",()=>{ if (PL.i < PL.a.tracks.length-1) plStep(1); else plSync(); });
+  ["play","pause","playing","waiting"].forEach(ev=>au.addEventListener(ev, plSync));
+  if ("mediaSession" in navigator){
+    try{
+      navigator.mediaSession.setActionHandler("play",()=>au.play());
+      navigator.mediaSession.setActionHandler("pause",()=>au.pause());
+      navigator.mediaSession.setActionHandler("previoustrack",()=>plStep(-1));
+      navigator.mediaSession.setActionHandler("nexttrack",()=>plStep(1));
+    }catch(e){}
+  }
+}
+function plLoad(slug, i){
+  plEnsure(); const a = ALBUMS[slug], t = a.tracks[i]; PL.a = a; PL.i = i;
+  PL.au.src = alUrl(a, t.file); PL.au.currentTime = 0;
+  const u = PL.ui; u.art.src = alUrl(a, t.art); u.ti.textContent = t.title; u.sub.textContent = a.artist+" · "+a.title+" · "+String(t.n).padStart(2,"0")+"/"+a.tracks.length;
+  u.meta.setAttribute("href","/music/"+a.slug); u.dur.textContent = fmtT(t.dur); u.cur.textContent = "0:00"; u.range.value = 0;
+  PL.bar.hidden = false; document.body.classList.add("has-player");
+  if ("mediaSession" in navigator){ try{ navigator.mediaSession.metadata = new MediaMetadata({title:t.title, artist:a.artist, album:a.title, artwork:[{src:alUrl(a,t.art),sizes:"360x360",type:"image/jpeg"}]}); }catch(e){} }
+  PL.au.play().catch(()=>{}); plSync();
+}
+function plPlay(slug, n){
+  const i = ALBUMS[slug].tracks.findIndex(t=>t.n===n);
+  if (PL.a && PL.a.slug===slug && PL.i===i && PL.au){ plToggle(); return; }
+  plLoad(slug, i);
+}
+function plToggle(){ if (!PL.au || !PL.a) return; if (PL.au.paused) PL.au.play().catch(()=>{}); else PL.au.pause(); }
+function plStep(d){ if (!PL.a) return; if (d<0 && PL.au.currentTime>3){ PL.au.currentTime=0; return; } const j = PL.i+d; if (j<0 || j>=PL.a.tracks.length) return; plLoad(PL.a.slug, j); }
+function plSync(){
+  const on = PL.au && PL.a && !PL.bar.hidden, playing = on && !PL.au.paused;
+  if (PL.ui){ PL.ui.playB.replaceChildren(icon(playing?IC_PAUSE:IC_PLAY,true)); PL.ui.playB.setAttribute("aria-label", playing?"Pause":"Play"); }
+  const curKey = on ? PL.a.slug+":"+PL.a.tracks[PL.i].n : "";
+  document.querySelectorAll("[data-trk]").forEach(r=>{ const me = r.dataset.trk===curKey; r.classList.toggle("is-cur", me); r.classList.toggle("is-playing", me && playing);
+    const b = r.querySelector(".trk-state"); if (b) b.replaceChildren(icon(me&&playing?IC_PAUSE:IC_PLAY,true)); r.setAttribute("aria-label",(me&&playing?"Pause ":"Play ")+r.dataset.title); });
+  document.querySelectorAll("[data-alb]").forEach(b=>{ const me = on && PL.a.slug===b.dataset.alb; b.querySelector("span").textContent = me ? (playing?"Pause":"Resume") : b.dataset.label; b.querySelector("svg") && b.querySelector("svg").replaceWith(icon(me&&playing?IC_PAUSE:IC_PLAY,true)); });
+}
+function trackRow(slug, n){
+  const a = ALBUMS[slug]; if (!a) return null; const t = a.tracks.find(x=>x.n===n); if (!t) return null;
+  return el("button",{type:"button",class:"trk","data-trk":slug+":"+n,"data-title":t.title,"aria-label":"Play "+t.title,onclick:()=>plPlay(slug,n)},
+    el("span",{class:"trk-art"}, el("img",{src:alUrl(a,t.art),alt:"",loading:"lazy"}), el("span",{class:"trk-state"}, icon(IC_PLAY,true))),
+    el("span",{class:"trk-no",text:String(n).padStart(2,"0")}),
+    el("span",{class:"trk-txt"}, el("b",{text:t.title}), el("span",{text:a.artist})),
+    el("span",{class:"trk-eq","aria-hidden":"true"}, el("i"),el("i"),el("i")),
+    el("span",{class:"trk-dur",text:fmtT(t.dur)}));
+}
+function albumPlayBtn(slug, label){
+  return el("button",{type:"button",class:"sb-btn alb-play","data-alb":slug,"data-label":label,onclick:()=>{ if (PL.a && PL.a.slug===slug && !PL.bar.hidden) plToggle(); else plLoad(slug,0); }}, icon(IC_PLAY,true), el("span",{text:label}));
+}
+function albumBlock(slug, mini, page){
+  const a = ALBUMS[slug]; if (!a) return null;
+  const head = el("div",{class:"alb-head"},
+    el("img",{class:"alb-cover",src:alUrl(a,a.cover),alt:a.title+" cover"}),
+    el("div",{class:"alb-info"}, el("span",{class:"alb-kicker",text: mini ? "Listen while you read" : "The album"}),
+      el(page?"h1":"h3",{class:"alb-title",text:a.title}),
+      el("span",{class:"alb-meta",text:a.artist+" · "+a.year+" · "+a.tracks.length+" tracks · "+alMins(a)+" min"}),
+      el("div",{class:"alb-actions"}, albumPlayBtn(slug, mini ? "Play the album" : "Play all"),
+        (page ? (a.article ? el("a",{class:"alb-link",href:a.article,text:"Read the story behind it →"}) : null) : el("a",{class:"alb-link",href:"/music/"+slug,text:"Album page →"})))));
+  if (mini) return el("section",{class:"alb alb-mini","aria-label":a.title}, head);
+  return el("section",{class:"alb","aria-label":a.title}, head, el("div",{class:"alb-list"}, a.tracks.map(t=>trackRow(slug,t.n))));
+}
+function albumView(slug){
+  const a = ALBUMS[slug];
+  if (!a) return [el("section",{class:"hero"}, el("h1",{text:"Not found"}))];
+  return [el("a",{class:"back",href:a.article||"/",text:"← ISSUE 6 · UNDERGROUND"}), el("div",{class:"article alb-page"}, albumBlock(slug,false,true),
+    el("p",{class:"alb-desc",text:a.desc}))];
+}
+'''
+PLAYER_CSS = '''.trk{display:grid;grid-template-columns:48px 26px minmax(0,1fr) auto auto;align-items:center;gap:12px;width:100%;margin:10px 0;padding:8px 14px 8px 8px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--fg);font:inherit;text-align:left;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.trk-group{display:flex;flex-direction:column;gap:8px;margin:18px 0}
+.trk-group .trk{margin:0}
+.alb-list .trk{margin:0;border-radius:0;border-width:0 0 1px;background:transparent}
+.alb-list .trk:last-child{border-bottom:0}
+.trk-art{position:relative;width:48px;height:48px;border-radius:8px;overflow:hidden;background:#000}
+.trk-art img{width:100%;height:100%;object-fit:cover;display:block}
+.trk-state{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.45);color:#fff;opacity:0;transition:opacity .15s ease}
+.trk-state svg{width:18px;height:18px}
+.trk.is-cur .trk-state{opacity:1}
+@media (hover:hover){.trk:hover{border-color:var(--fg)}.alb-list .trk:hover{background:var(--panel-2)}.trk:hover .trk-state{opacity:1}}
+.trk-no{font-family:var(--sans);font-weight:700;font-size:13px;color:var(--muted);text-align:right}
+.trk.is-cur .trk-no{color:var(--red)}
+.trk-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.trk-txt b{font-family:var(--sans);font-size:15px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trk-txt span{font-family:var(--sans);font-size:12px;color:var(--muted)}
+.trk.is-cur .trk-txt b{color:var(--red)}
+.trk-dur{font-family:var(--sans);font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.trk-eq{display:flex;align-items:flex-end;gap:2px;width:14px;height:14px;visibility:hidden}
+.trk-eq i{flex:1;background:var(--red);border-radius:1px;height:30%}
+.trk.is-playing .trk-eq{visibility:visible}
+.trk.is-playing .trk-eq i{animation:eq .9s ease-in-out infinite}
+.trk.is-playing .trk-eq i:nth-child(2){animation-delay:-.3s}.trk.is-playing .trk-eq i:nth-child(3){animation-delay:-.6s}
+@keyframes eq{0%,100%{height:25%}50%{height:100%}}
+@media (prefers-reduced-motion:reduce){.trk.is-playing .trk-eq i{animation:none;height:70%}}
+.alb{margin:28px 0;border-radius:16px;border:1px solid var(--line);background:var(--panel);overflow:hidden}
+.alb-head{display:flex;gap:18px;align-items:center;padding:18px}
+.alb-cover{width:132px;height:132px;flex:0 0 auto;border-radius:10px;object-fit:cover;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+.alb-info{display:flex;flex-direction:column;gap:6px;min-width:0}
+.alb-kicker{font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--red)}
+.alb .alb-title{margin:0;font-family:var(--display);font-weight:900;font-size:clamp(26px,4vw,40px);line-height:1.05;text-transform:none;letter-spacing:0;color:var(--fg)}
+.alb .alb-info>*{margin:0}
+.alb .alb-head img{margin:0}
+.alb-meta{font-family:var(--sans);font-size:13px;color:var(--muted)}
+.alb-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:6px}
+.alb-play{display:inline-flex;align-items:center;gap:8px}
+.alb-play svg{width:16px;height:16px}
+.alb-link{font-family:var(--sans);font-weight:700;font-size:13px;color:var(--fg-soft)}
+.alb-list{border-top:1px solid var(--line);padding:4px 8px}
+.alb-mini .alb-cover{width:84px;height:84px}
+.alb-mini .alb .alb-title,.alb.alb-mini .alb-title{font-size:26px}
+.alb-page .alb{margin-top:8px}
+.alb-page .alb-cover{width:min(260px,40vw);height:auto;aspect-ratio:1}
+.alb-page .alb .alb-title{font-size:clamp(40px,7vw,72px)}
+.alb-desc{color:var(--fg-soft)}
+@media (max-width:560px){.alb-head{flex-direction:column;align-items:flex-start}.alb-mini .alb-head{flex-direction:row;align-items:center}.alb-page .alb-cover{width:100%;max-width:320px}
+  .trk{grid-template-columns:44px minmax(0,1fr) auto auto;gap:10px}.trk-no{display:none}.trk-art{width:44px;height:44px}}
+.player{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(17,17,19,.96);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.pl-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1.1fr) auto minmax(0,1.4fr) auto;align-items:center;gap:16px;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+.pl-meta{display:flex;align-items:center;gap:12px;min-width:0;text-decoration:none;color:var(--fg)}
+.pl-art{width:46px;height:46px;border-radius:8px;object-fit:cover;flex:0 0 auto;background:#000}
+.pl-txt{display:flex;flex-direction:column;gap:2px;min-width:0;font-family:var(--sans)}
+.pl-title{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-sub{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl-ctrls{display:flex;align-items:center;gap:6px}
+.pl-btn{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:999px;border:0;background:transparent;color:var(--fg);cursor:pointer}
+.pl-btn svg{width:18px;height:18px}
+.pl-play{width:46px;height:46px;background:var(--fg);color:var(--ink)}
+.pl-x{color:var(--muted)}
+.pl-prog{display:flex;align-items:center;gap:10px;min-width:0}
+.pl-t{font-family:var(--sans);font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;min-width:34px;text-align:center}
+.pl-range{flex:1;min-width:0;accent-color:var(--red);height:20px}
+body.has-player{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+body.has-player .float-vote{bottom:calc(env(safe-area-inset-bottom,0px) + 88px)}
+body.has-player .nudge{bottom:calc(env(safe-area-inset-bottom,0px) + 88px)}
+body.has-player:has(#sb-nudge) .float-vote{bottom:calc(env(safe-area-inset-bottom,0px) + 222px)}
+@media (max-width:700px){.pl-inner{grid-template-columns:minmax(0,1fr) auto auto;gap:6px 8px;padding-top:12px}
+  .pl-prog{grid-column:1 / -1;grid-row:2}.pl-ctrls{gap:2px}.pl-btn{width:38px;height:38px}.pl-play{width:42px;height:42px}
+  body.has-player{padding-bottom:calc(112px + env(safe-area-inset-bottom,0px))}
+  body.has-player .float-vote,body.has-player .nudge{bottom:calc(env(safe-area-inset-bottom,0px) + 124px)}
+  body.has-player:has(#sb-nudge) .float-vote{bottom:calc(env(safe-area-inset-bottom,0px) + 270px)}}
+'''
+R('let lastRoute = null;', PLAYER_JS + 'let lastRoute = null;')
+R('.issue-thumb{', PLAYER_CSS + '.issue-thumb{')
+R('const ARCHIVE = __ARCHIVE__;', 'const ARCHIVE = __ARCHIVE__;\nconst ALBUMS = __ALBUMS__;')
+R('    else if (x.t==="cap") body.push(el("p",{class:"cap",text:x.text}));',
+  '    else if (x.t==="cap") body.push(el("p",{class:"cap",text:x.text}));\n    else if (x.t==="track"){ const last=body[body.length-1], row=trackRow(x.album, x.n); if (last && last.classList && last.classList.contains("trk-group")) last.append(row); else body.push(el("div",{class:"trk-group"}, row)); }\n    else if (x.t==="album") body.push(albumBlock(x.album, !!x.mini));')
+R('h==="blok" ? blokIndexView() :', '/^music\\/[a-z0-9-]+$/.test(h) ? albumView(h.slice(6)) : h==="blok" ? blokIndexView() :')
+R('  setTimeout(hydrateEmbeds,0);', '  if (/^music\\//.test(h)){ const al=ALBUMS[h.slice(6)]; document.title = al ? al.title+" by "+al.artist+" | 20 Blok" : "Not found | 20 Blok"; }\n  plSync();\n  setTimeout(hydrateEmbeds,0);')
 # ---------- write ----------
 for b in data:
     for x in b["body"]:
@@ -750,6 +930,7 @@ for b in data:
 dd = json.dumps(data, ensure_ascii=False).replace('</', '<\\/')
 t = t.replace('__DATA__', dd).replace('__IMAGES__', json.dumps(paths)).replace('__ARCHIVE__', json.dumps({str(k): v for k, v in ARCH.items()}, ensure_ascii=False).replace('</', '<\\/'))
 t = t.replace('https://unruly-reels-apqmcno.gamma.site/', 'https://unrulyreels.com')
+t = t.replace('__ALBUMS__', json.dumps(ALBUMS, ensure_ascii=False).replace('</', '<\\/'))
 import html as H, datetime as DT0
 SITE = "https://20blok.com"
 def page(route, title, desc, img, body_html, og_title=None, canonical=None):
@@ -849,6 +1030,15 @@ for sl in _order:
     lst = "".join('<li><a href="/%s">Issue %d: %s</a></li>' % (b["id"], n, H.escape(b["title"])) for n, b in ps)
     urls.append(page("blok/"+sl, "%s: every piece from every issue | 20 Blok" % nm, short("Every %s from 20 Blok, newest first: %s." % (nm, "; ".join(b["title"] for n, b in ps[:4]))), paths.get(hero["img"], BRAND) if hero else BRAND,
                      "<h1>%s</h1><p>Every %s from every issue, newest first.</p><ul>%s</ul>" % (H.escape(nm), H.escape(nm), lst)))
+# album pages
+for sl, al in ALBUMS.items():
+    au = "/media/albums/%s/" % sl
+    tl = "".join("<li>%02d. %s (%d:%02d)</li>" % (t_["n"], H.escape(t_["title"]), t_["dur"]//60, t_["dur"]%60) for t_ in al["tracks"])
+    ld = {"@context":"https://schema.org","@type":"MusicAlbum","name":al["title"],"byArtist":{"@type":"MusicGroup","name":al["artist"]},"datePublished":str(al["year"]),"image":SITE+au+al["cover"],"url":SITE+"/music/"+sl,"numTracks":len(al["tracks"]),
+          "track":[{"@type":"MusicRecording","position":t_["n"],"name":t_["title"],"duration":"PT%dM%dS" % (t_["dur"]//60, t_["dur"]%60),"audio":{"@type":"AudioObject","contentUrl":SITE+au+t_["file"],"encodingFormat":"audio/mpeg"}} for t_ in al["tracks"]]}
+    urls.append(page("music/"+sl, "%s by %s: the full album | 20 Blok" % (al["title"], al["artist"]), short(al["desc"]), au+al["cover"],
+        "<h1>%s</h1><p>%s · %d · %d tracks</p><p>%s</p><ol>%s</ol>" % (H.escape(al["title"]), H.escape(al["artist"]), al["year"], len(al["tracks"]), H.escape(al["desc"]), tl)
+        + '<script type="application/ld+json">'+json.dumps(ld, ensure_ascii=False).replace("</","<\\/")+'</script>'))
 for r_, ti in [("feedback","Feedback"),("contact","Contact"),("welcome","Welcome"),("privacy","Privacy"),("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue %d Notes" % ISSUE_NO),("bonus","Issue %d Notes" % ISSUE_NO)]:
     u = page(r_, ti+" — 20 Blok", home_desc, BRAND, "<h1>"+ti+"</h1>")
     if r_ not in ("bonus","welcome"): urls.append(u)
