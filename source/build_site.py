@@ -220,7 +220,7 @@ function goSubscribe(e){
 '''
 R('function ytId(u){', SUB_JS + 'function ytId(u){')
 R('    upNext(idx),', '    subscribeBox(),\n    upNext(idx),')
-R('  document.getElementById("view").replaceChildren(...kids);', '  const hasBand = kids.some(k=>k && k.nodeType===1 && (k.id==="subscribe-band" || k.querySelector("#subscribe-band")));\n  const extra = (!hasBand && h!=="welcome") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];\n  document.getElementById("view").replaceChildren(...kids, ...extra);')
+R('  document.getElementById("view").replaceChildren(...kids);', '  const hasBand = kids.some(k=>k && k.nodeType===1 && (k.id==="subscribe-band" || k.querySelector("#subscribe-band")));\n  const extra = (!hasBand && h!=="welcome") ? [el("div",{class:"article",style:"margin-top:32px"}, subscribeBox())] : [];\n  document.getElementById("view").replaceChildren(...kids.filter(k=>k!=null), ...extra);')
 R('<a class="sub" href="https://lennylesser.beehiiv.com" target="_blank" rel="noopener">SUBSCRIBE</a>',
   '<a class="sub" href="https://lennylesser.beehiiv.com" target="_blank" rel="noopener" onclick="goSubscribe(event)">SUBSCRIBE</a>')
 # ---------- privacy page + Turnstile (invisible bot check before anonymous voting) ----------
@@ -450,6 +450,7 @@ for f in sorted(glob.glob(os.path.join(HERE, "issues", "*.json"))):
     for b in a["bloks"]:
         b["slug"] = b["id"]; b["id"] = "issue-%d/%s" % (n, b["id"])
         b.setdefault("links", []); b.setdefault("media", "")
+    for k_, u_ in a.get("remote_images", {}).items(): paths["i%d_%s" % (n, k_)] = u_
     a["coverlines"] = ["issue-%d/%s" % (n, c) for c in a["coverlines"]]
     a["covertext"] = {"issue-%d/%s" % (n, k): v for k, v in a["covertext"].items()}
     ARCH[n] = a
@@ -514,11 +515,12 @@ R('" · Issue 7 · "+readTime(b)', '" · Issue "+CUR+" · "+readTime(b)')
 R('el("img",{src:IMG.cover,alt:"Issue 7 cover: Retail Mindset."})', 'el("img",{src:IMG[meta().cover],alt:meta().cover_alt})')
 # past issues
 R('{n:6,t:"Do you have what it takes to be early?",d:"Apr 24, 2026",img:"issue6",', '{n:6,t:"Do You Have What It Takes to Be Early?",d:"Apr 24, 2026",img:"i6_cover",path:"/issue-6",')
+R('{n:5,t:"Chaos is a Ladder",d:"Mar 13, 2026",img:"issue5",', '{n:5,t:"Chaos Is a Ladder",d:"Mar 13, 2026",img:"i5_cover",path:"/issue-5",')
 R('p.here?{href:"/"}:', 'p.path?{href:p.path}:p.here?{href:"/"}:')
 R('{n:7,t:"Retail Mindset",d:"Oct 28, 2026",here:true,', '{n:7,t:"Retail Mindset",d:"Oct 28, 2026",here:true,path:"/issue-7",')
 R('p.d+(p.here?" · on this site":" · on the newsletter")', 'p.d+((p.here||p.path)?" · on this site":" · on the newsletter")')
 R('"Issues 1 through 6 live on the newsletter. Tap a cover to read it. Issue 7 is the first one built as 20 Blok."',
-  '"Every issue, newest first. Tap a cover to read it. Issues 1 through 5 still live on the newsletter while they move over."')
+  '"Every issue, newest first. Tap a cover to read it. Issues 1 through 4 still live on the newsletter while they move over."')
 ARCH_JS = '''function archNotesView(){
   const a = ARCHIVE[CUR], N = a.notes;
   const sec=(h,...k)=>el("section",{class:"note"}, el("h3",{text:h}), ...k);
@@ -530,14 +532,16 @@ ARCH_JS = '''function archNotesView(){
       sec("Sign-off", el("p",{text:N.signoff}), el("p",{class:"sign",text:"— Lenny"})),
       N.treasure ? el("section",{class:"note",id:"treasure"}, el("h3",{text:"🗺️ Treasure Hunt"}),
         el("p",{text:N.treasure.text}),
-        N.treasure.gif ? figure({src:N.treasure.gif,cap:"",alt:"The 9mm Shigure Ui meme",gif:true}) : null,
-        el("p",{}, el("a",{href:N.treasure.link.href,target:"_blank",rel:"noopener",text:N.treasure.link.label})),
+        N.treasure.gif ? figure({src:N.treasure.gif,cap:"",alt:N.treasure.alt||"Treasure hunt answer",gif:true}) : null,
+        N.treasure.video ? figure({src:"",href:N.treasure.video.href,cap:N.treasure.video.cap,alt:N.treasure.video.cap,badge:"WATCH"}) : null,
+        N.treasure.link ? el("p",{}, el("a",{href:N.treasure.link.href,target:"_blank",rel:"noopener",text:N.treasure.link.label})) : null,
         el("p",{}, el("a",{href:N.treasure.back.href,text:N.treasure.back.label}))) : null,
-      N.editor_notes ? sec("📝 Editor notes", el("p",{text:N.editor_notes})) : null,
+      N.editor_notes ? sec("📝 Editor notes", ...(Array.isArray(N.editor_notes)?N.editor_notes:[{text:N.editor_notes}]).map(x=>para(x.text,false,x.links))) : null,
       sec("Work with me",
         el("p",{},"Need video ads for your brand or business? ", el("a",{href:"https://unrulyreels.com",target:"_blank",rel:"noopener",text:"UnrulyReels.com →"})),
         el("p",{},"Collaborations, interviews, writing for 20 Blok, brands → ", el("a",{href:"/contact",text:"use the contact form →"}))),
-      sec("⚡️ Alpha close", el("p",{class:"pull",text:N.alpha}))))];
+      sec("⚡️ Alpha close", el("p",{class:"pull",text:N.alpha})),
+      N.footnote ? el("p",{class:"cap"}, ...inlineLinks([N.footnote.text], N.footnote.links)) : null))];
 }
 '''
 R('function ytId(u){', ARCH_JS + 'function ytId(u){')
@@ -697,7 +701,7 @@ for n, a in sorted(ARCH.items()):
     N = a["notes"]
     nt = "<h1>Issue %d Notes</h1><p>%s</p>" % (n, H.escape(N["signoff"]))
     if N.get("treasure"): nt += "<h2>Treasure Hunt</h2><p>%s</p>" % H.escape(N["treasure"]["text"])
-    if N.get("editor_notes"): nt += "<h2>Editor notes</h2><p>%s</p>" % H.escape(N["editor_notes"])
+    if N.get("editor_notes"): nt += "<h2>Editor notes</h2>" + "".join("<p>%s</p>" % H.escape(x["text"] if isinstance(x, dict) else x) for x in (N["editor_notes"] if isinstance(N["editor_notes"], list) else [N["editor_notes"]]))
     nt += "<h2>Alpha close</h2><p>%s</p>" % H.escape(N["alpha"])
     urls.append(page("issue-%d/notes" % n, "Issue %d Notes: the Back Page | 20 Blok" % n, "The Back Page of 20 Blok Issue %d (%s): the sign-off, the treasure hunt answer, editor notes and the Alpha Close: %s" % (n, a["title"], N["alpha"]), cov, nt))
 for r_, ti in [("feedback","Feedback"),("contact","Contact"),("welcome","Welcome"),("privacy","Privacy"),("all-time","All-Time"),("past-issues","Past Issues"),("issue-notes","Issue %d Notes" % ISSUE_NO),("bonus","Issue %d Notes" % ISSUE_NO)]:

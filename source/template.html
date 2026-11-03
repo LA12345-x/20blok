@@ -432,7 +432,7 @@ function inlineLinks(nodes, links){
   if(!links||!links.length) return nodes;
   let out=nodes;
   links.forEach(L=>{ const next=[]; out.forEach(n=>{ if(typeof n!=="string"){ next.push(n); return; } const i=n.indexOf(L.text); if(i<0){ next.push(n); return; }
-    next.push(n.slice(0,i), el("a",{href:L.href,target:"_blank",rel:"noopener",text:L.text}), n.slice(i+L.text.length)); }); out=next; });
+    next.push(n.slice(0,i), el("a",L.href.startsWith("/")?{href:L.href,text:L.text}:{href:L.href,target:"_blank",rel:"noopener",text:L.text}), n.slice(i+L.text.length)); }); out=next; });
   return out;
 }
 function para(text, lead, links){
