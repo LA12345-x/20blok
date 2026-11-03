@@ -6,8 +6,15 @@
  "pub": "2026-01-03",
  "cover": "i3_cover",
  "cover_alt": "Issue 3 cover: Find Your Edge. A hand pours champagne into a glass on a red-and-white striped table.",
- "remote_images": {"edge": "https://media3.giphy.com/media/b1ZoZrDfRb7va/giphy.gif"},
- "coverlines": ["music-flow", "word-meme", "behind-the-reel", "chain-reaction"],
+ "remote_images": {
+  "edge": "https://media3.giphy.com/media/b1ZoZrDfRb7va/giphy.gif"
+ },
+ "coverlines": [
+  "music-flow",
+  "word-meme",
+  "behind-the-reel",
+  "chain-reaction"
+ ],
  "covertext": {
   "music-flow": "Clipse: Hip-Hop’s 2025 Darling",
   "word-meme": "Major Loser: Meme as Identity",
@@ -18,235 +25,740 @@
   "signoff": "Thanks for reading Issue 3. If you got something out of it, share it with someone who would too.",
   "link_text": "the sign-off, a public service announcement and the Alpha Close →",
   "editor_notes": [
-   {"text": "Public Service Announcement: Friends don’t let friends skip leg day."}
+   {
+    "text": "Public Service Announcement: Friends don’t let friends skip leg day."
+   }
   ],
   "alpha": "“The best way to know the future is to make it.”"
  },
  "bloks": [
   {
-   "id": "straight-up", "name": "STRAIGHT UP", "emoji": "🎙️", "feature": false, "editor": true,
+   "id": "straight-up",
+   "name": "STRAIGHT UP",
+   "emoji": "🎙️",
+   "feature": false,
+   "editor": true,
    "title": "Find Your Edge",
    "dek": "The line between discipline and the untamed energy that belongs only to you.",
    "img": "i3_cover",
-   "tags": ["Mindset"], "people": [],
+   "tags": [
+    "Mindset"
+   ],
+   "people": [],
    "body": [
-    {"t": "p", "text": "Find your edge is the line between discipline and untamed energy that belongs only to you."},
-    {"t": "img", "src": "i3_edge", "cap": "What finding your edge looks like.", "alt": "Find your edge GIF", "gif": true},
-    {"t": "p", "text": "Many of us inherit expectations and habits that were never meant to be ours."},
-    {"t": "pull", "text": "Finding your edge means stripping that away, putting your needs first — not as selfishness, but as oxygen."},
-    {"t": "p", "text": "And once you make that decision, you start to move with purpose."}
+    {
+     "t": "p",
+     "text": "Find your edge is the line between discipline and untamed energy that belongs only to you."
+    },
+    {
+     "t": "img",
+     "src": "i3_edge",
+     "cap": "What finding your edge looks like.",
+     "alt": "Find your edge GIF",
+     "gif": true
+    },
+    {
+     "t": "p",
+     "text": "Many of us inherit expectations and habits that were never meant to be ours."
+    },
+    {
+     "t": "pull",
+     "text": "Finding your edge means stripping that away, putting your needs first — not as selfishness, but as oxygen."
+    },
+    {
+     "t": "p",
+     "text": "And once you make that decision, you start to move with purpose."
+    }
    ]
   },
   {
-   "id": "must-see", "name": "MUST-SEE", "emoji": "👁️", "feature": false,
+   "id": "must-see",
+   "name": "MUST-SEE",
+   "emoji": "👁️",
+   "feature": false,
    "title": "Marcus Stadon’s Audacious Millionaire Mini-Course",
    "dek": "Split-screen, lecture-style, easy to take in.",
    "img": "i3_yt_lIla5FVw-EA",
-   "tags": ["Mindset", "Creativity"], "people": ["Marcus Stadon"],
+   "tags": [
+    "Mindset",
+    "Creativity"
+   ],
+   "people": [
+    "Marcus Stadon"
+   ],
    "body": [
-    {"t": "img", "src": "i3_yt_lIla5FVw-EA", "cap": "Marcus Stadon: The One Thing. Watch on YouTube.", "alt": "Marcus Stadon’s mini-course", "href": "https://www.youtube.com/watch?v=lIla5FVw-EA", "badge": "WATCH ON YOUTUBE"},
-    {"t": "p", "text": "His split-screen, lecture-style format makes it easy to take in."},
-    {"t": "link", "label": "🎥 On YouTube: Marcus Stadon →", "href": "https://www.youtube.com/@marcusstadon"}
+    {
+     "t": "img",
+     "src": "i3_yt_lIla5FVw-EA",
+     "cap": "Marcus Stadon: The One Thing. Watch on YouTube.",
+     "alt": "Marcus Stadon’s mini-course",
+     "href": "https://www.youtube.com/watch?v=lIla5FVw-EA",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "p",
+     "text": "His split-screen, lecture-style format makes it easy to take in."
+    },
+    {
+     "t": "link",
+     "label": "🎥 On YouTube: Marcus Stadon →",
+     "href": "https://www.youtube.com/@marcusstadon"
+    }
    ]
   },
   {
-   "id": "word-meme", "name": "WORD MEME", "emoji": "🗿", "feature": true,
+   "id": "word-meme",
+   "name": "WORD MEME",
+   "emoji": "🗿",
+   "feature": true,
    "title": "A Major Loser Known as Mr. Too Late",
    "dek": "How an insult became a signal.",
    "img": "i3_loser1",
-   "tags": ["Memes", "Culture", "News"], "people": ["Jerome Powell", "Donald Trump"],
+   "tags": [
+    "Memes",
+    "Culture",
+    "News"
+   ],
+   "people": [
+    "Jerome Powell",
+    "Donald Trump"
+   ],
    "body": [
-    {"t": "p", "text": "If we were—low-key—doing a “best of 2025,” it’d be hard to ignore Donald Trump’s two-part public shot at Jerome Powell — branding him a Major Loser and tagging him as Mr. Too Late."},
-    {"t": "pull", "text": "…Major Loser stopped being an insult and became a signal…"},
-    {"t": "p", "text": "For those who view the Federal Reserve as an opaque power center that prints digital money, it felt like a small win — a dart thrown at Goliath that landed."},
-    {"t": "p", "text": "For others who can’t stand Trump, it was simply more evidence of his abrasive, and to many, classless style."},
-    {"t": "img", "src": "i3_loser1", "cap": "A meme that knows its origin.", "alt": "Uncle Sam-style poster of Jerome Powell: I want you to be a major loser.", "narrow": true},
-    {"t": "p", "text": "Soon after it landed in April 2025, Major Loser stopped being an insult and became a signal — repeatable, shareable, and t-shirt ready 😉"},
-    {"t": "p", "text": "It was a single, cartoonish phrase that let Joe Public step into the moment and be instantly understood."},
-    {"t": "img", "src": "i3_yt_cjG3yvtDKfU", "cap": "Major Loser. Watch on YouTube.", "alt": "Major Loser reel", "href": "https://www.youtube.com/watch?v=cjG3yvtDKfU", "badge": "WATCH ON YOUTUBE"},
-    {"t": "pull", "text": "Language is power. Memes are how it moves."},
-    {"t": "img", "src": "i3_loser2", "cap": "Word meme merch loading.", "alt": "White T-shirt with Jerome Powell’s face and the words Mr Too Late.", "narrow": true}
+    {
+     "t": "p",
+     "text": "If we were—low-key—doing a “best of 2025,” it’d be hard to ignore Donald Trump’s two-part public shot at Jerome Powell — branding him a Major Loser and tagging him as Mr. Too Late."
+    },
+    {
+     "t": "pull",
+     "text": "…Major Loser stopped being an insult and became a signal…"
+    },
+    {
+     "t": "p",
+     "text": "For those who view the Federal Reserve as an opaque power center that prints digital money, it felt like a small win — a dart thrown at Goliath that landed."
+    },
+    {
+     "t": "p",
+     "text": "For others who can’t stand Trump, it was simply more evidence of his abrasive, and to many, classless style."
+    },
+    {
+     "t": "img",
+     "src": "i3_loser1",
+     "cap": "A meme that knows its origin.",
+     "alt": "Uncle Sam-style poster of Jerome Powell: I want you to be a major loser.",
+     "narrow": true
+    },
+    {
+     "t": "p",
+     "text": "Soon after it landed in April 2025, Major Loser stopped being an insult and became a signal — repeatable, shareable, and t-shirt ready 😉"
+    },
+    {
+     "t": "p",
+     "text": "It was a single, cartoonish phrase that let Joe Public step into the moment and be instantly understood."
+    },
+    {
+     "t": "img",
+     "src": "i3_yt_cjG3yvtDKfU",
+     "cap": "Major Loser. Watch on YouTube.",
+     "alt": "Major Loser reel",
+     "href": "https://www.youtube.com/watch?v=cjG3yvtDKfU",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "pull",
+     "text": "Language is power. Memes are how it moves."
+    },
+    {
+     "t": "img",
+     "src": "i3_loser2",
+     "cap": "Word meme merch loading.",
+     "alt": "White T-shirt with Jerome Powell’s face and the words Mr Too Late.",
+     "narrow": true
+    }
    ]
   },
   {
-   "id": "toolz", "name": "TOOLZ", "emoji": "🤖", "feature": false,
+   "id": "toolz",
+   "name": "TOOLZ",
+   "emoji": "🤖",
+   "feature": false,
    "title": "Napkin AI: A Writer’s Design Team",
    "dek": "Plain text into clean visuals in a single click.",
    "img": "i3_napkin_tile",
-   "tags": ["AI", "AI Tools"], "people": ["Napkin AI"],
+   "tags": [
+    "AI",
+    "AI Tools"
+   ],
+   "people": [
+    "Napkin AI"
+   ],
    "body": [
-    {"t": "img", "src": "i3_napkin_wide", "cap": "", "alt": "Napkin logo", "narrow": true},
-    {"t": "p", "text": "What it does: Napkin turns plain text into clean visuals—like diagrams and infographics—in a single click."},
-    {"t": "p", "text": "The bigger shift: It removes the friction between thinking and showing—it’s powerful if you publish online."},
-    {"t": "h", "text": "💡 Pro tip"},
-    {"t": "p", "text": "Paste in text → turn it into a visual → use it immediately."},
-    {"t": "link", "label": "Try Napkin AI: napkin.ai →", "href": "https://www.napkin.ai/"}
+    {
+     "t": "img",
+     "src": "i3_napkin_wide",
+     "cap": "",
+     "alt": "Napkin logo",
+     "narrow": true
+    },
+    {
+     "t": "p",
+     "text": "What it does: Napkin turns plain text into clean visuals—like diagrams and infographics—in a single click."
+    },
+    {
+     "t": "p",
+     "text": "The bigger shift: It removes the friction between thinking and showing—it’s powerful if you publish online."
+    },
+    {
+     "t": "h",
+     "text": "💡 Pro tip"
+    },
+    {
+     "t": "p",
+     "text": "Paste in text → turn it into a visual → use it immediately."
+    },
+    {
+     "t": "link",
+     "label": "Try Napkin AI: napkin.ai →",
+     "href": "https://www.napkin.ai/"
+    }
    ]
   },
   {
-   "id": "behind-the-reel", "name": "BEHIND THE REEL", "emoji": "🎞️", "feature": false,
+   "id": "behind-the-reel",
+   "name": "BEHIND THE REEL",
+   "emoji": "🎞️",
+   "feature": false,
    "title": "The AI Advertising Era",
    "dek": "Car-sales rhythm, selling AI software to dealerships.",
    "img": "i3_yt__RXcdD1lH3w",
-   "tags": ["AI", "AI Filmmaking"], "people": ["Unruly Reels", "Toma AI"],
+   "tags": [
+    "AI",
+    "AI Filmmaking"
+   ],
+   "people": [
+    "Unruly Reels",
+    "Toma AI"
+   ],
    "body": [
-    {"t": "img", "src": "i3_yt__RXcdD1lH3w", "cap": "The ad for Toma AI. Watch on YouTube.", "alt": "AI-made ad for Toma AI", "href": "https://www.youtube.com/watch?v=_RXcdD1lH3w", "badge": "WATCH ON YOUTUBE"},
-    {"t": "p", "text": "The ad borrows the language and rhythm of car sales to promote AI software for dealerships."},
-    {"t": "pull", "text": "The task wasn’t explaining the product, it was making something operational feel watchable."},
-    {"t": "p", "text": "Originally built as a marketing video for Toma AI, it became the foundation for what’s now Unruly Reels, an AI-native advertising studio.", "links": [{"text": "Unruly Reels", "href": "https://unrulyreels.com"}]},
-    {"t": "p", "text": "Takeaway: If you’re working with familiar tropes, do it with depth and intent."},
-    {"t": "p", "text": "Tools: MidJourney / Veo 3 / Suno / Final Cut Pro"},
-    {"t": "link", "label": "Need video ads for your brand? ➡️ UnrulyReels.com →", "href": "https://unrulyreels.com"}
+    {
+     "t": "img",
+     "src": "i3_yt__RXcdD1lH3w",
+     "cap": "The ad for Toma AI. Watch on YouTube.",
+     "alt": "AI-made ad for Toma AI",
+     "href": "https://www.youtube.com/watch?v=_RXcdD1lH3w",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "p",
+     "text": "The ad borrows the language and rhythm of car sales to promote AI software for dealerships."
+    },
+    {
+     "t": "pull",
+     "text": "The task wasn’t explaining the product, it was making something operational feel watchable."
+    },
+    {
+     "t": "p",
+     "text": "Originally built as a marketing video for Toma AI, it became the foundation for what’s now Unruly Reels, an AI-native advertising studio.",
+     "links": [
+      {
+       "text": "Unruly Reels",
+       "href": "https://unrulyreels.com"
+      }
+     ]
+    },
+    {
+     "t": "p",
+     "text": "Takeaway: If you’re working with familiar tropes, do it with depth and intent."
+    },
+    {
+     "t": "p",
+     "text": "Tools: MidJourney / Veo 3 / Suno / Final Cut Pro"
+    },
+    {
+     "t": "link",
+     "label": "Need video ads for your brand? ➡️ UnrulyReels.com →",
+     "href": "https://unrulyreels.com"
+    }
    ]
   },
   {
-   "id": "find-your-edge", "name": "FIND YOUR EDGE", "emoji": "🗡️", "feature": false,
+   "id": "find-your-edge",
+   "name": "FIND YOUR EDGE",
+   "emoji": "🗡️",
+   "feature": false,
    "title": "Kate Winslet: You Can’t Control the Attitude of Others",
    "dek": "Only how you live, act, and move with integrity.",
    "img": "i3_yt_mLu4UhrUE8k",
-   "tags": ["Mindset"], "people": ["Kate Winslet"],
+   "tags": [
+    "Mindset"
+   ],
+   "people": [
+    "Kate Winslet"
+   ],
    "body": [
-    {"t": "img", "src": "i3_yt_mLu4UhrUE8k", "cap": "Kate Winslet. Watch on YouTube.", "alt": "Kate Winslet in conversation", "href": "https://www.youtube.com/watch?v=mLu4UhrUE8k", "badge": "WATCH ON YOUTUBE"},
-    {"t": "p", "text": "This clip is a clean reminder: you can’t control how you’re received — only how you live, act, and move with integrity."}
+    {
+     "t": "img",
+     "src": "i3_yt_mLu4UhrUE8k",
+     "cap": "Kate Winslet. Watch on YouTube.",
+     "alt": "Kate Winslet in conversation",
+     "href": "https://www.youtube.com/watch?v=mLu4UhrUE8k",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "p",
+     "text": "This clip is a clean reminder: you can’t control how you’re received — only how you live, act, and move with integrity."
+    }
    ]
   },
   {
-   "id": "dezign-ur-ritual", "name": "DEZIGN UR RITUAL", "emoji": "🫖", "feature": false,
+   "id": "dezign-ur-ritual",
+   "name": "DEZIGN UR RITUAL",
+   "emoji": "🫖",
+   "feature": false,
    "title": "‘You Already Have It in You’",
    "dek": "Tommy John III on where authority actually lives.",
    "img": "seinfeld_poster",
-   "tags": ["Mindset"], "people": ["Tommy John III"],
+   "tags": [
+    "Mindset"
+   ],
+   "people": [
+    "Tommy John III"
+   ],
    "body": [
-    {"t": "img", "src": "i3_seinfeld", "cap": "", "alt": "Jerry Seinfeld, serious, GIF"},
-    {"t": "p", "text": "Tommy John III’s work sits just outside the mainstream — by design."},
-    {"t": "p", "text": "What we hear and see often suggests that our answers are just on the other side of the next mastermind or health protocol."},
-    {"t": "p", "text": "This clip below points to where authority actually lives — in you."},
-    {"t": "img", "src": "i3_tommy", "cap": "Tommy John III: You already have it in you. Watch on Instagram.", "alt": "Tommy John III talking to camera: You already have it in you", "href": "https://www.instagram.com/reel/DSVSxcGD4nQ/", "badge": "WATCH ON INSTAGRAM"}
+    {
+     "t": "img",
+     "src": "i3_seinfeld",
+     "cap": "",
+     "alt": "Jerry Seinfeld, serious, GIF"
+    },
+    {
+     "t": "p",
+     "text": "Tommy John III’s work sits just outside the mainstream — by design."
+    },
+    {
+     "t": "p",
+     "text": "What we hear and see often suggests that our answers are just on the other side of the next mastermind or health protocol."
+    },
+    {
+     "t": "p",
+     "text": "This clip below points to where authority actually lives — in you."
+    },
+    {
+     "t": "img",
+     "src": "i3_tommy",
+     "cap": "Tommy John III: You already have it in you. Watch on Instagram.",
+     "alt": "Tommy John III talking to camera: You already have it in you",
+     "href": "https://www.instagram.com/reel/DSVSxcGD4nQ/",
+     "badge": "WATCH ON INSTAGRAM"
+    }
    ]
   },
   {
-   "id": "chain-reaction", "name": "CHAIN REACTION", "emoji": "🔗", "feature": false,
+   "id": "chain-reaction",
+   "name": "CHAIN REACTION",
+   "emoji": "🔗",
+   "feature": false,
    "title": "What Is Kaspa? — The Playground Edition",
    "dek": "A simple way to understand how Kaspa moves digital money faster.",
    "img": "i3_kaspa_visual",
-   "tags": ["Crypto", "Bitcoin"], "people": ["Kaspa"],
+   "tags": [
+    "Crypto",
+    "Bitcoin"
+   ],
+   "people": [
+    "Kaspa"
+   ],
    "body": [
-    {"t": "img", "src": "i3_kaspa_logo", "cap": "", "alt": "Kaspa logo", "small": true},
-    {"t": "p", "text": "Kaspa is like a super-fast playground for digital money — much quicker than older systems like Bitcoin."},
-    {"t": "p", "text": "Most playgrounds have one slide (like how Bitcoin processes transactions one by one). Kids have to wait in a single line, which can take a while."},
-    {"t": "p", "text": "Kaspa’s playground is built differently. Instead of one slide, it has many slides, letting more things happen at once."},
-    {"t": "p", "text": "This means:"},
-    {"t": "ul", "items": ["No waiting: Many kids (transactions) can go down different slides at the same time.", "Super speed: You don’t have to wait long to know if your money made it to where it needed to go — it’s almost instant."]},
-    {"t": "pull", "text": "So Kaspa is like a playground where nobody’s stuck waiting in line, in the safest neighborhood of the city."},
-    {"t": "img", "src": "i3_kaspa_visual", "cap": "Kaspa, explained. Made with Napkin AI (see TOOLZ).", "alt": "Chat-style explainer: Kaspa is a super-fast playground for digital money."},
-    {"t": "link", "label": "Next: the Classroom Edition, Issue 4 →", "href": "/issue-4/chain-reaction"},
-    {"t": "link", "label": "kaspa.org →", "href": "https://kaspa.org/"}
+    {
+     "t": "img",
+     "src": "i3_kaspa_logo",
+     "cap": "",
+     "alt": "Kaspa logo",
+     "small": true
+    },
+    {
+     "t": "p",
+     "text": "Kaspa is like a super-fast playground for digital money — much quicker than older systems like Bitcoin."
+    },
+    {
+     "t": "p",
+     "text": "Most playgrounds have one slide (like how Bitcoin processes transactions one by one). Kids have to wait in a single line, which can take a while."
+    },
+    {
+     "t": "p",
+     "text": "Kaspa’s playground is built differently. Instead of one slide, it has many slides, letting more things happen at once."
+    },
+    {
+     "t": "p",
+     "text": "This means:"
+    },
+    {
+     "t": "ul",
+     "items": [
+      "No waiting: Many kids (transactions) can go down different slides at the same time.",
+      "Super speed: You don’t have to wait long to know if your money made it to where it needed to go — it’s almost instant."
+     ]
+    },
+    {
+     "t": "pull",
+     "text": "So Kaspa is like a playground where nobody’s stuck waiting in line, in the safest neighborhood of the city."
+    },
+    {
+     "t": "img",
+     "src": "i3_kaspa_visual",
+     "cap": "Kaspa, explained. Made with Napkin AI (see TOOLZ).",
+     "alt": "Chat-style explainer: Kaspa is a super-fast playground for digital money."
+    },
+    {
+     "t": "link",
+     "label": "Next: the Classroom Edition, Issue 4 →",
+     "href": "/issue-4/chain-reaction"
+    },
+    {
+     "t": "link",
+     "label": "kaspa.org →",
+     "href": "https://kaspa.org/"
+    }
    ]
   },
   {
-   "id": "story-beat", "name": "STORY BEAT", "emoji": "📖", "feature": false,
+   "id": "story-beat",
+   "name": "STORY BEAT",
+   "emoji": "📖",
+   "feature": false,
    "title": "When People Become a Reminder",
    "dek": "Episode 3: grace, and gratitude as fuel.",
    "img": "i3_ep3",
-   "tags": ["Culture", "Creativity"], "people": [],
+   "tags": [
+    "Culture",
+    "Creativity"
+   ],
+   "people": [],
    "body": [
-    {"t": "p", "text": "In episode 3, a woman reminds the retail worker what grace looks like. And that gratitude isn’t passive — it’s fuel."},
-    {"t": "img", "src": "i3_ep3", "cap": "Episode 3. Watch on Instagram.", "alt": "Episode 3 of the Apron Worker series", "href": "https://www.instagram.com/reel/DPrnuYAkoIq/", "badge": "WATCH ON INSTAGRAM"},
-    {"t": "link", "label": "Next: Episode 4, Issue 4 →", "href": "/issue-4/story-beat"}
+    {
+     "t": "p",
+     "text": "In episode 3, a woman reminds the retail worker what grace looks like. And that gratitude isn’t passive — it’s fuel."
+    },
+    {
+     "t": "img",
+     "src": "i3_ep3",
+     "cap": "Episode 3. Watch on Instagram.",
+     "alt": "Episode 3 of the Apron Worker series",
+     "href": "https://www.instagram.com/reel/DPrnuYAkoIq/",
+     "badge": "WATCH ON INSTAGRAM"
+    },
+    {
+     "t": "link",
+     "label": "Next: Episode 4, Issue 4 →",
+     "href": "/issue-4/story-beat"
+    }
    ]
   },
   {
-   "id": "lolz", "name": "LOLZ", "emoji": "🤣", "feature": false,
+   "id": "lolz",
+   "name": "LOLZ",
+   "emoji": "🤣",
+   "feature": false,
    "title": "Steve Emerson Strikes Again",
    "dek": "Gen Alpha slang as a crime-scene parody.",
    "img": "i3_yt_FI6tNwU-WOA",
-   "tags": ["Comedy", "Internet Culture"], "people": ["Steve Emerson"],
+   "tags": [
+    "Comedy",
+    "Internet Culture"
+   ],
+   "people": [
+    "Steve Emerson"
+   ],
    "body": [
-    {"t": "p", "text": "Emerson turns Gen-Alpha slang into a crime-scene parody that lands every beat."},
-    {"t": "img", "src": "i3_yt_FI6tNwU-WOA", "cap": "Steve Emerson. Watch on YouTube.", "alt": "Steve Emerson crime-scene parody", "href": "https://www.youtube.com/watch?v=FI6tNwU-WOA", "badge": "WATCH ON YOUTUBE"},
-    {"t": "link", "label": "Context: an online guide to Gen Alpha slang →", "href": "https://thestoryexchange.org/gen-alpha-slang-101-how-to-understand-kids-this-back-to-school-season/"}
+    {
+     "t": "p",
+     "text": "Emerson turns Gen-Alpha slang into a crime-scene parody that lands every beat."
+    },
+    {
+     "t": "img",
+     "src": "i3_yt_FI6tNwU-WOA",
+     "cap": "Steve Emerson. Watch on YouTube.",
+     "alt": "Steve Emerson crime-scene parody",
+     "href": "https://www.youtube.com/watch?v=FI6tNwU-WOA",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "Context: an online guide to Gen Alpha slang →",
+     "href": "https://thestoryexchange.org/gen-alpha-slang-101-how-to-understand-kids-this-back-to-school-season/"
+    }
    ]
   },
   {
-   "id": "music-flow", "name": "MUSIC FLOW", "emoji": "🎧", "feature": true,
+   "id": "music-flow",
+   "name": "MUSIC FLOW",
+   "emoji": "🎧",
+   "feature": true,
    "title": "Clipse — “So Be It”",
    "dek": "Hip-hop’s 2025 darling.",
    "img": "i3_yt_URlPXepBZdo",
-   "tags": ["Music", "Hip-Hop"], "people": ["Clipse", "Pusha T", "Malice", "Pharrell"],
+   "tags": [
+    "Music",
+    "Hip-Hop"
+   ],
+   "people": [
+    "Clipse",
+    "Pusha T",
+    "Malice",
+    "Pharrell"
+   ],
    "body": [
-    {"t": "p", "text": "In 2025, Clipse made their presence felt with “So Be It.”"},
-    {"t": "p", "text": "Heading into 2026, it would’ve been wrong not to tip the hat to the Virginia Beach brothers — Gene “Malice” and Terrence “Pusha T” Thornton."},
-    {"t": "p", "text": "Clipse carried a feel-good kind of charm in 2025 that’s likely to turn into nostalgia sooner than we expect — like finding something we didn’t realize we lost, then wanting to sit with it and savor the moment."},
-    {"t": "h", "text": "On the production"},
-    {"t": "p", "text": "Pharrell was the seasoning they may have needed, in full control of the production on the hit single, which was released as a music video exclusively on Instagram on June 17, 2025."},
-    {"t": "h", "text": "Visually"},
-    {"t": "p", "text": "As for the release itself: the visuals felt intentional with the right amount of space to breathe — a braggadocious juxtaposition with elegance."},
-    {"t": "p", "text": "The “culturally inappropriate” vocal sample, the Saudi Arabian audio theme, and a video that ultimately feels like a mish-mash of great 20th-century cinematic directors — Hitchcock, Kubrick, even flashes of Tarantino’s Sin City — in a way that works."},
-    {"t": "h", "text": "Stepping back"},
-    {"t": "p", "text": "To some (including me), it’s not perfect — but what is? And honestly, it feels perfect for them, and that’s what matters."},
-    {"t": "h", "text": "Worth noting"},
-    {"t": "p", "text": "Earlier this year, I went down the Clipse rabbit hole — interviews, backstory, how it all came together. The story of Clipse themselves — and this song — deserves far more space than this format allows."},
-    {"t": "pull", "text": "So be it."},
-    {"t": "img", "src": "i3_yt_URlPXepBZdo", "cap": "Clipse: So Be It. Watch on YouTube.", "alt": "Clipse: So Be It music video", "href": "https://www.youtube.com/watch?v=URlPXepBZdo", "badge": "WATCH"},
-    {"t": "p", "text": "Then watch this right under it:"},
-    {"t": "img", "src": "i3_yt_f7gIBB7jKc0", "cap": "Clipse: NPR Tiny Desk Concert. Watch on YouTube.", "alt": "Clipse at the NPR Tiny Desk", "href": "https://www.youtube.com/watch?v=f7gIBB7jKc0", "badge": "WATCH"},
-    {"t": "p", "text": "Their NPR Tiny Desk Concert is exactly what it should be — intimate, authentic, and proof they’ve been doing this for a long time. Clipse sounding like Clipse, live and locked in."},
-    {"t": "p", "text": "Set list: “Virginia,” “Keys Open Doors,” “Momma I’m So Sorry,” “Chains & Whips,” “Birds Don’t Sing,” “Grindin’.”"}
+    {
+     "t": "p",
+     "text": "In 2025, Clipse made their presence felt with “So Be It.”"
+    },
+    {
+     "t": "p",
+     "text": "Heading into 2026, it would’ve been wrong not to tip the hat to the Virginia Beach brothers — Gene “Malice” and Terrence “Pusha T” Thornton."
+    },
+    {
+     "t": "p",
+     "text": "Clipse carried a feel-good kind of charm in 2025 that’s likely to turn into nostalgia sooner than we expect — like finding something we didn’t realize we lost, then wanting to sit with it and savor the moment."
+    },
+    {
+     "t": "h",
+     "text": "On the production"
+    },
+    {
+     "t": "p",
+     "text": "Pharrell was the seasoning they may have needed, in full control of the production on the hit single, which was released as a music video exclusively on Instagram on June 17, 2025."
+    },
+    {
+     "t": "h",
+     "text": "Visually"
+    },
+    {
+     "t": "p",
+     "text": "As for the release itself: the visuals felt intentional with the right amount of space to breathe — a braggadocious juxtaposition with elegance."
+    },
+    {
+     "t": "p",
+     "text": "The “culturally inappropriate” vocal sample, the Saudi Arabian audio theme, and a video that ultimately feels like a mish-mash of great 20th-century cinematic directors — Hitchcock, Kubrick, even flashes of Tarantino’s Sin City — in a way that works."
+    },
+    {
+     "t": "h",
+     "text": "Stepping back"
+    },
+    {
+     "t": "p",
+     "text": "To some (including me), it’s not perfect — but what is? And honestly, it feels perfect for them, and that’s what matters."
+    },
+    {
+     "t": "h",
+     "text": "Worth noting"
+    },
+    {
+     "t": "p",
+     "text": "Earlier this year, I went down the Clipse rabbit hole — interviews, backstory, how it all came together. The story of Clipse themselves — and this song — deserves far more space than this format allows."
+    },
+    {
+     "t": "pull",
+     "text": "So be it."
+    },
+    {
+     "t": "img",
+     "src": "i3_yt_URlPXepBZdo",
+     "cap": "Clipse: So Be It. Watch on YouTube.",
+     "alt": "Clipse: So Be It music video",
+     "href": "https://www.youtube.com/watch?v=URlPXepBZdo",
+     "badge": "WATCH"
+    },
+    {
+     "t": "p",
+     "text": "Then watch this right under it:"
+    },
+    {
+     "t": "img",
+     "src": "i3_yt_f7gIBB7jKc0",
+     "cap": "Clipse: NPR Tiny Desk Concert. Watch on YouTube.",
+     "alt": "Clipse at the NPR Tiny Desk",
+     "href": "https://www.youtube.com/watch?v=f7gIBB7jKc0",
+     "badge": "WATCH"
+    },
+    {
+     "t": "p",
+     "text": "Their NPR Tiny Desk Concert is exactly what it should be — intimate, authentic, and proof they’ve been doing this for a long time. Clipse sounding like Clipse, live and locked in."
+    },
+    {
+     "t": "p",
+     "text": "Set list: “Virginia,” “Keys Open Doors,” “Momma I’m So Sorry,” “Chains & Whips,” “Birds Don’t Sing,” “Grindin’.”"
+    },
+    {
+     "t": "link",
+     "label": "🎧 Also in the Music Flow Collection →",
+     "href": "https://musicflowcollection.com/song/clipse-so-be-it/"
+    }
    ]
   },
   {
-   "id": "off-the-path", "name": "OFF THE PATH", "emoji": "🧭", "feature": false,
+   "id": "off-the-path",
+   "name": "OFF THE PATH",
+   "emoji": "🧭",
+   "feature": false,
    "title": "Focus Like a CEO: A Way to Find Your Zone",
    "dek": "Music-only channels built to help you lock in.",
    "img": "i3_yt_ahawPLh4epk",
-   "tags": ["Music", "Mindset"], "people": [],
+   "tags": [
+    "Music",
+    "Mindset"
+   ],
+   "people": [],
    "body": [
-    {"t": "p", "text": "There’s a whole wave of music-only YouTube channels to help you lock in and focus on your tasks, accompanied by idyllic images of dreamlike spaces."},
-    {"t": "img", "src": "i3_yt_ahawPLh4epk", "cap": "Hyperfocus. Listen on YouTube.", "alt": "Hyperfocus music mix", "href": "https://www.youtube.com/watch?v=ahawPLh4epk", "badge": "LISTEN"},
-    {"t": "link", "label": "Alternate bonus: a “Smooth Jazz and Sweet Bossa Nova” mix →", "href": "https://www.youtube.com/live/hsHO39PnC1s"}
+    {
+     "t": "p",
+     "text": "There’s a whole wave of music-only YouTube channels to help you lock in and focus on your tasks, accompanied by idyllic images of dreamlike spaces."
+    },
+    {
+     "t": "img",
+     "src": "i3_yt_ahawPLh4epk",
+     "cap": "Hyperfocus. Listen on YouTube.",
+     "alt": "Hyperfocus music mix",
+     "href": "https://www.youtube.com/watch?v=ahawPLh4epk",
+     "badge": "LISTEN"
+    },
+    {
+     "t": "link",
+     "label": "Alternate bonus: a “Smooth Jazz and Sweet Bossa Nova” mix →",
+     "href": "https://www.youtube.com/live/hsHO39PnC1s"
+    }
    ]
   },
   {
-   "id": "wall-of-sommi", "name": "WALL OF SOMMI", "emoji": "🧱", "feature": false,
+   "id": "wall-of-sommi",
+   "name": "WALL OF SOMMI",
+   "emoji": "🧱",
+   "feature": false,
    "title": "The Anti-Grifter",
    "dek": "Warning newcomers before they fall into the grift traps.",
    "img": "i3_sommi_shot",
-   "tags": ["Crypto"], "people": ["Sommi"],
+   "tags": [
+    "Crypto"
+   ],
+   "people": [
+    "Sommi"
+   ],
    "body": [
-    {"t": "p", "text": "Sommi started making crypto videos because he wished someone like him had been there when he was new — warning newcomers before they fell into the space’s many grift traps."},
-    {"t": "img", "src": "i3_sommi_shot", "cap": "Sommi’s variety show.", "alt": "Sommi in a horned Viking helmet with a giant lollipop"},
-    {"t": "p", "text": "This week’s Wall of Sommi blends that warning with his signature character work, taking aim at the archetypal YouTube crypto grifter crowding every corner of the internet."},
-    {"t": "img", "src": "i3_yt_a_DGbmRyH2o", "cap": "Sommi: the anti-grifter. Watch on YouTube.", "alt": "Sommi in character", "href": "https://www.youtube.com/watch?v=a_DGbmRyH2o", "badge": "WATCH ON YOUTUBE"},
-    {"t": "link", "label": "🎥 On YouTube: @yourfriendSOMMI →", "href": "https://www.youtube.com/@yourfriendsommi"}
+    {
+     "t": "p",
+     "text": "Sommi started making crypto videos because he wished someone like him had been there when he was new — warning newcomers before they fell into the space’s many grift traps."
+    },
+    {
+     "t": "img",
+     "src": "i3_sommi_shot",
+     "cap": "Sommi’s variety show.",
+     "alt": "Sommi in a horned Viking helmet with a giant lollipop"
+    },
+    {
+     "t": "p",
+     "text": "This week’s Wall of Sommi blends that warning with his signature character work, taking aim at the archetypal YouTube crypto grifter crowding every corner of the internet."
+    },
+    {
+     "t": "img",
+     "src": "i3_yt_a_DGbmRyH2o",
+     "cap": "Sommi: the anti-grifter. Watch on YouTube.",
+     "alt": "Sommi in character",
+     "href": "https://www.youtube.com/watch?v=a_DGbmRyH2o",
+     "badge": "WATCH ON YOUTUBE"
+    },
+    {
+     "t": "link",
+     "label": "🎥 On YouTube: @yourfriendSOMMI →",
+     "href": "https://www.youtube.com/@yourfriendsommi"
+    }
    ]
   },
   {
-   "id": "sports-talk", "name": "SPORTS TALK", "emoji": "🏀", "feature": false,
+   "id": "sports-talk",
+   "name": "SPORTS TALK",
+   "emoji": "🏀",
+   "feature": false,
    "title": "The Shot (NCAA Basketball Edition)",
    "dek": "Grant Hill to Christian Laettner, 1992.",
    "img": "i3_theshot",
-   "tags": ["Sports"], "people": ["Christian Laettner", "Grant Hill"],
+   "tags": [
+    "Sports"
+   ],
+   "people": [
+    "Christian Laettner",
+    "Grant Hill"
+   ],
    "body": [
-    {"t": "p", "text": "It feels like everything from the ’90s is being rediscovered and crowned iconic — college basketball included."},
-    {"t": "p", "text": "The 1992 Grant Hill inbounds to Christian Laettner — catch, shoot, score — is hands down one of the greatest sports moments in history."},
-    {"t": "img", "src": "i3_theshot", "cap": "What pure satisfaction looks like.", "alt": "Christian Laettner celebrates after The Shot, 1992"},
-    {"t": "p", "text": "Back when hype didn’t feel manufactured — when moments just happened."},
-    {"t": "p", "text": "Was this the beginning of sports media hype — or the peak? Maybe both."},
-    {"t": "p", "text": "Down one. Seconds left… ▶️"},
-    {"t": "img", "src": "i3_yt_i6O0q50fayM", "cap": "1992: The Shot by Christian Laettner. Watch on YouTube.", "alt": "The Shot by Christian Laettner, 1992", "href": "https://www.youtube.com/watch?v=i6O0q50fayM", "badge": "WATCH ON YOUTUBE"}
+    {
+     "t": "p",
+     "text": "It feels like everything from the ’90s is being rediscovered and crowned iconic — college basketball included."
+    },
+    {
+     "t": "p",
+     "text": "The 1992 Grant Hill inbounds to Christian Laettner — catch, shoot, score — is hands down one of the greatest sports moments in history."
+    },
+    {
+     "t": "img",
+     "src": "i3_theshot",
+     "cap": "What pure satisfaction looks like.",
+     "alt": "Christian Laettner celebrates after The Shot, 1992"
+    },
+    {
+     "t": "p",
+     "text": "Back when hype didn’t feel manufactured — when moments just happened."
+    },
+    {
+     "t": "p",
+     "text": "Was this the beginning of sports media hype — or the peak? Maybe both."
+    },
+    {
+     "t": "p",
+     "text": "Down one. Seconds left… ▶️"
+    },
+    {
+     "t": "img",
+     "src": "i3_yt_i6O0q50fayM",
+     "cap": "1992: The Shot by Christian Laettner. Watch on YouTube.",
+     "alt": "The Shot by Christian Laettner, 1992",
+     "href": "https://www.youtube.com/watch?v=i6O0q50fayM",
+     "badge": "WATCH ON YOUTUBE"
+    }
    ]
   },
   {
-   "id": "now-playing", "name": "NOW PLAYING", "emoji": "🍿", "feature": false,
+   "id": "now-playing",
+   "name": "NOW PLAYING",
+   "emoji": "🍿",
+   "feature": false,
    "title": "Big Trouble in Little China",
    "dek": "The Pork Chop Express rolls out — and the tone is set.",
    "img": "i3_yt_UeR27OP4V7U",
-   "tags": ["Film"], "people": ["Kurt Russell", "John Carpenter"],
+   "tags": [
+    "Film"
+   ],
+   "people": [
+    "Kurt Russell",
+    "John Carpenter"
+   ],
    "body": [
-    {"t": "p", "text": "Big Trouble in Little China (1986) is John Carpenter’s cult-action film starring Kurt Russell as trucker Jack Burton."},
-    {"t": "p", "text": "What makes it sing is Russell’s Jack: cocky, clueless, all-American bravado played like comedy genius."},
-    {"t": "p", "text": "That opening radio-dispatch monologue over the ’80s groove, rolling the big rig, is peak Burton—enjoy."},
-    {"t": "img", "src": "i3_yt_UeR27OP4V7U", "cap": "Big Trouble in Little China: the Pork Chop Express. Watch on YouTube.", "alt": "Kurt Russell as Jack Burton on the CB radio", "href": "https://www.youtube.com/watch?v=UeR27OP4V7U", "badge": "WATCH ON YOUTUBE"}
+    {
+     "t": "p",
+     "text": "Big Trouble in Little China (1986) is John Carpenter’s cult-action film starring Kurt Russell as trucker Jack Burton."
+    },
+    {
+     "t": "p",
+     "text": "What makes it sing is Russell’s Jack: cocky, clueless, all-American bravado played like comedy genius."
+    },
+    {
+     "t": "p",
+     "text": "That opening radio-dispatch monologue over the ’80s groove, rolling the big rig, is peak Burton—enjoy."
+    },
+    {
+     "t": "img",
+     "src": "i3_yt_UeR27OP4V7U",
+     "cap": "Big Trouble in Little China: the Pork Chop Express. Watch on YouTube.",
+     "alt": "Kurt Russell as Jack Burton on the CB radio",
+     "href": "https://www.youtube.com/watch?v=UeR27OP4V7U",
+     "badge": "WATCH ON YOUTUBE"
+    }
    ]
   }
  ]
