@@ -1012,11 +1012,12 @@ for b in data:
     try: os.rmdir(os.path.join(out, b["slug"]))
     except OSError: pass
 REDIRECTS = [{"source": "/"+b["slug"], "destination": "/"+b["id"], "permanent": True} for b in data]
-page("issue-%d" % ISSUE_NO, "Issue %d: %s | 20 Blok" % (ISSUE_NO, ISSUE_TITLE), "20 Blok Issue %d: %s. %d stories on culture, creativity and the internet by Lenny Lesser, ranked by readers." % (ISSUE_NO, ISSUE_TITLE.rstrip("."), len(data)), paths.get("cover", BRAND), '<h1>20 Blok, Issue %d: %s</h1><ul>' % (ISSUE_NO, H.escape(ISSUE_TITLE))+grid+'</ul>', canonical="")
+page("issue-%d" % ISSUE_NO, "Issue %d: %s | 20 Blok" % (ISSUE_NO, ISSUE_TITLE), "20 Blok Issue %d: %s. %d stories on culture, creativity and the internet by Lenny Lesser, ranked by readers." % (ISSUE_NO, ISSUE_TITLE.rstrip("."), len(data)), "/media/share/issue-%d.jpg" % ISSUE_NO if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "media/share/issue-%d.jpg" % ISSUE_NO)) else paths.get("cover", BRAND), '<h1>20 Blok, Issue %d: %s</h1><ul>' % (ISSUE_NO, H.escape(ISSUE_TITLE))+grid+'</ul>', canonical="")
 for n, a in sorted(ARCH.items()):
     g = "".join('<li><a href="/'+b["id"]+'">'+H.escape(b["name"])+': '+H.escape(b["title"])+'</a></li>' for b in a["bloks"])
     cov = paths.get(a["cover"], BRAND)
-    urls.append(page("issue-%d" % n, "Issue %d: %s | 20 Blok" % (n, a["title"]), "20 Blok Issue %d (%s): %s %d stories on culture, creativity and the internet by Lenny Lesser, ranked by readers." % (n, a["date"], a["title"].rstrip(".")+("" if a["title"][-1] in "?!" else "."), len(a["bloks"])), cov,
+    sc = "/media/share/issue-%d.jpg" % n   # split card: 20 BLOK + issue | cover (made by source/share_cards.js)
+    urls.append(page("issue-%d" % n, "Issue %d: %s | 20 Blok" % (n, a["title"]), "20 Blok Issue %d (%s): %s %d stories on culture, creativity and the internet by Lenny Lesser, ranked by readers." % (n, a["date"], a["title"].rstrip(".")+("" if a["title"][-1] in "?!" else "."), len(a["bloks"])), sc if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", sc.lstrip("/"))) else cov,
                      '<h1>20 Blok, Issue %d: %s</h1><ul>' % (n, H.escape(a["title"]))+g+'</ul>'
                      + '<script type="application/ld+json">'+json.dumps({"@context":"https://schema.org","@type":"PublicationIssue","issueNumber":str(n),"name":a["title"],"datePublished":a["pub"],"image":SITE+cov,"url":SITE+"/issue-%d" % n,
                         "author":{"@type":"Person","name":"Lenny Lesser"},"isPartOf":{"@type":"Periodical","name":"20 Blok","url":SITE},
