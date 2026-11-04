@@ -1578,6 +1578,14 @@ function render(keepFocus){
   else if (commentsUnsub){ commentsUnsub(); commentsUnsub=null; commentsFor=null; }
 }
 window.addEventListener("hashchange", ()=>{ const h=(location.hash||"").replace(/^#/,""); if (h && isAuthHash(h)) return; if (h) history.replaceState({}, "", "/"+(h==="this-week"?"":h)); render(false); });
+// Already on the home grid: the logo (or THIS WEEK) glides back to the top instead of doing nothing.
+document.addEventListener("click", e=>{
+  const a=e.target.closest && e.target.closest('a[href="/"]');
+  if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  if (curRoute()!=="this-week") return;
+  e.preventDefault();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
 render(false);
 connect();
 </script>

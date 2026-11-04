@@ -624,6 +624,14 @@ function render(keepFocus){
   else if (commentsUnsub){ commentsUnsub(); commentsUnsub=null; commentsFor=null; }
 }
 window.addEventListener("hashchange", ()=>render(false));
+// Already on the home grid: the logo (or THIS WEEK) glides back to the top instead of doing nothing.
+document.addEventListener("click", e=>{
+  const a=e.target.closest && e.target.closest('a[href="#this-week"]');
+  if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  if (curRoute()!=="this-week") return;
+  e.preventDefault();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
 render(false);
 connect();
 </script>
