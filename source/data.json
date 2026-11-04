@@ -62,19 +62,42 @@
   "name": "NEWSFEED",
   "emoji": "📰",
   "feature": false,
-  "title": "Open",
-  "dek": "Coming in Issue 8.",
+  "title": "A Jury Rebukes Kristin Knouse",
+  "dek": "$6 million for David Sabatini, the MIT scientist she accused.",
   "media": "",
   "links": [],
   "body": [
    {
     "t": "p",
-    "text": "Nothing here yet."
+    "text": "In October 2026 a Massachusetts jury found that biologist Kristin Knouse defamed David Sabatini, the cancer researcher who lost his posts at MIT and the Whitehead Institute in 2021 after she reported their relationship. Jurors awarded him $6 million."
+   },
+   {
+    "t": "p",
+    "text": "Knouse, then a postdoc at Whitehead, had a relationship with Sabatini that ended in 2019. A 2021 investigation by the law firm Hinckley Allen led to his removal, and in 2022 a planned hire at NYU drew protests. The jury rejected her coercion and assault claims. According to Janice Fiamengo, Knouse is appealing."
+   },
+   {
+    "t": "p",
+    "text": "Fiamengo's column on the verdict argues that science institutions have been slow to reckon with it."
+   },
+   {
+    "t": "link",
+    "label": "📰 Janice Fiamengo: “A Jury Has Rebuked Kristin Knouse” →",
+    "href": "https://fiamengofile.substack.com/p/a-jury-has-rebuked-kristin-knouse"
+   },
+   {
+    "t": "link",
+    "label": "📰 Boston Globe: the verdict →",
+    "href": "https://www.bostonglobe.com/2026/10/16/metro/david-sabatini-verdict/"
    }
   ],
-  "img": "",
-  "tags": [],
-  "people": []
+  "img": "nf_sabatini",
+  "tags": [
+   "News"
+  ],
+  "people": [
+   "David Sabatini",
+   "Kristin Knouse"
+  ]
  },
  {
   "id": "word-meme",
