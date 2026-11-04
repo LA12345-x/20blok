@@ -3,102 +3,102 @@
   "redirects": [
     {
       "source": "/straight-up",
-      "destination": "/issue-7/straight-up",
+      "destination": "/issue-8/straight-up",
       "permanent": true
     },
     {
       "source": "/must-see",
-      "destination": "/issue-7/must-see",
+      "destination": "/issue-8/must-see",
       "permanent": true
     },
     {
       "source": "/industry-freeks",
-      "destination": "/issue-7/industry-freeks",
+      "destination": "/issue-8/industry-freeks",
       "permanent": true
     },
     {
       "source": "/newsfeed",
-      "destination": "/issue-7/newsfeed",
+      "destination": "/issue-8/newsfeed",
       "permanent": true
     },
     {
       "source": "/word-meme",
-      "destination": "/issue-7/word-meme",
+      "destination": "/issue-8/word-meme",
       "permanent": true
     },
     {
       "source": "/toolz",
-      "destination": "/issue-7/toolz",
+      "destination": "/issue-8/toolz",
       "permanent": true
     },
     {
       "source": "/behind-the-reel",
-      "destination": "/issue-7/behind-the-reel",
+      "destination": "/issue-8/behind-the-reel",
       "permanent": true
     },
     {
       "source": "/find-your-edge",
-      "destination": "/issue-7/find-your-edge",
+      "destination": "/issue-8/find-your-edge",
       "permanent": true
     },
     {
       "source": "/style-scene",
-      "destination": "/issue-7/style-scene",
+      "destination": "/issue-8/style-scene",
       "permanent": true
     },
     {
       "source": "/underground",
-      "destination": "/issue-7/underground",
+      "destination": "/issue-8/underground",
       "permanent": true
     },
     {
       "source": "/dezign-ur-ritual",
-      "destination": "/issue-7/dezign-ur-ritual",
+      "destination": "/issue-8/dezign-ur-ritual",
       "permanent": true
     },
     {
       "source": "/chain-reaction",
-      "destination": "/issue-7/chain-reaction",
+      "destination": "/issue-8/chain-reaction",
       "permanent": true
     },
     {
       "source": "/lolz",
-      "destination": "/issue-7/lolz",
+      "destination": "/issue-8/lolz",
       "permanent": true
     },
     {
       "source": "/music-flow",
-      "destination": "/issue-7/music-flow",
+      "destination": "/issue-8/music-flow",
       "permanent": true
     },
     {
       "source": "/story-beat",
-      "destination": "/issue-7/story-beat",
+      "destination": "/issue-8/story-beat",
       "permanent": true
     },
     {
       "source": "/off-the-path",
-      "destination": "/issue-7/off-the-path",
+      "destination": "/issue-8/off-the-path",
       "permanent": true
     },
     {
       "source": "/wall-of-sommi",
-      "destination": "/issue-7/wall-of-sommi",
+      "destination": "/issue-8/wall-of-sommi",
       "permanent": true
     },
     {
       "source": "/sports-talk",
-      "destination": "/issue-7/sports-talk",
+      "destination": "/issue-8/sports-talk",
       "permanent": true
     },
     {
       "source": "/now-playing",
-      "destination": "/issue-7/now-playing",
+      "destination": "/issue-8/now-playing",
       "permanent": true
     },
     {
       "source": "/based",
-      "destination": "/issue-7/based",
+      "destination": "/issue-8/based",
       "permanent": true
     }
   ],
