@@ -266,12 +266,16 @@
     "text": "From Freeways, the dublab compilation out of Los Angeles, released December 2001."
    },
    {
-    "t": "link",
-    "label": "Listen on YouTube →",
+    "t": "img",
+    "src": "mf_freeways",
+    "cap": "Mia Doi Todd, “Digital, Version 2.1,” from dublab presents Freeways (2001). Listen on YouTube.",
+    "alt": "dublab presents Freeways album cover: a grid of blue street-map squares.",
+    "video": true,
+    "badge": "LISTEN ON YOUTUBE",
     "href": "https://www.youtube.com/watch?v=9LOC8xojtAA"
    }
   ],
-  "img": "",
+  "img": "mf_freeways",
   "tags": [
    "Music"
   ],
