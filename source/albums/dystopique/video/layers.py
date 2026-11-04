@@ -1,6 +1,6 @@
 import json, sys
 from PIL import Image, ImageDraw, ImageFilter, ImageFont, ImageEnhance
-A='/home/claude/20blok/source/albums/dystopique/'
+A='../'
 AL=json.load(open(A+'album.json'))
 W,H=1920,1080
 CY=(0,229,255); PK=(255,43,180)
@@ -25,7 +25,7 @@ def layer(i):
     d.text((X,y0+46),'TRACK %02d / %02d' % (t['n'],len(AL['tracks'])),font=STM(30),fill=(200,210,230))
     f=fit(d,t['title'].upper(),ORB,64,W-X-110)
     d.text((X,y0+100),t['title'].upper(),font=f,fill=(255,255,255))
-    d.text((X,y0+190),'PRESENTED BY THE AMERICAN',font=STM(26),fill=PK)
+    d.text((X,y0+190),'PRESENTED BY THE AMERICAN.ID',font=STM(26),fill=PK)
     # visualizer frame + progress track
     d.rectangle([X,y0+260,W-110,y0+500],outline=CY+(90,),width=2)
     d.line([X,y0+560,W-110,y0+560],fill=(255,255,255,70),width=6)

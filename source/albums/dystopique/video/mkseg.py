@@ -9,12 +9,7 @@ def run(i,s):
         vf=f"{crop}split[a][b];[b]reverse[r];[a][r]concat,setpts={sp}*PTS,scale=1920:1080:force_original_aspect_ratio=increase:flags=lanczos,crop=1920:1080,fps=30"
         cmd=['ffmpeg','-v','error','-y','-ss',str(s['x']),'-i','src/%s.mp4'%s['src'],'-filter_complex',vf+',loop=loop=-1:size=32767','-frames:v',str(n),'-an','-c:v','libx264','-preset','veryfast','-crf','16','-pix_fmt','yuv420p',out]
     else:
-        W,H=2208,1242; mx,my=W-1920,H-1080
-        dr=s['x']; p=f"(n/{max(n-1,1)})"
-        x={'r':f"{mx}*{p}",'l':f"{mx}*(1-{p})",'u':f"{mx}/2"}[dr]
-        y={'r':f"{my}/2",'l':f"{my}/2",'u':f"{my}*(1-{p})"}[dr]
-        vf=f"scale={W}:{H}:flags=lanczos,crop=1920:1080:'{x}':'{y}'"
-        cmd=['ffmpeg','-v','error','-y','-loop','1','-framerate','30','-i','src/%s.png'%s['src'],'-vf',vf,'-frames:v',str(n),'-c:v','libx264','-preset','veryfast','-crf','16','-pix_fmt','yuv420p',out]
+        cmd=['python3','smooth.py','src/%s.png'%s['src'],out,str(n),s['x']]
     subprocess.run(cmd,check=True)
 import os; os.makedirs('seg',exist_ok=True)
 with open('seg/list.txt','w') as f:
