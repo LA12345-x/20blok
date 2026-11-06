@@ -32,7 +32,7 @@ for k, uri in IM.items():
 # share image per issue: a new file name each issue, so link previews never show an old cover
 ISSUE_NO = int(re.search(r"const ISSUE = (\d+);", t).group(1))
 COVER = "/media/cover-i%d.jpg" % ISSUE_NO   # for issue pages (coming with Issue 8)
-BRAND = "/media/share_brand.png"             # 20 BLOK card: home and general pages
+BRAND = "/media/share_brand_v2.png"             # 20 BLOK card: home and general pages
 if "cover" in paths:
     import shutil; shutil.copyfile(os.path.join(out, paths["cover"].lstrip("/")), os.path.join(out, COVER.lstrip("/")))
 # ---------- page head: real document ----------
