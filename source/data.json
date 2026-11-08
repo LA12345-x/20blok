@@ -406,18 +406,31 @@
   "name": "BASED",
   "emoji": "🧨",
   "feature": false,
-  "title": "Open",
-  "dek": "Coming in Issue 8.",
+  "title": "NLE Choppa on L.A. Leakers",
+  "dek": "Freestyle #127 at Power 106.",
   "media": "",
   "links": [],
   "body": [
    {
     "t": "p",
-    "text": "Nothing here yet."
+    "text": "[Draft. Lenny's angle to add.]"
+   },
+   {
+    "t": "img",
+    "src": "bs_nle",
+    "cap": "NLE Choppa with the L.A. Leakers at Power 106, Freestyle #127. Watch on YouTube.",
+    "alt": "NLE Choppa standing between the two L.A. Leakers hosts in front of a Power 106 FM backdrop.",
+    "video": true,
+    "badge": "WATCH ON YOUTUBE",
+    "href": "https://www.youtube.com/watch?v=i5O0xbJ3qSY"
    }
   ],
-  "img": "",
-  "tags": [],
-  "people": []
+  "img": "bs_nle",
+  "tags": [
+   "Music"
+  ],
+  "people": [
+   "NLE Choppa"
+  ]
  }
 ]
