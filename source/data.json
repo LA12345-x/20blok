@@ -43,19 +43,33 @@
   "name": "INDUSTRY FREEKS",
   "emoji": "🧪",
   "feature": false,
-  "title": "Open",
-  "dek": "Coming in Issue 8.",
+  "title": "Anthony Fantano, Still Doing It",
+  "dek": "The Needle Drop’s album reviewer, years into the job.",
   "media": "",
   "links": [],
   "body": [
    {
     "t": "p",
-    "text": "Nothing here yet."
+    "text": "Anthony Fantano runs The Needle Drop, the YouTube channel where he reviews albums, scores them and says exactly what he thinks. He’s been at it for well over a decade, and he’s still out there doing it."
+   },
+   {
+    "t": "img",
+    "src": "if_fantano",
+    "cap": "Anthony Fantano on The Needle Drop. Watch on YouTube.",
+    "alt": "Anthony Fantano in a red plaid shirt with the words NOT GOOD painted over the frame, an album cover pinned on the wall behind him.",
+    "video": true,
+    "badge": "WATCH ON YOUTUBE",
+    "href": "https://www.youtube.com/watch?v=YmWOOoc0yRY"
    }
   ],
-  "img": "",
-  "tags": [],
-  "people": []
+  "img": "if_fantano",
+  "tags": [
+   "Music",
+   "Internet Culture"
+  ],
+  "people": [
+   "Anthony Fantano"
+  ]
  },
  {
   "id": "newsfeed",
