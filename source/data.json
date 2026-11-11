@@ -344,18 +344,50 @@
   "name": "OFF THE PATH",
   "emoji": "🧭",
   "feature": false,
-  "title": "Open",
-  "dek": "Coming in Issue 8.",
+  "title": "This Issue’s Word: Transmute",
+  "dek": "What the dictionary says, and what it means to me.",
   "media": "",
   "links": [],
   "body": [
    {
     "t": "p",
-    "text": "Nothing here yet."
+    "text": "Every issue gets a word. This issue’s word is transmute."
+   },
+   {
+    "t": "img",
+    "src": "otp_transmute",
+    "alt": "A dictionary-style card: THIS ISSUE’S WORD, transmute, verb, to change something into another form, nature or substance."
+   },
+   {
+    "t": "h",
+    "text": "The dictionary"
+   },
+   {
+    "t": "p",
+    "text": "transmute (trans·mute), verb. To change something into another form, nature or substance."
+   },
+   {
+    "t": "ul",
+    "items": [
+     "Everyday use: to turn one thing into something different, often something better.",
+     "In alchemy: to turn one element into another, the old dream of turning lead into gold.",
+     "From Latin transmutare: trans-, “across,” and mutare, “to change.”"
+    ]
+   },
+   {
+    "t": "h",
+    "text": "What it means to me"
+   },
+   {
+    "t": "p",
+    "text": "[Lenny’s words go here.]"
    }
   ],
-  "img": "",
-  "tags": [],
+  "img": "otp_tile",
+  "tags": [
+   "Culture",
+   "Mindset"
+  ],
   "people": []
  },
  {
