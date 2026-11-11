@@ -344,14 +344,14 @@
   "name": "OFF THE PATH",
   "emoji": "🧭",
   "feature": false,
-  "title": "This Issue’s Word: Transmute",
-  "dek": "What the dictionary says, and what it means to me.",
+  "title": "Transmute Your Reality",
+  "dek": "This issue’s word, and Danny Dodge of @radical.self.",
   "media": "",
   "links": [],
   "body": [
    {
     "t": "p",
-    "text": "Every issue gets a word. This issue’s word is transmute."
+    "text": "Every issue gets a word. This issue’s word is transmute. I’ve been doing Danny Dodge’s mantras, and I’m not going to gatekeep."
    },
    {
     "t": "img",
@@ -376,11 +376,41 @@
    },
    {
     "t": "h",
-    "text": "What it means to me"
+    "text": "Danny Dodge, @radical.self"
    },
    {
     "t": "p",
-    "text": "[Lenny’s words go here.]"
+    "text": "Danny Dodge runs Radical Self (@radical.self on Instagram, about 29,000 followers). His bio is two words: “Become Inevitable.” His reels are short guided sessions shot close to the camera, many from the driver’s seat of his car: “60 Second Millionaire Hypnosis,” “Master the Law of Assumption,” “Third Eye Visualization Technique,” “listen 3x and watch what happens.”"
+   },
+   {
+    "t": "img",
+    "src": "otp_radical",
+    "cap": "Reels from @radical.self. Open on Instagram.",
+    "alt": "Six reels from Danny Dodge's Instagram, close-ups with titles like 60 Second Millionaire Hypnosis and Master the Law of Assumption.",
+    "badge": "OPEN ON INSTAGRAM",
+    "href": "https://www.instagram.com/radical.self/"
+   },
+   {
+    "t": "h",
+    "text": "Positive, with integrity"
+   },
+   {
+    "t": "pull",
+    "text": "How can we reinvent staying positive and give it the integrity it deserves?"
+   },
+   {
+    "t": "p",
+    "text": "[Lenny’s words go here: what it looks like when staying positive stays authentic, and what transmute means to me.]"
+   },
+   {
+    "t": "link",
+    "label": "🧭 Danny Dodge on Instagram: @radical.self →",
+    "href": "https://www.instagram.com/radical.self/"
+   },
+   {
+    "t": "link",
+    "label": "🧭 His site: radical-self.com/rewire →",
+    "href": "https://radical-self.com/rewire"
    }
   ],
   "img": "otp_tile",
@@ -388,7 +418,9 @@
    "Culture",
    "Mindset"
   ],
-  "people": []
+  "people": [
+   "Danny Dodge"
+  ]
  },
  {
   "id": "wall-of-sommi",
