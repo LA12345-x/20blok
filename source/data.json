@@ -137,18 +137,42 @@
   "name": "TOOLZ",
   "emoji": "🤖",
   "feature": false,
-  "title": "Open",
-  "dek": "Coming in Issue 8.",
+  "title": "We Need to Talk About Claude",
+  "dek": "You can build websites now without knowing how to code.",
   "media": "",
   "links": [],
   "body": [
    {
     "t": "p",
-    "text": "Nothing here yet."
+    "text": "Something revelatory has happened. I don’t think it happened yesterday, but it definitely didn’t exist two or three years ago."
+   },
+   {
+    "t": "p",
+    "text": "Somewhere along the line, I discovered you can build digital website infrastructure without knowing how to code. I knew this day was coming. It’s here, and it’s exciting."
+   },
+   {
+    "t": "p",
+    "text": "I’ve been able to build out 20 Blok, and I’ve expanded other projects too. It’s a massive era of freedom."
+   },
+   {
+    "t": "p",
+    "text": "Check out the tutorial below, where I talk about it."
+   },
+   {
+    "t": "p",
+    "text": "[Tutorial video goes here.]"
+   },
+   {
+    "t": "link",
+    "label": "🤖 Try Claude: claude.ai →",
+    "href": "https://claude.ai"
    }
   ],
-  "img": "",
-  "tags": [],
+  "img": "tz_claude",
+  "tags": [
+   "AI",
+   "AI Tools"
+  ],
   "people": []
  },
  {
